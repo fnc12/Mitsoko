@@ -3,6 +3,7 @@
 
 #include "JNI.hpp"
 #include "JavaRuntime.hpp"
+#include <type_traits>
 
 namespace java{
     namespace lang{
@@ -34,9 +35,34 @@ namespace java{
                 }
             }
             
+            /**
+             *  Java `instanceof` operator analog.
+             *  Usage:  if( v.instanceof<android::widget::ListView>() ){ ...
+             */
+            template<class T>
+            bool instanceof(){
+                if(auto java_env=JNI::Env()){
+                    auto targetClass=java_env->FindClass(T::signature().c_str());
+                    return java_env->IsInstanceOf(this->handle,targetClass);
+                }else{
+                    return false;
+                }
+            }
+            
+            /**
+             *  Cast operator. Implements `instanceof` call and returns null object if cast failed.
+             */
+            template<class T,class=typename std::enable_if<std::is_base_of<T,Object>::value>::type>
+            operator T (){
+                if(this->instanceof<T>){
+                    return this->handle;
+                }else{
+                    return {};
+                }
+            }
+            
             jclass getClass(){
-                auto java_env=JNI::Env();
-                if(java_env){
+                if(auto java_env=JNI::Env()){
                     return java_env->GetObjectClass(static_cast<jobject>(const_cast<void*>(this->handle)));
                 }else{
                     return nullptr;
