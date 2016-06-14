@@ -22,9 +22,11 @@ namespace android{
              *  This function doesn't exist in SDK. This is a special function used for
              *  settings a core crossplarform adapter to a listView.
              */
-            Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<Viper::AdapterBase> adapterPointer,
+            template<class T>
+            Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer,
                                                           const content::Context &context)
             {
+                auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
                 if(auto java_env=java::lang::JNI::Env()){
                     if(auto clazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/ViperTableViewAdapter")){
 //                    if(auto clazz=java_env->FindClass("kz/outlawstudio/groozim/ViperTableViewAdapter")){

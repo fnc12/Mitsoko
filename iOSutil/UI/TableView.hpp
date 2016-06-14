@@ -38,7 +38,9 @@ namespace UI {
          *  android::widget::ListView with two arguments where second argument is
          *  android::content::Context.
          */
-        Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<Viper::AdapterBase> adapterPointer){
+        template<class T>
+        Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
+            auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
             auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
             auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
             auto sharedAdapter=NS::Object::sendMessage<Handle>(sharedAdapterClass,"shared");
