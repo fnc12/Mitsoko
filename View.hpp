@@ -10,11 +10,8 @@
 #define View_h
 
 #include <memory>
-//#ifdef __APPLE__
 #include "iOSutil/iOSutil.hpp"
-//#else
 #include "AndroidUtil/AndroidUtil.hpp"
-//#endif
 #include <map>
 #include <string>
 #include <cstdlib>
@@ -24,6 +21,15 @@
 #include "ViewPresenterIF.hpp"
 
 #define VIEW_DECL(module) struct View:public Viper::View<module::EventHandler, module::UserInterface>,Selfish<View>
+
+/**
+ *  Used fo simplifying client member references declaration.
+ */
+#ifdef __APPLE__
+#define FIELD_DECL(type,name) type name(){return NS::Object::sendMessage<Handle>(self.handle,#name);}
+#else
+#define FIELD_DECL(type,name) type name(){return java::lang::Object(self.handle).getField<type>(#name);}
+#endif
 
 namespace Viper{
     struct ViewBase{
