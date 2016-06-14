@@ -1,0 +1,92 @@
+
+#pragma once
+
+#include "Viper/AndroidUtil/java/lang/Class.hpp"
+
+namespace android{
+    namespace view{
+        struct View:public java::lang::Object{
+            using Object::Object;
+            STATIC_VAR(const std::string, signature, "android/view/View");
+#ifdef __ANDROID__
+            View findViewById(int id){
+                return this->sendMessage<View>("findViewById",id);
+            }
+            
+            /**
+             *  This function actually doesn't exist in SDK but it is created
+             *  to simplify developers finding a subview by string identifier from xml-file.
+             *  =========
+             *  Also it's body contains call to 'getResourseId' static function call instead of
+             *  android native context.getResources.getIdentifier("view_id","id",context.getPackageName());.
+             *  This is done because calling context.getResources.getIdentifier from C++ always returns
+             *  incorrect id. The reason is still unknown so I decided to transfer this logic into
+             *  client side. If you know the reason why context.getResources.getIdentifier doesn't work
+             *  correctly please contact me fnc12@me.com. Thanks
+             */
+            View findViewById(const std::string &idString,const content::Context &context){
+                if(auto java_env=java::lang::JNI::Env()){
+//                    auto niClazz=java_env->FindClass("kz/outlawstudio/groozim/NI");
+//                    auto niClazz=java_env->FindClass((java::lang::JNI::appNamespace()+"/NI").c_str());
+                    auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
+                    auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
+                    auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
+                    auto resourseId=java::lang::String::create(idString);
+                    auto folderName=java::lang::String::create("id");
+                    auto resID=java_env->CallStaticIntMethod(niClazz,methodId,
+                                                             context.handle,
+                                                             resourseId.handle,
+                                                             folderName.handle);
+                    return this->findViewById(resID);
+                }else{
+                    return {};
+                }
+            }
+            
+            void setVisibility(int visibility){
+                this->sendMessage<void>("setVisibility",visibility);
+            }
+            
+            void setEnabled(bool enabled){
+                this->sendMessage<void>("setEnabled",enabled);
+            }
+            
+            bool isEnabled(){
+                return this->sendMessage<bool>("isEnabled");
+            }
+            
+            static int VISIBLE(){
+                if(auto env=java::lang::JNI::Env()){
+                    if(auto cls=java::lang::Class::find<View>()){
+                        if(auto fieldId=env->GetStaticFieldID(cls, "VISIBLE", TypeSignatureGenerator<int>()().c_str())){
+                            return env->GetStaticIntField(cls,fieldId);
+                        }else{
+                            return -1;
+                        }
+                    }else{
+                        return -1;
+                    }
+                }else{
+                    return -1;
+                }
+            }
+            
+            static int GONE(){
+                if(auto env=java::lang::JNI::Env()){
+                    if(auto cls=java::lang::Class::find<View>()){
+                        if(auto fieldId=env->GetStaticFieldID(cls, "GONE", TypeSignatureGenerator<int>()().c_str())){
+                            return env->GetStaticIntField(cls,fieldId);
+                        }else{
+                            return -1;
+                        }
+                    }else{
+                        return -1;
+                    }
+                }else{
+                    return -1;
+                }
+            }
+#endif
+        };
+    }
+}
