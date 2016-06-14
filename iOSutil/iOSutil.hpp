@@ -13,6 +13,7 @@
 #include "NS/Array.hpp"
 #include "NS/IndexSet.hpp"
 #include "NS/String.hpp"
+#include "NS/Bundle.hpp"
 
 #include "CF/String.hpp"
 
