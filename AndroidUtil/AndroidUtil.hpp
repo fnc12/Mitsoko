@@ -12,6 +12,8 @@
 #include "java/lang/Thread.hpp"
 #include "java/lang/CharSequence.hpp"
 
+#include "java/util/Locale.hpp"
+
 #include "android/content/res/Resources.hpp"
 
 #include "android/content/Context.hpp"
