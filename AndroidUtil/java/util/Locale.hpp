@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Object.hpp"
+#include "Viper/AndroidUtil/java/lang/Object.hpp"
 
 namespace java{
     namespace util{
