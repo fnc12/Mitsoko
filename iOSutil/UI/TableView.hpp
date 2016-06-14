@@ -59,6 +59,10 @@ namespace UI {
                 DetailButton=UITableViewCellAccessoryDetailButton,
             };
             
+            UI::Label detailTextLabel(){
+                return this->sendMessage<Handle>("detailTextLabel");
+            }
+            
             UI::Label textLabel(){
                 return this->sendMessage<Handle>("textLabel");
             }
