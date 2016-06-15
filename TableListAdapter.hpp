@@ -2,6 +2,9 @@
 #pragma once
 
 #include "Util.hpp"
+#ifdef __APPLE__
+#include <UIKit/UIKit.h>
+#endif
 #include <map>
 #include <memory>
 #include <iostream>
@@ -76,12 +79,39 @@ namespace Viper {
     struct AdapterBase{
         
         /**
+         *  UITableViewCellStyle mirror enum. Used in iOS only.
+         */
+        enum class RowStyle{
+            Default
+#ifdef __APPLE__
+            =UITableViewCellStyleDefault
+#endif
+            ,
+            Value1
+#ifdef __APPLE__
+            =UITableViewCellStyleValue1
+#endif
+            ,
+            Value2
+#ifdef __APPLE__
+            =UITableViewCellStyleValue2
+#endif
+            ,
+            Subtitle
+#ifdef __APPLE__
+            =UITableViewCellStyleSubtitle
+#endif
+            ,
+        };
+        
+        /**
          *  This function should be bound to presenter cause in Viper
          *  presenters receive event from views.
          */
         std::function<void(int,int)> rowSelectedLambda;
         
 #ifdef __ANDROID__
+        
         /**
          *  Adapter stores activity handle in android. Actually this is a pointer to a context.
          *  Context is required almost everywhere. This is why it is very important to store a
@@ -102,6 +132,8 @@ namespace Viper {
         
         virtual auto getViewClass(int section,int row)->std::string =0;
         
+        virtual auto getRowStyle(int section,int row)->RowStyle =0;
+        
         std::function<double(int,int)> getRowHeightLambda;
         
         virtual auto getRowHeight(int section,int row)->double{
@@ -115,6 +147,12 @@ namespace Viper {
         virtual auto getDataSource()->std::shared_ptr<DataSourceBase> =0;
     };
     
+    /**
+     *  Adapter is a class which adaptates data from data source to row/cell views.
+     *  You can customize adapters in two ways: either create a subclass and override
+     *  required functions or create Adater<T> instace without inheritance and assign
+     *  appropriate lambdas to it.
+     */
     template<class T>
     struct Adapter:public AdapterBase{
         typedef T data_type;
@@ -122,15 +160,10 @@ namespace Viper {
         
         Adapter(std::shared_ptr<data_source_type> dsPointer):dataSource(dsPointer){}
         
-        virtual auto getDataSource()->std::shared_ptr<DataSourceBase> override{
-            return std::dynamic_pointer_cast<DataSourceBase>(this->dataSource);
-        }
-        
-        virtual auto onCreateCell(const void *cell,int section,int row)->void override{
-            this->onCreateCell(cell,section,row,this->dataSource->getItem(section,row));
-        }
-        
         std::function<void(const void*,int,int,const data_type&)> onCreateCellLambda;
+        std::function<void(const void*,int,int,const data_type&)> onDisplayCellLambda;
+        std::function<std::string(int,int,const data_type&)> getViewClassLambda;
+        std::function<RowStyle(int,int,const data_type&)> getRowStyleLambda;
         
         virtual auto onCreateCell(const void *cellHandle,int section,int row,const data_type &item) throw (std::runtime_error) ->void{
             if(this->onCreateCellLambda){
@@ -140,23 +173,19 @@ namespace Viper {
             }
         }
         
-        virtual auto onDisplayCell(const void *cell,int section,int row)->void override{
-            this->onDisplayCell(cell,section,row,this->dataSource->getItem(section,row));
-        }
-        
-        std::function<void(const void*,int,int,const data_type&)> onDisplayCellLambda;
-        
         virtual auto onDisplayCell(const void *cellHandle,int section,int row,const data_type &item)->void{
             if(this->onDisplayCellLambda){
                 this->onDisplayCellLambda(cellHandle,section,row,item);
             }
         };
         
-        virtual auto getViewClass(int section,int row)->std::string override{
-            return std::move(this->getViewClass(section,row,this->dataSource->getItem(section,row)));
+        virtual auto getRowStyle(int section,int row,const data_type &item)->RowStyle override{
+            if(this->getRowStyleLambda){
+                return this->getRowStyleLambda(section,row,item);
+            }else{
+                return AdapterBase::RowStyle::Default;
+            }
         }
-        
-        std::function<std::string(int,int,const data_type&)> getViewClassLambda;
         
         virtual auto getViewClass(int section,int row,const data_type &item) throw (std::runtime_error) ->std::string{
             if(this->getViewClassLambda){
@@ -165,6 +194,27 @@ namespace Viper {
                 throw std::runtime_error("getViewClass is not implemented. Either implement it in you adapter subclass or assign getViewClassLambda to your adapter instance");
             }
         }
+        
+        virtual auto getRowStyle(int section,int row)->RowStyle override final{
+            return this->appropriate(section,row,this->dataSource->getItem(section,row));
+        }
+        
+        virtual auto getDataSource()->std::shared_ptr<DataSourceBase> override final{
+            return std::dynamic_pointer_cast<DataSourceBase>(this->dataSource);
+        }
+        
+        virtual auto onCreateCell(const void *cell,int section,int row)->void override final{
+            this->onCreateCell(cell,section,row,this->dataSource->getItem(section,row));
+        }
+        
+        virtual auto onDisplayCell(const void *cell,int section,int row)->void override final{
+            this->onDisplayCell(cell,section,row,this->dataSource->getItem(section,row));
+        }
+        
+        virtual auto getViewClass(int section,int row)->std::string override final{
+            return std::move(this->getViewClass(section,row,this->dataSource->getItem(section,row)));
+        }
+
     protected:
         std::shared_ptr<data_source_type> dataSource;
     };
@@ -262,6 +312,21 @@ namespace Viper {
                 it->second->onCreateCell(cell, section, row);
             }else{
                 //  not found..
+            }
+        }
+        
+        static AdapterBase::RowStyle cellStyle(const void *tableOrListView,int section,int row){
+            auto it=adaptersMap().end();
+#ifdef __APPLE__
+            it = adaptersMap().find(tableOrListView);
+#else
+            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+            it = adaptersMap().find((const void*)adapterId);
+#endif
+            if(it != adaptersMap().end()){
+                return it->second->
+            }else{
+                return 0;
             }
         }
         
