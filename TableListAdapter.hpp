@@ -315,13 +315,14 @@ namespace Viper {
             }
         }
         
+        /*** iOS only ***/
         static AdapterBase::RowStyle cellStyle(const void *tableOrListView,int section,int row){
             auto it=adaptersMap().end();
 #ifdef __APPLE__
             it = adaptersMap().find(tableOrListView);
 #else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
+            /*auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+            it = adaptersMap().find((const void*)adapterId);*/
 #endif
             if(it != adaptersMap().end()){
                 return it->second->getRowStyle(section,row);
