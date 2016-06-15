@@ -326,7 +326,7 @@ namespace Viper {
             if(it != adaptersMap().end()){
                 return it->second->getRowStyle(section,row);
             }else{
-                return 0;
+                return AdapterBase::RowStyle::Default;
             }
         }
         
