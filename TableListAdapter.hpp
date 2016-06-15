@@ -69,6 +69,10 @@ namespace Viper {
         };
     };
     
+    /**
+     *  This is a base ckass for adapter. All adapters are stored as pointers to
+     *  instances of this class.
+     */
     struct AdapterBase{
         
         /**
@@ -78,6 +82,11 @@ namespace Viper {
         std::function<void(int,int)> rowSelectedLambda;
         
 #ifdef __ANDROID__
+        /**
+         *  Adapter stores activity handle in android. Actually this is a pointer to a context.
+         *  Context is required almost everywhere. This is why it is very important to store a
+         *  pointer to it inside adapter.
+         */
         const void *activityHandle=nullptr;
 #endif
         
@@ -87,36 +96,11 @@ namespace Viper {
             }
         }
         
-        std::function<std::string(int,int)> getViewClassLambda;
-        
-        virtual auto getViewClass(int section,int row) throw (std::runtime_error) ->std::string{
-            if(this->getViewClassLambda){
-                return std::move(this->getViewClassLambda(section,row));
-            }else{
-                throw std::runtime_error("getViewClass is not implemented. Either implement it in you adapter subclass or assign getViewClassLambda to your adapter instance");
-            }
-        }
-        
-//        std::function<void(const void*,int,int)> onCreateCellLambda;
-        
         virtual auto onCreateCell(const void *cell,int section,int row)->void =0;
-        /*virtual auto onCreateCell(const void *cell,int section,int row) throw (std::runtime_error) ->void{
-            if(this->onCreateCellLambda){
-                this->onCreateCellLambda(cell,section,row);
-            }else{
-                throw std::runtime_error("onCreateCell is not implemented. Either implement it in you adapter subclass or assign onCreateCellLambda to your adapter instance");
-            }
-        };*/
-        
-//        std::function<void(const void*,int,int)> onDisplayCellLambda;
         
         virtual auto onDisplayCell(const void *cell,int section,int row)->void =0;
         
-        /*virtual auto onDisplayCell(const void *cell,int section,int row)->void{
-            if(this->onDisplayCellLambda){
-                this->onDisplayCellLambda(cell,section,row);
-            }
-        };*/
+        virtual auto getViewClass(int section,int row)->std::string =0;
         
         std::function<double(int,int)> getRowHeightLambda;
         
@@ -167,6 +151,20 @@ namespace Viper {
                 this->onDisplayCellLambda(cellHandle,section,row,item);
             }
         };
+        
+        virtual auto getViewClass(int section,int row)->std::string override{
+            return std::move(this->getViewClass(section,row,this->dataSource->getItem(section,row)));
+        }
+        
+        std::function<std::string(int,int,const data_type&)> getViewClassLambda;
+        
+        virtual auto getViewClass(int section,int row,const data_type &item) throw (std::runtime_error) ->std::string{
+            if(this->getViewClassLambda){
+                return std::move(this->getViewClassLambda(section,row,item));
+            }else{
+                throw std::runtime_error("getViewClass is not implemented. Either implement it in you adapter subclass or assign getViewClassLambda to your adapter instance");
+            }
+        }
     protected:
         std::shared_ptr<data_source_type> dataSource;
     };
