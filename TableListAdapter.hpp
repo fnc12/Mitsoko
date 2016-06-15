@@ -324,7 +324,7 @@ namespace Viper {
             it = adaptersMap().find((const void*)adapterId);
 #endif
             if(it != adaptersMap().end()){
-                return it->second->
+                return it->second->getRowStyle(section,row);
             }else{
                 return 0;
             }
