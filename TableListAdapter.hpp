@@ -179,7 +179,7 @@ namespace Viper {
             }
         };
         
-        virtual auto getRowStyle(int section,int row,const data_type &item)->RowStyle override{
+        virtual auto getRowStyle(int section,int row,const data_type &item)->RowStyle{
             if(this->getRowStyleLambda){
                 return this->getRowStyleLambda(section,row,item);
             }else{
@@ -196,7 +196,7 @@ namespace Viper {
         }
         
         virtual auto getRowStyle(int section,int row)->RowStyle override final{
-            return this->appropriate(section,row,this->dataSource->getItem(section,row));
+            return this->getRowStyle(section,row,this->dataSource->getItem(section,row));
         }
         
         virtual auto getDataSource()->std::shared_ptr<DataSourceBase> override final{
