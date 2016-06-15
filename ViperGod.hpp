@@ -49,7 +49,8 @@ namespace Viper{
                 const auto arguments=viewPointer->arguments();
                 
                 //  create presenter..
-                auto presenterPointer=std::make_shared<typename PageType::presenter_type>();
+                typedef typename PageType::presenter_type Presenter_t;
+                auto presenterPointer=std::make_shared<Presenter_t>();
                 
                 //  chain view and presenter..
                 viewPointer->setEventHandler(presenterPointer);
@@ -67,7 +68,17 @@ namespace Viper{
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
                 
                 viewPointer->init();
-                interactorPointer->initWithArguments(arguments);
+//                interactorPointer->initWithArguments(arguments);
+                /*if(!std::is_same<typename Wireframe_t::argument_type, void>::value){
+                    if(Wireframe_t::staticArgument()){
+                        presenterPointer->init(std::move(*Wireframe_t::staticArgument()));
+                        Wireframe_t::staticArgument() = {};
+                    }
+                }else{
+                    presenterPointer->init();
+                }*/
+                typedef typename Presenter_t::P PresenterBase_t;
+                presenterPointer->PresenterBase_t::init();
                 
                 return std::dynamic_pointer_cast<ViewBase>(viewPointer);
             }else{
