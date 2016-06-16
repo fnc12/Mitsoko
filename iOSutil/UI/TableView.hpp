@@ -3,6 +3,7 @@
 
 #include "View.hpp"
 #include "Viper/TableListAdapter.hpp"
+#include "ImageView.hpp"
 
 namespace UI {
     struct TableView:public UI::View{
@@ -60,6 +61,10 @@ namespace UI {
                 Checkmark=UITableViewCellAccessoryCheckmark,
                 DetailButton=UITableViewCellAccessoryDetailButton,
             };
+            
+            UI::ImageView imageView(){
+                return this->sendMessage<Handle>("imageView");
+            }
             
             UI::Label detailTextLabel(){
                 return this->sendMessage<Handle>("detailTextLabel");
