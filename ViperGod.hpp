@@ -68,7 +68,7 @@ namespace Viper{
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
                 
                 viewPointer->init();
-//                interactorPointer->initWithArguments(arguments);
+                interactorPointer->initWithArguments(arguments);
                 /*if(!std::is_same<typename Wireframe_t::argument_type, void>::value){
                     if(Wireframe_t::staticArgument()){
                         presenterPointer->init(std::move(*Wireframe_t::staticArgument()));

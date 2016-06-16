@@ -44,6 +44,12 @@ struct SignatureGenerator<>{
     }
 };
 
+/**
+ *  ArgumentProxy is a class translating c++ type to
+ *  java (jni) type. It casts double to jdouble,
+ *  bool to jboolean, int to jint and any other types
+ *  to jobject.
+ */
 template<class T>
 struct ArgumentProxy{
     static jobject cast(const T &value){

@@ -24,6 +24,11 @@ namespace java{
 #ifdef __ANDROID__
         protected:
             bool isGlobal=false;
+            
+            template<class T>
+            void _setField(JNIEnv *java_env,jfieldID fieldId,const T &value){
+                java_env->SetObjectField((jobject)this->handle, fieldId, ArgumentProxy<T>::cast(value));
+            }
         public:
             virtual ~Object(){
                 if(this->isGlobal){
@@ -67,6 +72,29 @@ namespace java{
                 }else{
                     return nullptr;
                 }
+            }
+            
+            template<class T>
+            void setField(const char *fieldName,const T &value){
+                if(auto java_env=JNI::Env()){
+                    if(auto clazz=this->getClass()){
+                        auto signature=TypeSignatureGenerator<T>()();
+                        if(auto field = java_env->GetFieldID(clazz, fieldName, signature.c_str())){
+                            this->_setField(java_env, field, value);
+                        }else{
+                            LOGI("field is null");
+                        }
+                    }else{
+                        LOGI("clazz is null");
+                    }
+                }else{
+                    LOGI("java_env is null");
+                }
+            }
+            
+            template<class T>
+            void setField(const std::string &fieldName,const T &value){
+                this->setField(fieldName.c_str(),value);
             }
             
             template<class T>
@@ -132,6 +160,13 @@ namespace java{
 #endif
         };
 #ifdef __ANDROID__
+        
+        template<>
+        void Object::_setField<int>(JNIEnv *java_env,jfieldID fieldId,const int &value){
+            LOGI("java_env->SetIntField((jobject)this->handle, fieldId, ArgumentProxy<int>::cast(value));");
+            java_env->SetIntField((jobject)this->handle, fieldId, ArgumentProxy<int>::cast(value));
+        }
+        
         template<>
         int Object::getField<int>(const char *fieldName){
             if(auto java_env=JNI::Env()){
