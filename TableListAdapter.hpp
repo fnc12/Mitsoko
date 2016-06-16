@@ -134,8 +134,41 @@ namespace Viper {
         
         virtual auto getRowStyle(int section,int row)->RowStyle =0;
         
-        std::function<double(int,int)> getRowHeightLambda;
+        /**
+         *  Optional.
+         */
+        std::function<std::string(int)> getHeaderClassLambda;
+        virtual auto getHeaderClass(int section)->std::string{
+            if(this->getHeaderClassLambda){
+                return std::move(this->getHeaderClassLambda(section));
+            }else{
+                return {};
+            }
+        }
         
+        /**
+         *  Optional.
+         */
+        std::function<double(int)> getHeaderHeightLambda;
+        virtual auto getHeaderHeight(int section)->double{
+            if(this->getHeaderHeightLambda){
+                return this->getHeaderHeightLambda(section);
+            }else{
+                return 0;
+            }
+        }
+        
+        /**
+         *  Optional.
+         */
+        std::function<void(const void*,int)> onCreateHeaderLambda;
+        virtual auto onCreateHeader(const void *headerHandle,int section)->void{
+            if(this->onCreateHeaderLambda){
+                this->onCreateHeaderLambda(headerHandle,section);
+            }
+        }
+        
+        std::function<double(int,int)> getRowHeightLambda;
         virtual auto getRowHeight(int section,int row)->double{
             if(this->getRowHeightLambda){
                 return this->getRowHeightLambda(section,row);
@@ -328,6 +361,51 @@ namespace Viper {
                 return it->second->getRowStyle(section,row);
             }else{
                 return AdapterBase::RowStyle::Default;
+            }
+        }
+        
+        static void headerCreated(const void *tableOrListView,const void *header,int section,const void *jni=nullptr){
+            auto it=adaptersMap().end();
+#ifdef __APPLE__
+            it = adaptersMap().find(tableOrListView);
+#else
+            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+            it = adaptersMap().find((const void*)adapterId);
+#endif
+            if(it != adaptersMap().end()){
+                it->second->onCreateHeader(header, section);
+            }else{
+                //  not found..
+            }
+        }
+        
+        static double headerHeight(const void *tableOrListView,int section,const void *jni=nullptr){
+            auto it=adaptersMap().end();
+#ifdef __APPLE__
+            it = adaptersMap().find(tableOrListView);
+#else
+            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+            it = adaptersMap().find((const void*)adapterId);
+#endif
+            if(it != adaptersMap().end()){
+                return it->second->getHeaderHeight(section);
+            }else{
+                return 0;
+            }
+        }
+        
+        static std::string headerViewClassName(const void *tableOrListView,int section,const void *jni=nullptr){
+            auto it=adaptersMap().end();
+#ifdef __APPLE__
+            it = adaptersMap().find(tableOrListView);
+#else
+            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+            it = adaptersMap().find((const void*)adapterId);
+#endif
+            if(it != adaptersMap().end()){
+                return std::move(it->second->getHeaderClass(section));
+            }else{
+                return "";
             }
         }
         
