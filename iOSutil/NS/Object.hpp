@@ -84,6 +84,12 @@ namespace NS {
                 return nullptr;
             }
         }
+        
+        template<class T>
+        static T create(){
+            const auto &className=T::className();
+            return std::move(create<T>(className));
+        }
 #endif
     protected:
         bool shouldClearOnDestroy=false;

@@ -20,6 +20,7 @@
 #include "NS/Bundle.hpp"
 
 #include "UI/Application.hpp"
+#include "UI/AlertView.hpp"
 #include "UI/BarItem.hpp"
 #include "UI/BarButtonItem.hpp"
 #include "UI/Button.hpp"
@@ -34,6 +35,8 @@
 #include "UI/Switch.hpp"
 #include "UI/Label.hpp"
 #include "UI/TableView.hpp"
+#include "UI/TextInput.hpp"
+#include "UI/TextInputTraits.hpp"
 #include "UI/RefreshControl.hpp"
 #include "UI/View.hpp"
 #include "UI/ViewController.hpp"

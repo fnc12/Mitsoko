@@ -5,6 +5,7 @@
 #include <mutex>
 #include "iOSutil/iOSutil.hpp"
 #include "AndroidUtil/AndroidUtil.hpp"
+#include "R/Strings.hpp"
 
 namespace Viper{
     struct Language{
@@ -29,4 +30,30 @@ namespace Viper{
             return res;
         }
     };
+    
+    inline std::string localizedString(const std::string &key){
+        auto c=Language::current();
+        if(c.length()){
+            auto mapIt=R::localizedStrings().find(c);
+            if(mapIt != R::localizedStrings().end()){
+                auto pIt=mapIt->second.find(key);
+                if(pIt != mapIt->second.end()){
+                    return pIt->second;
+                }else{
+                    return key;
+                }
+            }else{
+                return key;
+            }
+        }else{
+            return key;
+        }
+    }
+    
+    /**
+     *  Localized string syntax sugar.
+     */
+    inline std::string operator"" _ls (const char *s,size_t len){
+        return localizedString({s,len});
+    }
 }
