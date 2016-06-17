@@ -7,8 +7,8 @@ namespace java{
     namespace util{
         struct Locale final : public java::lang::Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "java/util/Locale");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "java/util/Locale");
             void start(){
                 this->sendMessage<void>("start");
             }

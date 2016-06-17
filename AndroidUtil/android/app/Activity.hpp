@@ -8,8 +8,9 @@ namespace android{
     namespace app{
         struct Activity:public content::Context{
             using Context::Context;
-            STATIC_VAR(const std::string, signature, "android/app/Activity");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/app/Activity");
+            
             void finish(){
                 this->sendMessage<void>("finish");
             }

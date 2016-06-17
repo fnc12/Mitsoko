@@ -13,26 +13,31 @@
 #include "java/lang/CharSequence.hpp"
 
 #include "java/util/Locale.hpp"
+#include "java/util/Calendar.hpp"
+#include "java/util/Date.hpp"
+
+#include "android/app/Activity.hpp"
+#include "android/app/Fragment.hpp"
+#include "android/app/Dialog.hpp"
+#include "android/app/AlertDialog.hpp"
+#include "android/app/DatePickerDialog.hpp"
 
 #include "android/content/res/Resources.hpp"
 
 #include "android/content/Context.hpp"
 #include "android/content/Intent.hpp"
 
-#include "android/app/Activity.hpp"
-#include "android/app/Fragment.hpp"
+#include "android/os/Handler.hpp"
 
 #include "android/support/v4/app/FragmentActivity.hpp"
 #include "android/support/v4/app/Fragment.hpp"
 
 #include "android/support/v7/app/AppCompatActivity.hpp"
 
-#include "android/os/Handler.hpp"
+#include "android/text/Editable.hpp"
 
 #include "android/view/View.hpp"
 #include "android/view/ViewGroup.hpp"
-
-#include "android/text/Editable.hpp"
 
 #include "android/widget/Adapter.hpp"
 #include "android/widget/ListAdapter.hpp"
@@ -48,12 +53,6 @@
 #include "android/widget/AbsListView.hpp"
 #include "android/widget/ImageView.hpp"
 #include "android/widget/ListView.hpp"
-
-namespace android{
-    namespace widget{
-        
-    }
-}
 
 #ifdef __ANDROID__
 class androidbuf : public std::streambuf {
