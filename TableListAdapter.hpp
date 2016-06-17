@@ -264,12 +264,12 @@ namespace Viper {
         
         static AdapterId registerAdapter(const void *tableOrListView,AdapterBasePointer adapter,const void *jni=nullptr){
             auto it=adaptersMap().end();
-#ifdef __APPLE__
+//#ifdef __APPLE__
             it=adaptersMap().find(tableOrListView);
-#else
+/*#else
             auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
             it = adaptersMap().find((const void*)adapterId);
-#endif
+#endif*/
             if(it != adaptersMap().end()){
                 if(adapter){
                     it->second=adapter;
@@ -278,20 +278,20 @@ namespace Viper {
                 }
             }else{
                 if(adapter){
-#ifdef __APPLE__
+//#ifdef __APPLE__
                     adaptersMap().insert({tableOrListView,adapter});
-#else
+/*#else
                     adaptersMap().insert({(const void*)adapterId,adapter});
-#endif
+#endif*/
                 }else{
                     cout<<"table or list view not found ("<<tableOrListView<<")"<<endl;
                 }
             }
-#ifdef __APPLE__
+//#ifdef __APPLE__
             return tableOrListView;
-#else
+/*#else
             return AdapterId(adapterId);
-#endif
+#endif*/
         }
         
         static void willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr){
@@ -366,12 +366,12 @@ namespace Viper {
         
         static void headerCreated(const void *tableOrListView,const void *header,int section,const void *jni=nullptr){
             auto it=adaptersMap().end();
-#ifdef __APPLE__
+//#ifdef __APPLE__
             it = adaptersMap().find(tableOrListView);
-#else
+/*#else
             auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
             it = adaptersMap().find((const void*)adapterId);
-#endif
+#endif*/
             if(it != adaptersMap().end()){
                 it->second->onCreateHeader(header, section);
             }else{
@@ -381,12 +381,12 @@ namespace Viper {
         
         static double headerHeight(const void *tableOrListView,int section,const void *jni=nullptr){
             auto it=adaptersMap().end();
-#ifdef __APPLE__
+//#ifdef __APPLE__
             it = adaptersMap().find(tableOrListView);
-#else
+/*#else
             auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
             it = adaptersMap().find((const void*)adapterId);
-#endif
+#endif*/
             if(it != adaptersMap().end()){
                 return it->second->getHeaderHeight(section);
             }else{
@@ -396,12 +396,12 @@ namespace Viper {
         
         static std::string headerViewClassName(const void *tableOrListView,int section,const void *jni=nullptr){
             auto it=adaptersMap().end();
-#ifdef __APPLE__
+//#ifdef __APPLE__
             it = adaptersMap().find(tableOrListView);
-#else
+/*#else
             auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
             it = adaptersMap().find((const void*)adapterId);
-#endif
+#endif*/
             if(it != adaptersMap().end()){
                 return std::move(it->second->getHeaderClass(section));
             }else{
@@ -456,12 +456,12 @@ namespace Viper {
         
         static int sectionsCount(const void *tableOrListView,const void *jni=nullptr){
             auto it=adaptersMap().end();
-#ifdef __APPLE__
+//#ifdef __APPLE__
             it = adaptersMap().find(tableOrListView);
-#else
+/*#else
             auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
             it = adaptersMap().find((const void*)adapterId);
-#endif
+#endif*/
             if(it != adaptersMap().end()){
                 auto adapterBase=it->second;
                 auto dataSource=adapterBase->getDataSource();
