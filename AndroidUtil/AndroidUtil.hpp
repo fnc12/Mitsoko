@@ -26,6 +26,7 @@
 
 #include "android/content/Context.hpp"
 #include "android/content/Intent.hpp"
+#include "android/content/DialogInterface.hpp"
 
 #include "android/os/Handler.hpp"
 

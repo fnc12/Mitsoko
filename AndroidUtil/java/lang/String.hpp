@@ -2,11 +2,12 @@
 #pragma once
 
 #include "Object.hpp"
+#include "CharSequence.hpp"
 
 namespace java{
     namespace lang{
-        struct String:public Object{
-            using Object::Object;
+        struct String:public _CharSequence<String>{
+            using _CharSequence::_CharSequence;
             STATIC_VAR(const std::string, signature, "java/lang/String");
 #ifdef __ANDROID__
             const char* c_str()const{
@@ -17,7 +18,7 @@ namespace java{
                 }
             }
             
-            static String create(const std::string &str){
+            static String create(std::string str){
                 if(auto env=JNI::Env()){
                     jbyteArray array = env->NewByteArray(str.size());
                     env->SetByteArrayRegion(array, 0, str.size(), (const jbyte*)str.c_str());
@@ -32,5 +33,6 @@ namespace java{
             }
 #endif
         };
+        typedef _CharSequence<String> CharSequence;
     }
 }
