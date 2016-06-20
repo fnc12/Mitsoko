@@ -8,8 +8,8 @@ namespace android{
         
         struct View:public java::lang::Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "android/view/View");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/view/View");
             
             /**
              *  Implemented in ViewGroup.hpp"
@@ -67,19 +67,6 @@ namespace android{
                 }else{
                     return -1;
                 }
-                /*if(auto env=java::lang::JNI::Env()){
-                    if(auto cls=java::lang::Class::find<View>()){
-                        if(auto fieldId=env->GetStaticFieldID(cls, "VISIBLE", TypeSignatureGenerator<int>()().c_str())){
-                            return env->GetStaticIntField(cls,fieldId);
-                        }else{
-                            return -1;
-                        }
-                    }else{
-                        return -1;
-                    }
-                }else{
-                    return -1;
-                }*/
             }
             
             static int GONE(){

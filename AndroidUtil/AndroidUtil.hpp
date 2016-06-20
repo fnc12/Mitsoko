@@ -36,9 +36,13 @@
 #include "android/support/v7/app/AppCompatActivity.hpp"
 
 #include "android/text/Editable.hpp"
+#include "android/text/InputType.hpp"
 
 #include "android/view/View.hpp"
 #include "android/view/ViewGroup.hpp"
+#include "android/view/ViewManager.hpp"
+#include "android/view/Window.hpp"
+#include "android/view/WindowManager.hpp"
 
 #include "android/widget/Adapter.hpp"
 #include "android/widget/BaseAdapter.hpp"
