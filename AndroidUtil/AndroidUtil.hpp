@@ -41,14 +41,15 @@
 #include "android/view/ViewGroup.hpp"
 
 #include "android/widget/Adapter.hpp"
-#include "android/widget/ListAdapter.hpp"
 #include "android/widget/BaseAdapter.hpp"
-#include "android/widget/FrameLayout.hpp"
-#include "android/widget/TabHost.hpp"
-#include "android/widget/TextView.hpp"
 #include "android/widget/Button.hpp"
 #include "android/widget/CompoundButton.hpp"
 #include "android/widget/CheckBox.hpp"
+#include "android/widget/LinearLayout.hpp"
+#include "android/widget/ListAdapter.hpp"
+#include "android/widget/FrameLayout.hpp"
+#include "android/widget/TabHost.hpp"
+#include "android/widget/TextView.hpp"
 #include "android/widget/EditText.hpp"
 #include "android/widget/AdapterView.hpp"
 #include "android/widget/AbsListView.hpp"
@@ -56,6 +57,11 @@
 #include "android/widget/ListView.hpp"
 
 #ifdef __ANDROID__
+
+/**
+ *  This is a cool class that allows redirecting std::cout to
+ *  android log.
+ */
 class androidbuf : public std::streambuf {
 public:
     enum { bufsize = 128 }; // ... or some other suitable buffer size

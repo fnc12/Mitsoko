@@ -7,6 +7,7 @@
 #include <functional>
 #include <map>
 #include "Viper/AndroidUtil/android/content/DialogInterface.hpp"
+#include "Viper/AndroidUtil/android/view/View.hpp"
 
 namespace android{
     namespace app{
@@ -93,6 +94,11 @@ namespace android{
                     onClickMap().insert({callbackId,cb});
                     auto l=(android::content::DialogInterface::OnClickListener)callbackObject;
                     this->sendMessage<Builder>("setNegativeButton",text,l);
+                    return *this;
+                }
+                
+                Builder& setView(const android::view::View &view){
+                    this->sendMessage<Builder>("setView",view);
                     return *this;
                 }
             };

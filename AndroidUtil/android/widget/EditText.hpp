@@ -2,6 +2,7 @@
 #pragma once
 
 #include "TextView.hpp"
+#include "Viper/AndroidUtil/android/content/Context.hpp"
 
 namespace android{
     namespace widget{
@@ -9,6 +10,10 @@ namespace android{
             using TextView::TextView;
             STATIC_VAR(const std::string, signature, "android/widget/EditText");
 #ifdef __ANDROID__
+            static EditText create(const content::Context &context){
+                return std::move(java::lang::Object::create<EditText>(context));
+            }
+            
             android::text::Editable getText(){
                 return this->sendMessage<android::text::Editable>("getText");
             }

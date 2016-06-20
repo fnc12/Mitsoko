@@ -5,10 +5,18 @@
 
 namespace android{
     namespace view{
+        
         struct View:public java::lang::Object{
             using Object::Object;
             STATIC_VAR(const std::string, signature, "android/view/View");
 #ifdef __ANDROID__
+            
+            /**
+             *  Implemented in ViewGroup.hpp"
+             */
+            template<class T/*,class*/>
+            void setLayoutParams(const T &params);
+            
             View findViewById(int id){
                 return this->sendMessage<View>("findViewById",id);
             }
@@ -26,8 +34,6 @@ namespace android{
              */
             View findViewById(const std::string &idString,const content::Context &context){
                 if(auto java_env=java::lang::JNI::Env()){
-//                    auto niClazz=java_env->FindClass("kz/outlawstudio/groozim/NI");
-//                    auto niClazz=java_env->FindClass((java::lang::JNI::appNamespace()+"/NI").c_str());
                     auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
                     auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
                     auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
@@ -56,7 +62,12 @@ namespace android{
             }
             
             static int VISIBLE(){
-                if(auto env=java::lang::JNI::Env()){
+                if(java::lang::Class cls=java::lang::Class::find<View>()){
+                    return cls.getStaticField<int>("VISIBLE");
+                }else{
+                    return -1;
+                }
+                /*if(auto env=java::lang::JNI::Env()){
                     if(auto cls=java::lang::Class::find<View>()){
                         if(auto fieldId=env->GetStaticFieldID(cls, "VISIBLE", TypeSignatureGenerator<int>()().c_str())){
                             return env->GetStaticIntField(cls,fieldId);
@@ -68,11 +79,16 @@ namespace android{
                     }
                 }else{
                     return -1;
-                }
+                }*/
             }
             
             static int GONE(){
-                if(auto env=java::lang::JNI::Env()){
+                if(java::lang::Class cls=java::lang::Class::find<View>()){
+                    return cls.getStaticField<int>("GONE");
+                }else{
+                    return -1;
+                }
+                /*if(auto env=java::lang::JNI::Env()){
                     if(auto cls=java::lang::Class::find<View>()){
                         if(auto fieldId=env->GetStaticFieldID(cls, "GONE", TypeSignatureGenerator<int>()().c_str())){
                             return env->GetStaticIntField(cls,fieldId);
@@ -84,7 +100,7 @@ namespace android{
                     }
                 }else{
                     return -1;
-                }
+                }*/
             }
 #endif
         };
