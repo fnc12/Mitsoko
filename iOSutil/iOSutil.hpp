@@ -19,6 +19,7 @@
 #include "NS/String.hpp"
 #include "NS/Bundle.hpp"
 
+#include "UI/ActionSheet.hpp"
 #include "UI/Application.hpp"
 #include "UI/AlertView.hpp"
 #include "UI/BarItem.hpp"

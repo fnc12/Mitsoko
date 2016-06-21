@@ -38,33 +38,32 @@ static std::string TrimEnumString(const std::string &s)
 //    return s;
 }
 
-static void SplitEnumArgs(const char* szArgs, std::vector<std::string>& Array, int nMax)
+static std::vector<std::string> SplitEnumArgs(const char* szArgs, int nMax)
 {
+    std::vector<std::string> res;
     std::stringstream ss(szArgs);
     std::string strSub;
     int nIdx = 0;
     while (ss.good() && (nIdx < nMax)) {
         getline(ss, strSub, ',');
-        Array.emplace_back(std::move(TrimEnumString(strSub)));
+        res.emplace_back(std::move(TrimEnumString(strSub)));
 //        Array[nIdx] = TrimEnumString(strSub);
         nIdx++;
     }
+    return std::move(res);
 };
 #define DECLARE_ENUM(ename, ...) \
 enum class ename { __VA_ARGS__ }; \
 struct Incorrect##ename##StringException{};\
 static constexpr const int MAX_NUMBER_OF_##ename=PP_NARG(__VA_ARGS__);\
-static std::vector<std::string>& ename##Strings(){static std::vector<std::string> res;return res;}\
+static std::vector<std::string>& ename##Strings(){\
+    static std::vector<std::string> res=std::move(SplitEnumArgs(#__VA_ARGS__,MAX_NUMBER_OF_##ename));\
+    return res;\
+}\
 static const std::string& enumToString(ename e) { \
-    if (ename##Strings().empty()) {\
-        SplitEnumArgs(#__VA_ARGS__, ename##Strings(), MAX_NUMBER_OF_##ename); \
-    } \
     return ename##Strings()[int(e)]; \
 } \
 static ename stringToEnum(const std::string &szEnum) throw(Incorrect##ename##StringException) { \
-    if (ename##Strings().empty()) {\
-        SplitEnumArgs(#__VA_ARGS__, ename##Strings(), MAX_NUMBER_OF_##ename); \
-    } \
     for (int i = 0; i < MAX_NUMBER_OF_##ename; i++) { \
         if (ename##Strings()[i] == szEnum) {\
             return (ename)i; \

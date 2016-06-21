@@ -56,4 +56,13 @@ namespace Viper{
     inline std::string operator"" _ls (const char *s,size_t len){
         return localizedString({s,len});
     }
+    
+    /**
+     *  Functor for lambda replacing in STL algorithms.
+     */
+    struct Localizator{
+        auto operator()(const std::string &s) const{
+            return std::move(localizedString(s));
+        }
+    };
 }

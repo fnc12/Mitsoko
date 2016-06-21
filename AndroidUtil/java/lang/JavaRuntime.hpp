@@ -3,9 +3,11 @@
 
 #include <sstream>
 #include <string>
+#include <vector>
 
 #ifdef __ANDROID__
 #include <jni.h>
+#include "Array.hpp"
 #endif
 
 #ifdef __ANDROID__
@@ -24,6 +26,14 @@ TYPE_SIGNATURE(int,"I");
 TYPE_SIGNATURE(bool,"Z");
 TYPE_SIGNATURE(double,"D");
 #undef TYPE_SIGNATURE
+
+//  array specialization..
+template<class T>
+struct TypeSignatureGenerator<java::lang::Array<T>>{
+    std::string operator()()const{
+        return "["+TypeSignatureGenerator<T>()();
+    }
+};
 
 template<class ...Args>
 struct SignatureGenerator;
@@ -77,6 +87,13 @@ struct ArgumentProxy<int>{
         return jint(value);
     }
 };
+
+/*template<class T>
+struct ArgumentProxy<std::vector<T>>{
+    static jobjectArray cast(const std::vector<T> &value){
+        return jobjectArray(value);
+    }
+};*/
 
 template<class RT>
 struct MessageSender{

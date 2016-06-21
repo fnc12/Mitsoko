@@ -53,6 +53,22 @@ namespace android{
                     return this->setTitle(str);
                 }
                 
+                Builder& setItems(const std::vector<std::string> &items,OnClickCallback cb){
+                    auto jItems=java::lang::Array<java::lang::CharSequence>::create(int(items.size()),{});
+                    for(auto i=0;i<items.size();++i){
+                        const auto &item=items[i];
+                        auto str=java::lang::String::create(item);
+                        jItems[i]=str;
+                    }
+                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+                    auto callbackObject=java::lang::Object::create(classSignature);
+                    auto callbackId=callbackObject.getField<int>("mId");
+                    onClickMap().insert({callbackId,cb});
+                    auto l=(android::content::DialogInterface::OnClickListener)callbackObject;
+                    this->sendMessage<Builder>("setItems",jItems,l);
+                    return *this;
+                }
+                
                 Builder& setTitle(const java::lang::CharSequence &title){
 //                    LOGI("(CharSequence)title = %p",title.handle);
                     this->sendMessage<Builder>("setTitle",title);

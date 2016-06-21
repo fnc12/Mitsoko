@@ -7,7 +7,7 @@ namespace UI {
     struct Application:public NS::Object{
         using Object::Object;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "UIApplication");
+        STATIC_VAR(const std::string, className, "UIApplication");
         
         static Application sharedApplication(){
             auto cls=NS::getClass(className());

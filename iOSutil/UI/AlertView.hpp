@@ -215,13 +215,6 @@ namespace UI {
                         e->clickedButtonAtIndex(aw,buttonIndex);
                     }
                 }
-                /*auto it=delegateEventHandlers().find(aw);
-                if(it != delegateEventHandlers().end()){
-                    auto &eventHandler=it->second;
-                    if(eventHandler.clickedButtonAtIndex){
-                        eventHandler.clickedButtonAtIndex(aw,buttonIndex);
-                    }
-                }*/
             }
         };
 #endif

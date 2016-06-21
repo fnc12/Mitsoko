@@ -7,8 +7,9 @@ namespace java{
     namespace lang{
         struct Class:public Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "java/lang/Class");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "java/lang/Class");
+            
             static jclass find(const std::string &signature){
                 if(auto env=JNI::Env()){
                     return env->FindClass(signature.c_str());

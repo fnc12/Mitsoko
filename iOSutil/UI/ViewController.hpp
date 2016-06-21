@@ -2,11 +2,17 @@
 #pragma once
 
 #include "Responder.hpp"
+#include "View.hpp"
 
 namespace UI {
     struct ViewController:public UI::Responder{
         using Responder::Responder;
 #ifdef __APPLE__
+        
+        UI::View view(){
+            return this->sendMessage<Handle>("view");
+        }
+        
         NavigationItem navigationItem(){
             return this->sendMessage<Handle>("navigationItem");
         }

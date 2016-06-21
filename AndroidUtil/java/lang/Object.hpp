@@ -11,7 +11,11 @@ namespace java{
             typedef const void *Handle;
             Handle handle;
             
+            /**
+             *  Default constructor means `null`.
+             */
             Object():Object(nullptr){}
+            
             Object(Handle handle_):handle(handle_){}
             
             operator bool()const{
