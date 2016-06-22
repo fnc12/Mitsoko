@@ -134,6 +134,8 @@ namespace Viper {
         
         virtual auto getRowStyle(int section,int row)->RowStyle =0;
         
+        virtual auto getRowHeight(int section,int row)->double=0;
+        
         /**
          *  Optional.
          */
@@ -168,14 +170,13 @@ namespace Viper {
             }
         }
         
-        std::function<double(int,int)> getRowHeightLambda;
-        virtual auto getRowHeight(int section,int row)->double{
-            if(this->getRowHeightLambda){
+//        virtual auto getRowHeight(int section,int row)->double=0;/*{
+/*            if(this->getRowHeightLambda){
                 return this->getRowHeightLambda(section,row);
             }else{
                 return 44;
             }
-        }
+        }*/
         
         virtual auto getDataSource()->std::shared_ptr<DataSourceBase> =0;
     };
@@ -197,6 +198,7 @@ namespace Viper {
         std::function<void(const void*,int,int,const data_type&)> onDisplayCellLambda;
         std::function<std::string(int,int,const data_type&)> getViewClassLambda;
         std::function<RowStyle(int,int,const data_type&)> getRowStyleLambda;
+        std::function<double(int,int,const data_type&)> getRowHeightLambda;
         
         virtual auto onCreateCell(const void *cellHandle,int section,int row,const data_type &item) throw (std::runtime_error) ->void{
             if(this->onCreateCellLambda){
@@ -226,6 +228,18 @@ namespace Viper {
             }else{
                 throw std::runtime_error("getViewClass is not implemented. Either implement it in you adapter subclass or assign getViewClassLambda to your adapter instance");
             }
+        }
+        
+        virtual auto getRowHeight(int section,int row,const data_type &item)->double{
+            if(this->getRowHeightLambda){
+                return getRowHeightLambda(section,row,item);
+            }else{
+                return 44;
+            }
+        }
+        
+        virtual auto getRowHeight(int section,int row)->double override final{
+            return this->getRowHeight(section,row,this->dataSource->getItem(section,row));
         }
         
         virtual auto getRowStyle(int section,int row)->RowStyle override final{
