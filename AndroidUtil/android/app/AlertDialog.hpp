@@ -48,11 +48,6 @@ namespace android{
                     return std::move(this->sendMessage<AlertDialog>("create"));
                 }
                 
-                Builder& setTitle(const std::string &title){
-                    auto str=java::lang::String::create(title);
-                    return this->setTitle(str);
-                }
-                
                 Builder& setItems(const std::vector<std::string> &items,OnClickCallback cb){
                     auto jItems=java::lang::Array<java::lang::CharSequence>::create(int(items.size()),{});
                     for(auto i=0;i<items.size();++i){
@@ -69,8 +64,22 @@ namespace android{
                     return *this;
                 }
                 
+                Builder& setMessage(const std::string &title){
+                    auto t=java::lang::String::create(title);
+                    return this->setMessage(t);
+                }
+                
+                Builder& setMessage(const java::lang::CharSequence &title){
+                    this->sendMessage<Builder>("setMessage",title);
+                    return *this;
+                }
+                
+                Builder& setTitle(const std::string &title){
+                    auto str=java::lang::String::create(title);
+                    return this->setTitle(str);
+                }
+                
                 Builder& setTitle(const java::lang::CharSequence &title){
-//                    LOGI("(CharSequence)title = %p",title.handle);
                     this->sendMessage<Builder>("setTitle",title);
                     return *this;
                 }
@@ -85,11 +94,14 @@ namespace android{
                 Builder& setPositiveButton(const java::lang::CharSequence &text,
                                            std::function<void(content::DialogInterface,int)> cb)
                 {
-                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
-                    auto callbackObject=java::lang::Object::create(classSignature);
-                    auto callbackId=callbackObject.getField<int>("mId");
-                    onClickMap().insert({callbackId,cb});
-                    auto l=(android::content::DialogInterface::OnClickListener)callbackObject;
+                    android::content::DialogInterface::OnClickListener l;
+                    if(cb){
+                        auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+                        auto callbackObject=java::lang::Object::create(classSignature);
+                        auto callbackId=callbackObject.getField<int>("mId");
+                        onClickMap().insert({callbackId,cb});
+                        l=(android::content::DialogInterface::OnClickListener)callbackObject;
+                    }
                     this->sendMessage<Builder>("setPositiveButton",text,l);
                     return *this;
                 }

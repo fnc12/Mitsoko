@@ -140,7 +140,9 @@ namespace UI {
                 auto res=NS::Object::create<AlertView>();
                 res.setTitle(title);
                 res.setMessage(message);
-                res.setCancelButtonIndex(res.addButtonWithTitle(cancelButtonTitle));
+                if(cancelButtonTitle){
+                    res.setCancelButtonIndex(res.addButtonWithTitle(cancelButtonTitle));
+                }
                 for(const auto &t:otherButtonTitles){
                     auto s=CF::String::create(t);
                     res.addButtonWithTitle(s);
