@@ -13,11 +13,12 @@
 
 #include "CF/String.hpp"
 
-#include "NS/Object.hpp"
 #include "NS/Array.hpp"
-#include "NS/IndexSet.hpp"
-#include "NS/String.hpp"
 #include "NS/Bundle.hpp"
+#include "NS/IndexSet.hpp"
+#include "NS/NotificationCenter.hpp"
+#include "NS/Object.hpp"
+#include "NS/String.hpp"
 
 #include "UI/ActionSheet.hpp"
 #include "UI/Application.hpp"
