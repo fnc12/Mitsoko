@@ -48,12 +48,10 @@ namespace Viper{
         
         static void unsubscribe(Observer *observer){
             observersMutex().lock();
-            //        cout<<"unsubscribe"<<endl;
             const auto it=std::find(observers().begin(), observers().end(), observer);
             if(observers().end()!=it){
                 observers().erase(it);
             }
-            //        cout<<"/unsubscribe"<<endl;
             observersMutex().unlock();
         }
         
