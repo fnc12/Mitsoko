@@ -91,12 +91,12 @@ namespace Viper{
 //                LOGI("callback on background inserted %d",cId);
                 callbacksMutex().unlock();
                 
-//                auto backgroundRunnableClass=java_env->FindClass("kz/outlawstudio/groozim/BackgroundRunnable");
-                auto backgroundRunnableClass=java::lang::Class::find(java::lang::JNI::appNamespace()+"/BackgroundRunnable");
+                auto backgroundRunnableClass=java_env->FindClass("kz/outlawstudio/viper/BackgroundRunnable");
+//                auto backgroundRunnableClass=java::lang::Class::find(java::lang::JNI::appNamespace()+"/BackgroundRunnable");
 //                auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
                 auto ctor=java_env->GetMethodID(backgroundRunnableClass,"<init>",Object::generateMethodSignature<void,int>().c_str());
-                auto backgroundRunnable = java_env->NewObject(backgroundRunnableClass, ctor,jint(cId));
-                Thread thread=Thread::create(backgroundRunnable);
+                java::lang::Runnable backgroundRunnable = java_env->NewObject(backgroundRunnableClass, ctor,jint(cId));
+                auto thread=Thread::create(backgroundRunnable);
                 thread.start();
             }else{
                 LOGI("java::lang::JNI::Env is null");
@@ -117,7 +117,8 @@ namespace Viper{
                 callbacksMutex().unlock();
 
 //                auto backgroundRunnableClass=java_env->FindClass("kz/outlawstudio/groozim/BackgroundRunnable");
-                auto backgroundRunnableClass=java::lang::Class::find(java::lang::JNI::appNamespace()+"/BackgroundRunnable");
+//                auto backgroundRunnableClass=java::lang::Class::find(java::lang::JNI::appNamespace()+"/BackgroundRunnable");
+                auto backgroundRunnableClass=java_env->FindClass("kz/outlawstudio/viper/BackgroundRunnable");
                 auto ctor=java_env->GetMethodID(backgroundRunnableClass,"<init>",Object::generateMethodSignature<void,int>().c_str());
                 Runnable backgroundRunnable = java_env->NewObject(backgroundRunnableClass, ctor,jint(cId));
                 mainThreadHandler().post(backgroundRunnable);

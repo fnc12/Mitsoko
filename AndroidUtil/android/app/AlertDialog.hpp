@@ -55,7 +55,8 @@ namespace android{
                         auto str=java::lang::String::create(item);
                         jItems[i]=str;
                     }
-                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+//                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+                    auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
                     auto callbackObject=java::lang::Object::create(classSignature);
                     auto callbackId=callbackObject.getField<int>("mId");
                     onClickMap().insert({callbackId,cb});
@@ -96,7 +97,8 @@ namespace android{
                 {
                     android::content::DialogInterface::OnClickListener l;
                     if(cb){
-                        auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+//                        auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+                        auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
                         auto callbackObject=java::lang::Object::create(classSignature);
                         auto callbackId=callbackObject.getField<int>("mId");
                         onClickMap().insert({callbackId,cb});
@@ -116,7 +118,8 @@ namespace android{
                 Builder& setNegativeButton(const java::lang::CharSequence &text,
                                            std::function<void(content::DialogInterface,int)> cb)
                 {
-                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+//                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
+                    auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
                     auto callbackObject=java::lang::Object::create(classSignature);
                     auto callbackId=callbackObject.getField<int>("mId");
                     onClickMap().insert({callbackId,cb});

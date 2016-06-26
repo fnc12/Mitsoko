@@ -12,11 +12,12 @@ namespace android{
             
             /**
              *  This method doesn't exist in SDK but it is created to
-             *  allow user avoid requesting image resource id (like android::view::View::findViewById).
+             *  allow user avoid requesting image resource id (just like android::view::View::findViewById).
              */
             void setImageResource(const std::string &resName,const content::Context &context){
                 if(auto java_env=java::lang::JNI::Env()){
-                    auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
+//                    auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
+                    auto niClazz=java::lang::Class::find("kz/outlawstudio/viper/NI");
                     auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
                     auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
                     auto resourseId=java::lang::String::create(resName);
