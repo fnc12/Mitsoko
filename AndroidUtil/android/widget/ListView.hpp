@@ -27,9 +27,15 @@ namespace android{
                                                           const content::Context &context)
             {
                 auto pointer=std::make_shared<T>(std::move(ad));
+                return this->setAdapter(pointer);
+            }
+            
+            template<class T>
+            Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer,
+                                                          const content::Context &context)
+            {
                 auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
                 if(auto java_env=java::lang::JNI::Env()){
-//                    if(auto clazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/ViperTableViewAdapter")){
                     if(auto clazz=java::lang::Class::find("kz/outlawstudio/viper/ViperTableViewAdapter")){
                         auto signature=java::lang::Object::generateMethodSignature<void,ListView,content::Context>();
                         if(auto ctor = java_env->GetMethodID(clazz, "<init>", signature.c_str())){

@@ -192,7 +192,18 @@ namespace Viper {
         typedef T data_type;
         typedef DataSource<data_type> data_source_type;
         
-        Adapter(data_source_type ds):dataSource(std::make_shared<data_source_type>(std::move(ds))){}
+        /**
+         *  Constructor from straight variable is comfortable if dataSource
+         *  is not subclassed but implemented with lambdas. If Your dataSource is
+         *  subclassed - use c-stor `Adapter(std::shared_ptr<data_source_type>)`.
+         */
+        Adapter(data_source_type ds):Adapter(std::make_shared<data_source_type>(std::move(ds))){}
+        
+        /**
+         *  Constructor with smart pointer used if dataSource inherits from
+         *  DataSource.
+         */
+        Adapter(std::shared_ptr<data_source_type> dsPointer):dataSource(std::move(dsPointer)){}
         
         std::function<void(const void*,int,int,const data_type&)> onCreateCellLambda;
         std::function<void(const void*,int,int,const data_type&)> onDisplayCellLambda;

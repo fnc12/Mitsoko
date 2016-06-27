@@ -44,6 +44,19 @@ namespace UI {
         template<class T>
         Viper::TableListAdapter::AdapterId setAdapter(T ad){
             auto pointer=std::make_shared<T>(std::move(ad));
+            return this->setAdapter(pointer);
+            /*auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
+            auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
+            auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
+            auto sharedAdapter=NS::Object::sendMessage<Handle>(sharedAdapterClass,"shared");
+            this->sendMessage<void>("setDataSource:", sharedAdapter);
+            this->sendMessage<void>("setDelegate:", sharedAdapter);
+            return adapterId;*/
+        }
+        
+        template<class T>
+        Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
+//            auto pointer=std::make_shared<T>(std::move(ad));
             auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
             auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
             auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
