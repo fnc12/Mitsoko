@@ -7,7 +7,7 @@ namespace NS {
     struct IndexSet:public Object{
         using Object::Object;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "NSIndexSet");
+        STATIC_VAR(const std::string, className, "NSIndexSet");
         
         static IndexSet create(int index){
             auto cls=NS::getClass(className());

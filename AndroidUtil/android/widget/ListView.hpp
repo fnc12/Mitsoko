@@ -23,9 +23,10 @@ namespace android{
              *  settings a core crossplarform adapter to a listView.
              */
             template<class T>
-            Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer,
+            Viper::TableListAdapter::AdapterId setAdapter(T ad,
                                                           const content::Context &context)
             {
+                auto pointer=std::make_shared<T>(std::move(ad));
                 auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
                 if(auto java_env=java::lang::JNI::Env()){
 //                    if(auto clazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/ViperTableViewAdapter")){

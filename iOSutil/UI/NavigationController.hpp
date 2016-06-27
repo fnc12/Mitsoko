@@ -3,12 +3,34 @@
 
 #include "ViewController.hpp"
 #include "Viper/iOSutil/NS/Array.hpp"
+//#include "NavigationBar.hpp"
 
 namespace UI {
-    struct NavigationController:public ViewController{
-        using ViewController::ViewController;
+    struct NavigationController;
+    typedef _ViewController<NavigationController> ViewController;
+    
+    struct NavigationController:public _ViewController<NavigationController>{
+        using _ViewController::_ViewController;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "UINavigationController");
+        STATIC_VAR(const std::string, className, "UINavigationController");
+        
+        static NavigationController create(const UI::ViewController &rootViewController){
+            auto cls=NS::getClass(className());
+            assert(cls);
+            auto handle=sendMessage<Handle>(cls, "alloxc");
+            NavigationController res(handle);
+            res.shouldClearOnDestroy=true;
+            res.initWithRootViewController(rootViewController);
+            return std::move(res);
+        }
+        
+        UI::NavigationBar navigationBar(){
+            return this->sendMessage<Handle>("navigationBar");
+        }
+        
+        void setNavigationBarHidden(bool hidden,bool animated){
+            this->sendMessage<void>("setNavigationBarHidden:animated:", BOOL(hidden),BOOL(animated));
+        }
         
         NS::Array viewControllers(){
             return this->sendMessage<Handle>("viewControllers");
@@ -24,16 +46,6 @@ namespace UI {
         
         void popViewControllerAnimated(bool animated){
             this->sendMessage<void>("popViewControllerAnimated:", animated);
-        }
-        
-        static NavigationController create(const UI::ViewController &rootViewController){
-            auto cls=NS::getClass(className());
-            assert(cls);
-            auto handle=sendMessage<Handle>(cls, "alloc");
-            NavigationController res(handle);
-            res.shouldClearOnDestroy=true;
-            res.initWithRootViewController(rootViewController);
-            return std::move(res);
         }
     protected:
         Handle initWithRootViewController(const Handle &rootViewController){

@@ -34,10 +34,13 @@
 
 #include "android/os/Handler.hpp"
 
+#include "android/support/design/widget/TabLayout.hpp"
+
 #include "android/support/v4/app/FragmentActivity.hpp"
 #include "android/support/v4/app/Fragment.hpp"
 
 #include "android/support/v7/app/AppCompatActivity.hpp"
+#include "android/support/v7/app/ActionBar.hpp"
 
 #include "android/text/Editable.hpp"
 #include "android/text/InputType.hpp"
@@ -56,6 +59,7 @@
 #include "android/widget/LinearLayout.hpp"
 #include "android/widget/ListAdapter.hpp"
 #include "android/widget/FrameLayout.hpp"
+#include "android/widget/HorizontalScrollView.hpp"
 #include "android/widget/TabHost.hpp"
 #include "android/widget/TextView.hpp"
 #include "android/widget/EditText.hpp"

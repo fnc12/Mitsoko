@@ -8,8 +8,9 @@ namespace android{
     namespace widget{
         struct EditText:public TextView{
             using TextView::TextView;
-            STATIC_VAR(const std::string, signature, "android/widget/EditText");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/widget/EditText");
+            
             static EditText create(const content::Context &context){
                 return std::move(java::lang::Object::create<EditText>(context));
             }

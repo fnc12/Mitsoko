@@ -11,7 +11,7 @@ namespace NS {
     struct NotificationCenter:public NS::Object{
         using Object::Object;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "NSNotificationCenter");
+        STATIC_VAR(const std::string, className, "NSNotificationCenter");
         
         static NotificationCenter defaultCenter(){
             auto cls=NS::getClass(className());

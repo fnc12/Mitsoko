@@ -11,35 +11,53 @@
 #include "Util.hpp"
 #include "Selfish.hpp"
 
-#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Wireframe<arg,ret>,Selfish<Wireframe>
+#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret>,Selfish<Wireframe>
 
 namespace Viper{
     
-    template<class C>
-    struct WireframeBase{
+    /**
+     *  This is how wireframe works:
+     *  every wireframe has two main base classes:
+     *  1)  Argumentable<A,W> is used to provide arguments to module.
+     *      in `WIREFRAME_DECL` macro second argument must be a type module receives
+     *      as an argument. Once argument specified one can override `virtual void
+     *      init(A)` function in module's presenter. `init` function in presenter acts as a costructor.
+     *      Second template argument must be Wireframe itself. It is used to make `Argumentable` superclass
+     *      unique. Every module Argumentable superclass must be unique cause every `Argumentable<A,W>` has
+     *      a `staticArgument` static optional variable. You have to assign it before creating a new module
+     *      if you want to pass arguments to module. Example: `MyProfile::Wireframe::statusArgument()=5;`.
+     *      If there is no need to pass an argument just pass void in WIREFRAME_DECL second argument or
+     *      Argumentable<A,W> first template argument. You can still override `init()` function in presenter 
+     *      when your module has void argument.
+     *  2)  Callbackable<C,W> is used to specify a callback mechanism for the module. It has `std::function<void(C)> staticCallback`
+     *      static variable that must be assigned before module creating. This variable is `move`d into `callback` non-static member
+     *      in `Callbackable` constructor and can be accessed at any time from presenter (`wireframe.callback(5);`)
+     *      or from wireframe itself. Second template argument `W` is very important cause every Callbackable superclass
+     *      must be unique for every module cause it has statis variables. The third argument in `WIREFRAME_DECL` macro
+     *      must be a return type or void if there nothing to return. However you cann still fire a callback if module
+     *      has `void` return type - callback just does not have argument (see `Callbackable<void,W>` specialization).
+     */
+    
+    template<class C,class W>
+    struct Callbackable{
         typedef C return_type;
         std::function<void(C)> callback;
         STATIC_VAR(std::function<void(C)>, staticCallback, {});
         
-        WireframeBase():callback(std::move(staticCallback())){}
+        Callbackable():callback(std::move(staticCallback())){}
     };
     
-    template<>
-    struct WireframeBase<void>{
+    template<class W>
+    struct Callbackable<void,W>{
         typedef void return_type;
         std::function<void()> callback;
         STATIC_VAR(std::function<void()>, staticCallback, {});
         
-        WireframeBase():callback(std::move(staticCallback())){}
+        Callbackable():callback(std::move(staticCallback())){}
     };
     
-    /**  
-     *  Base class for wireframe.
-     *  **A** is argument type.
-     *  **C** is a callback (return) type.
-     */
-    template<class A,class C>
-    struct Wireframe:WireframeBase<C>{
+    template<class A,class W>
+    struct Argumentable{
         typedef A argument_type;
         
         /**
@@ -49,15 +67,8 @@ namespace Viper{
         STATIC_VAR(std::experimental::optional<argument_type>, staticArgument, {});
     };
     
-    /**
-     *  Specialization for void argument.
-     */
-    template<class C>
-    struct Wireframe<void,C>:WireframeBase<C>{
+    template<class W>
+    struct Argumentable<void,W>{
         typedef void argument_type;
-        typedef C return_type;
-        
-//        Wireframe()=default;
-        
     };
 }

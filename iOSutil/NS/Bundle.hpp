@@ -8,7 +8,7 @@ namespace NS {
     struct Bundle:public Object{
         using Object::Object;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "NSBundle");
+        STATIC_VAR(const std::string, className, "NSBundle");
         
         static Bundle mainBundle(){
             auto cls=NS::getClass(className());

@@ -16,6 +16,8 @@ namespace UI {
         typedef UI::View Super;
         using View::View;
 #ifdef __APPLE__
+        STATIC_VAR(const std::string, className, "UIAlertView");
+        
         typedef std::function<void(UI::AlertView,int)> ClickedButtonAtIndex;
         typedef std::function<void(UI::AlertView,int)> WillDismissWithButtonIndex;
         typedef std::function<void(UI::AlertView,int)> DidDismissWithButtonIndex;
@@ -46,8 +48,6 @@ namespace UI {
             }
             DelegateEventHandler::getOrCreate(this->handle).clickedButtonAtIndex=f;
         }
-        
-        STATIC_VAR(const std::string, className, "UIAlertView");
         
         enum class Style{
             Default=UIAlertViewStyleDefault,

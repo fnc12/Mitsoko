@@ -1,14 +1,16 @@
 
 #pragma once
 
-#include "View.hpp"
+#include "ScrollView.hpp"
 #include "Viper/TableListAdapter.hpp"
 #include "ImageView.hpp"
 
 namespace UI {
-    struct TableView:public UI::View{
-        using View::View;
+    struct TableView:public UI::ScrollView{
+        using ScrollView::ScrollView;
 #ifdef __APPLE__
+        STATIC_VAR(const std::string, className, "UITableView");
+        
         enum class RowAnimation{
             Fade = UITableViewRowAnimationFade,
             Right = UITableViewRowAnimationRight,
@@ -40,7 +42,8 @@ namespace UI {
          *  android::content::Context.
          */
         template<class T>
-        Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
+        Viper::TableListAdapter::AdapterId setAdapter(T ad){
+            auto pointer=std::make_shared<T>(std::move(ad));
             auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
             auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
             auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");

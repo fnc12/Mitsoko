@@ -3,6 +3,8 @@
 
 #include "Responder.hpp"
 #include "Viper/iOSutil/CG/AffineTransform.hpp"
+#include "Viper/iOSutil/CG/Rect.hpp"
+#include "Color.hpp"
 
 namespace UI {
     struct View:public UI::Responder{
@@ -23,6 +25,18 @@ namespace UI {
             BottomLeft = UIViewContentModeBottomLeft,
             BottomRight = UIViewContentModeBottomRight,
         };
+        
+        void setBackgroundColor(const UI::Color &newValue){
+            this->sendMessage<void>("setBackgroundColor:", newValue.handle);
+        }
+        
+        UI::Color backgroundColor(){
+            return this->sendMessage<Handle>("backgroundColor");
+        }
+        
+        CG::Rect frame(){
+            return this->sendMessage<CG::Rect>("frame");
+        }
         
         void setContentMode(ContentMode newValue){
             this->sendMessage<void>("setContentMode:", UIViewContentMode(newValue));
