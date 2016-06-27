@@ -14,6 +14,12 @@
 
 #include "CF/String.hpp"
 
+#include "CL/Location.hpp"
+
+#include "MK/Annotation.hpp"
+#include "MK/Geometry.hpp"
+#include "MK/MapView.hpp"
+
 #include "NS/Array.hpp"
 #include "NS/Bundle.hpp"
 #include "NS/IndexSet.hpp"

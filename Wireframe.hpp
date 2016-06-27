@@ -11,7 +11,7 @@
 #include "Util.hpp"
 #include "Selfish.hpp"
 
-#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret>,Selfish<Wireframe>
+#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Selfish<Wireframe>
 
 namespace Viper{
     
