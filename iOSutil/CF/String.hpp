@@ -24,7 +24,7 @@ namespace CF {
         static String create(const char *cString){
             auto cfStr=CFStringCreateWithCString(nullptr, cString, kCFStringEncodingUTF8);
             String res(cfStr);
-            res.shouldClearOnDestroy=true;
+//            res.shouldClearOnDestroy=true;
             return std::move(res);
         }
 #endif

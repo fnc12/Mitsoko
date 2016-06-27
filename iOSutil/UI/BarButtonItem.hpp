@@ -20,7 +20,7 @@ namespace UI {
             assert(cls);
             auto handle=sendMessage<Handle>(cls, "alloc");
             BarButtonItem res(handle);
-            res.shouldClearOnDestroy=true;
+//            res.shouldClearOnDestroy=true;
             auto t=CF::String::create(title);
             res.initWithTitle(t, style);
             return std::move(res);

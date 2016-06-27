@@ -19,7 +19,7 @@ namespace UI {
             assert(cls);
             auto handle=sendMessage<Handle>(cls, "alloxc");
             NavigationController res(handle);
-            res.shouldClearOnDestroy=true;
+//            res.shouldClearOnDestroy=true;
             res.initWithRootViewController(rootViewController);
             return std::move(res);
         }

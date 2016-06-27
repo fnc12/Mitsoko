@@ -22,22 +22,60 @@ namespace NS {
         typedef const void *Handle;
         Handle handle;
         
+        /**
+         *  Empty constructor. Equals nil reference.
+         */
         Object():Object(nullptr){}
-        Object(decltype(handle)handle_):handle(handle_){}
-        Object(const Object&)=default;
-        Object & operator=(const Object &)=default;
         
-        Object(Object &&object):handle(object.handle),shouldClearOnDestroy(object.shouldClearOnDestroy){
-            object.handle=nullptr;
-            object.shouldClearOnDestroy=false;
+        /**
+         *  Strong reference creation constructor.
+         */
+        Object(decltype(handle)handle_):
+        handle(handle_){
+            if(this->handle){
+                this->retain();
+            }
         }
         
+        /**
+         *  Copy strong reference on init.
+         */
+        Object(const Object &other):
+        handle(other.handle){
+            if(this->handle){
+                this->retain();
+            }
+        }
+        
+        /**
+         *  Copy strong reference on assign.
+         */
+        Object& operator=(const Object &other){
+            this->cleanUp();
+            this->handle=other.handle;
+            if(this->handle){
+                this->retain();
+            }
+            return *this;
+        }
+        
+        /**
+         *  Move constructor. Has not retain/release.
+         */
+        Object(Object &&object):handle(object.handle)/*,shouldClearOnDestroy(object.shouldClearOnDestroy)*/{
+            object.handle=nullptr;
+//            object.shouldClearOnDestroy=false;
+        }
+        
+        /**
+         *  Move assignment. Also hasn't retain/release.
+         */
         Object& operator=(Object &&object){
             this->cleanUp();
             this->handle=object.handle;
-            this->shouldClearOnDestroy=object.shouldClearOnDestroy;
+//            this->shouldClearOnDestroy=object.shouldClearOnDestroy;
             object.handle=nullptr;
-            object.shouldClearOnDestroy=false;
+//            object.shouldClearOnDestroy=false;
             return *this;
         }
         
@@ -78,7 +116,7 @@ namespace NS {
             if(cls){
                 T res=sendMessage<Handle>(cls, "alloc");
                 res.template sendMessage<Handle>("init");
-                res.shouldClearOnDestroy=true;
+//                res.shouldClearOnDestroy=true;
                 return std::move(res);
             }else{
                 return nullptr;
@@ -92,13 +130,30 @@ namespace NS {
         }
 #endif
     protected:
-        bool shouldClearOnDestroy=false;
+//        bool shouldClearOnDestroy=false;
+#ifdef __APPLE__
+        void retain(){
+            CFRetain(CFTypeRef(this->handle));
+        }
+        
+        void release(){
+            CFRelease(CFTypeRef(this->handle));
+        }
+        
+        int retainCount(){
+            return int(CFGetRetainCount(CFTypeRef(this->handle)));
+        }
+#endif
     private:
         void cleanUp(){
 #ifdef __APPLE__
-            if(this->shouldClearOnDestroy){
+            /*if(this->shouldClearOnDestroy){
                 CFRelease(CFTypeRef(this->handle));
                 this->shouldClearOnDestroy=false;
+            }*/
+            if(this->handle){
+                this->release();
+                this->handle=nullptr;
             }
 #endif
         }

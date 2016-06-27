@@ -17,7 +17,7 @@ namespace NS{
             assert(cls);
             auto handle=sendMessage<Handle>(cls, "new");
             NS::MutableArray res(handle);
-            res.shouldClearOnDestroy=true;
+//            res.shouldClearOnDestroy=true;
             return std::move(res);
         }
         
