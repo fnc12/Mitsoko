@@ -22,8 +22,10 @@
 
 #include "NS/Array.hpp"
 #include "NS/Bundle.hpp"
+#include "NS/Dictionary.hpp"
 #include "NS/IndexSet.hpp"
 #include "NS/MutableArray.hpp"
+#include "NS/MutableDictionary.hpp"
 #include "NS/NotificationCenter.hpp"
 #include "NS/Object.hpp"
 #include "NS/String.hpp"
