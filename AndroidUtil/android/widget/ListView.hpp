@@ -40,7 +40,7 @@ namespace android{
                         auto signature=java::lang::Object::generateMethodSignature<void,ListView,content::Context>();
                         if(auto ctor = java_env->GetMethodID(clazz, "<init>", signature.c_str())){
                             ListAdapter adapter=java_env->NewObject(clazz, ctor, this->handle,context.handle);
-                            adapterPointer->activityHandle=context.handle;
+//                            adapterPointer->activityHandle=context.handle;
                             auto adapterId=adapter.getField<int>("adapterId");
                             auto res=Viper::TableListAdapter::registerAdapter((const void*)adapterId, adapterPointer, java_env);
                             this->setAdapter(adapter);

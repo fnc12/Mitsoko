@@ -113,9 +113,10 @@ namespace Viper {
 #ifdef __ANDROID__
         
         /**
-         *  Adapter stores activity handle in android. Actually this is a pointer to a context.
+         *  Adapter stores activity handle (or fragment handle) in android. Actually this is a global pointer to activity or fragement
+         *  that helps obtaining context dunring calling `findViewById`.
          *  Context is required almost everywhere. This is why it is very important to store a
-         *  pointer to it inside adapter.
+         *  pointer to it inside adapter. This value must be assigned manually.
          */
         const void *activityHandle=nullptr;
 #endif
