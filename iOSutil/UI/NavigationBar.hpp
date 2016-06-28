@@ -10,6 +10,14 @@ namespace UI {
 #ifdef __APPLE__
         STATIC_VAR(const std::string, className, "UINavigationBar");
         
+        void setBarTintColor(const UI::Color &newValue){
+            this->sendMessage<void>("setBarTintColor:", newValue.handle);
+        }
+        
+        UI::Color barTintColor(){
+            return this->sendMessage<Handle>("barTintColor");
+        }
+        
         void setTintColor(const UI::Color &newValue){
             this->sendMessage<void>("setTintColor:", newValue.handle);
         }

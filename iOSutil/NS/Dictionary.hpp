@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Viper/iOSutil/NS/Object.hpp"
+#include "Viper/Util.hpp"
 
 namespace NS {
     struct Dictionary:public NS::Object{

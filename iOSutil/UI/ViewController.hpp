@@ -5,6 +5,7 @@
 #include "View.hpp"
 #include "TabBarItem.hpp"
 #include "NavigationItem.hpp"
+#include <functional>
 
 namespace UI {
     template<class NavC>
@@ -35,16 +36,24 @@ namespace UI {
             return this->sendMessage<Handle>("navigationController");
         }
         
-        void presentViewController(const Self &vc,bool animated){
-            this->sendMessage<void>("presentViewController:animated:completion:", vc.handle, animated);
+        void presentViewController(const Self &vc,bool animated,std::function<void()> completion){
+            this->sendMessage<void>("presentViewController:animated:completion:", vc.handle, animated, ^{
+                if(completion){
+                    completion();
+                }
+            });
         }
         
         Self presentingViewController(){
             return this->sendMessage<Handle>("presentingViewController");
         }
         
-        void dismissViewControllerAnimated(bool animated){
-            this->sendMessage<void>("dismissViewControllerAnimated:completion:", animated, nullptr);
+        void dismissViewControllerAnimated(bool animated,std::function<void()> completion){
+            this->sendMessage<void>("dismissViewControllerAnimated:completion:", animated, ^{
+                if(completion){
+                    completion();
+                }
+            });
         }
 #endif
     };
