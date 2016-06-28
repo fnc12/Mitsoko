@@ -27,7 +27,7 @@ namespace android{
                                                           const content::Context &context)
             {
                 auto pointer=std::make_shared<T>(std::move(ad));
-                return this->setAdapter(pointer);
+                return this->setAdapter(pointer,context);
             }
             
             template<class T>

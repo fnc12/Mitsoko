@@ -32,9 +32,11 @@ namespace NS {
          */
         Object(decltype(handle)handle_):
         handle(handle_){
+#ifdef __APPLE__
             if(this->handle){
                 this->retain();
             }
+#endif
         }
         
         /**
@@ -42,9 +44,11 @@ namespace NS {
          */
         Object(const Object &other):
         handle(other.handle){
+#ifdef __APPLE__
             if(this->handle){
                 this->retain();
             }
+#endif
         }
         
         /**
@@ -53,9 +57,11 @@ namespace NS {
         Object& operator=(const Object &other){
             this->cleanUp();
             this->handle=other.handle;
+#ifdef __APPLE__
             if(this->handle){
                 this->retain();
             }
+#endif
             return *this;
         }
         
