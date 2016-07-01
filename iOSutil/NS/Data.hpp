@@ -9,6 +9,17 @@ namespace NS {
 #ifdef __APPLE__
         STATIC_VAR(const std::string, className, "NSData");
         
+        static NS::Data createWithContentsOfFile(const std::string &path){
+            auto s=CF::String::create(path);
+            return std::move(createWithContentsOfFile(s));
+        }
+        
+        static NS::Data createWithContentsOfFile(const CF::String &path){
+            auto cls=NS::getClass(className());
+            assert(cls);
+            return sendMessage<Handle>(cls, "dataWithContentsOfFile:",path.handle);
+        }
+        
         int length(){
             return int(this->sendMessage<NSUInteger>("length"));
         }

@@ -103,6 +103,7 @@ namespace Viper{
             }
 #endif
         }
+        
         static void onMainThread(std::function<void()> functionPointer){
 #ifdef __APPLE__
             dispatch_async(dispatch_get_main_queue(), ^{

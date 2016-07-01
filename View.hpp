@@ -19,6 +19,7 @@
 #include "Disposable.hpp"
 #include "rapidjson/Document.h"
 #include "ViewPresenterIF.hpp"
+#include "ImageCache.hpp"
 
 #define VIEW_DECL(module) struct View:public Viper::View<module::EventHandler, module::UserInterface>,Selfish<View>
 

@@ -17,6 +17,16 @@ namespace UI {
             return NS::Object::sendMessage<Handle>(cls,"imageNamed:", str.handle);
         }
         
+        static UI::Image createWithContentsOfFile(const std::string &filename){
+            auto s=CF::String::create(filename);
+            return std::move(createWithContentsOfFile(s));
+        }
+        
+        static UI::Image createWithContentsOfFile(const CF::String &filename){
+            auto cls=NS::getClass(className());
+            return NS::Object::sendMessage<Handle>(cls,"imageWithContentsOfFile:", filename.handle);
+        }
+        
         static NS::Data JPEGRepresentation(UI::Image image,CG::Float compressionQuality){
             image.retain();
             auto res=CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
