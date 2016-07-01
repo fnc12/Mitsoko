@@ -70,15 +70,6 @@ namespace Viper{
                 it2->second.clear();
                 this->disposables.erase(it2);
             }
-/*#ifdef __ANDROID__
-            if(this->viewPool.size()){
-                auto lastIt=viewPool.end();
-                --lastIt;
-                Dispatch::frontActivity()=static_cast<jobject>(const_cast<void*>(lastIt->second->handle));
-            }else{
-                Dispatch::frontActivity()=nullptr;
-            }
-#endif*/
             return res;
         }
         
@@ -90,6 +81,18 @@ namespace Viper{
                 cout<<"view not found with id "<<viewId<<endl;
             }
         }
+        
+#ifdef __ANDROID__
+        void onActivityResult(ViewId viewId,int requestCode,int resultCode,jobject data){
+            const auto it=this->viewPool.find(viewId);
+            if(it!=this->viewPool.end()){
+                it->second->onActivityResult(requestCode,resultCode,data);
+            }else{
+                cout<<"view not found with id "<<viewId<<endl;
+            }
+        }
+        
+#endif
         
 //    protected:
         std::map<ViewId, std::shared_ptr<ViewBase>> viewPool;

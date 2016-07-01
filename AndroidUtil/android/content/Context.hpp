@@ -8,8 +8,9 @@ namespace android{
     namespace content{
         struct Context:public java::lang::Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "android/content/Context");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/content/Context");
+            
             res::Resources getResources(){
                 return this->sendMessage<res::Resources>("getResources");
             }

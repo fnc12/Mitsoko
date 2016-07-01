@@ -7,8 +7,9 @@ namespace android{
     namespace os{
         struct Handler:public java::lang::Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "android/os/Handler");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/os/Handler");
+            
             bool post(const java::lang::Runnable &runnable){
                 return this->sendMessage<bool>("post",runnable);
             }

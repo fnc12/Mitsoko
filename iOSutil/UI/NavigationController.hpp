@@ -3,7 +3,7 @@
 
 #include "ViewController.hpp"
 #include "Viper/iOSutil/NS/Array.hpp"
-//#include "NavigationBar.hpp"
+#include "NavigationBar.hpp"
 
 namespace UI {
     struct NavigationController;
@@ -19,7 +19,6 @@ namespace UI {
             assert(cls);
             auto handle=sendMessage<Handle>(cls, "alloc");
             NavigationController res(handle);
-//            res.shouldClearOnDestroy=true;
             res.initWithRootViewController(rootViewController);
             return std::move(res);
         }

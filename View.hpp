@@ -68,6 +68,12 @@ namespace Viper{
             this->messageReceived(messageCode,std::move(arguments));
         }
         
+//#ifdef __ANDROID__
+        virtual void onActivityResult(int requestCode,int resultCode, android::content::Intent data){
+            //..
+        }
+//#endif
+        
         virtual void messageReceived(int messageCode,Arguments arguments){}
         
         std::string arguments(){

@@ -16,6 +16,12 @@
 #include "java/lang/String.hpp"
 #include "java/lang/Thread.hpp"
 
+#include "java/io/BufferedOutputStream.hpp"
+#include "java/io/File.hpp"
+#include "java/io/FileOutputStream.hpp"
+#include "java/io/FilterOutputStream.hpp"
+#include "java/io/OutputStream.hpp"
+
 #include "java/util/Locale.hpp"
 #include "java/util/Calendar.hpp"
 #include "java/util/Date.hpp"
@@ -32,7 +38,15 @@
 #include "android/content/Intent.hpp"
 #include "android/content/DialogInterface.hpp"
 
+#include "android/graphics/Bitmap.hpp"
+
+#include "android/net/Uri.hpp"
+
+#include "android/os/BaseBundle.hpp"
+#include "android/os/Bundle.hpp"
 #include "android/os/Handler.hpp"
+
+#include "android/provider/MediaStore.hpp"
 
 #include "android/support/design/widget/TabLayout.hpp"
 

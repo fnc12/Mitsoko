@@ -26,6 +26,8 @@ namespace java{
                 return this->handle;
             }
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "java/lang/Object");
+            
         protected:
             bool isGlobal=false;
             

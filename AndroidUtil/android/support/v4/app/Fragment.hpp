@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Viper/AndroidUtil/android/content/Intent.hpp"
 
 namespace android{
     namespace support{
@@ -13,6 +14,10 @@ namespace android{
 #ifdef __ANDROID__
                     FragmentActivity getActivity(){
                         return this->sendMessage<FragmentActivity>("getActivity");
+                    }
+                    
+                    void startActivityForResult(const android::content::Intent &intent,int requestCode){
+                        this->sendMessage<void>("startActivityForResult",intent,requestCode);
                     }
 #endif
                 };

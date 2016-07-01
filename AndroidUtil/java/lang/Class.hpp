@@ -36,7 +36,8 @@ namespace java{
                                                               TypeSignatureGenerator<T>()().c_str())){
                             return this->_getStaticField<T>(fieldId,env);
                         }else{
-                            return -1;
+//                            return -1;
+                            return MessageSender<T>().failure();
                         }
                 }else{
                     return MessageSender<T>().failure();

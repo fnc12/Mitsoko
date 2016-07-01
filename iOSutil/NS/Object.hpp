@@ -10,6 +10,7 @@
 #include <type_traits>
 #include <cassert>
 #include <cstddef>
+#include <ostream>
 
 namespace NS {
 #ifdef __APPLE__
@@ -89,11 +90,55 @@ namespace NS {
             this->cleanUp();
         }
         
+#ifdef __APPLE__
+        std::string description(){
+            NS::Object s=this->sendMessage<Handle>("description");
+            return s.sendMessage<const char*>("UTF8String");
+        }
+        
+        template<class T>
+        bool isKindOfClass(){
+            if(auto cls=NS::getClass(T::className())){
+                return this->sendMessage<BOOL>("isKindOfClass:", cls);
+            }else{
+                return false;
+            }
+        }
+        
+        template<class T>
+        bool isMemberOfClass(){
+            if(auto cls=NS::getClass(T::className())){
+                return this->sendMessage<BOOL>("isMemberOfClass:", cls);
+            }else{
+                return false;
+            }
+        }
+        
+        /**
+         *  Operator is from swift.
+         */
+        template<class T>
+        bool is(){
+            return this->isKindOfClass<T>();
+        }
+        
+        /**
+         *  Operator as from swift. Acts like as? version.
+         */
+        template<class T>
+        T as(){
+            if(this->is<T>()){
+                return T(this->handle);
+            }else{
+                return {};
+            }
+        }
+        
         template<class RT,class ...Args>
         RT sendMessage(const std::string &message,const Args& ...args){
             return sendMessage<RT>(this->handle, message, args...);
         }
-#ifdef __APPLE__
+
         Class getClass(){
             return this->sendMessage<Class>("class");
         }
@@ -138,6 +183,11 @@ namespace NS {
     protected:
 //        bool shouldClearOnDestroy=false;
 #ifdef __APPLE__
+        
+        /**
+         *  This functions must not be called explictly. They called automtacally
+         *  in object`s constructor and destructor with ARC-like style.
+         */
         void retain(){
             CFRetain(CFTypeRef(this->handle));
         }
@@ -146,6 +196,7 @@ namespace NS {
             CFRelease(CFTypeRef(this->handle));
         }
         
+    public:
         int retainCount(){
             return int(CFGetRetainCount(CFTypeRef(this->handle)));
         }
@@ -153,10 +204,6 @@ namespace NS {
     private:
         void cleanUp(){
 #ifdef __APPLE__
-            /*if(this->shouldClearOnDestroy){
-                CFRelease(CFTypeRef(this->handle));
-                this->shouldClearOnDestroy=false;
-            }*/
             if(this->handle){
                 this->release();
                 this->handle=nullptr;
@@ -164,4 +211,10 @@ namespace NS {
 #endif
         }
     };
+#ifdef __APPLE__
+    inline std::ostream& operator<<(std::ostream &os,NS::Object &obj){
+        os<<obj.description()<<endl;
+        return os;
+    }
+#endif
 }

@@ -12,8 +12,9 @@ namespace java{
         template<class S>
         struct _CharSequence:public Object{
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "java/lang/CharSequence");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "java/lang/CharSequence");
+            
             S toString(){
                 return this->sendMessage<S>("toString");
             }

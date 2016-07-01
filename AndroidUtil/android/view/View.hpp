@@ -14,7 +14,7 @@ namespace android{
             /**
              *  Implemented in ViewGroup.hpp"
              */
-            template<class T/*,class*/>
+            template<class T>
             void setLayoutParams(const T &params);
             
             View findViewById(int id){
@@ -34,7 +34,6 @@ namespace android{
              */
             View findViewById(const std::string &idString,const content::Context &context){
                 if(auto java_env=java::lang::JNI::Env()){
-//                    auto niClazz=java::lang::Class::find(java::lang::JNI::appNamespace()+"/NI");
                     auto niClazz=java::lang::Class::find("kz/outlawstudio/viper/NI");
                     auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
                     auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());

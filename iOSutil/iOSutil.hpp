@@ -22,6 +22,7 @@
 
 #include "NS/Array.hpp"
 #include "NS/Bundle.hpp"
+#include "NS/Data.hpp"
 #include "NS/Dictionary.hpp"
 #include "NS/IndexSet.hpp"
 #include "NS/MutableArray.hpp"
@@ -40,6 +41,7 @@
 #include "UI/Control.hpp"
 #include "UI/Image.hpp"
 #include "UI/ImageView.hpp"
+#include "UI/ImagePickerController.hpp"
 #include "UI/NavigationBar.hpp"
 #include "UI/NavigationController.hpp"
 #include "UI/NavigationItem.hpp"
