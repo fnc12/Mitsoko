@@ -213,7 +213,7 @@ namespace NS {
     };
 #ifdef __APPLE__
     inline std::ostream& operator<<(std::ostream &os,NS::Object &obj){
-        os<<obj.description()<<endl;
+        os<<obj.description();
         return os;
     }
 #endif

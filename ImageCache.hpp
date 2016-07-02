@@ -64,91 +64,82 @@ namespace Viper {
          *  Should be called from main thread only. Otherwise data races may occur.
          */
         void get(const std::string &url,Callback cb){
-            sha256_t digest;
-            ::sha256((unsigned char*)url.c_str(), url.length(), digest);
-            auto key=getHexRepresentation(digest, sizeof(digest));
-#ifdef __APPLE__
-            auto keyString=CF::String::create(key);
-            if(auto res=this->ramCache()[keyString].as<UI::Image>()){
-#else
-            auto keyString=java::lang::String::create(key);
-//            java::lang::JNI::Env()->ExceptionCheck();
-//            cout<<"keyString = "<<keyString.c_str()<<endl;
-//            auto c=this->ramCache();
-//            cout<<"auto c=this->ramCache();"<<endl;
-//            java::lang::JNI::Env()->ExceptionCheck();
-//            cout<<"auto c=this->ramCache();"<<endl;
-            if(auto res=this->ramCache().get(keyString)){
-//            if(false){
-#endif
-//                cb(res);
+            std::string key,filepath;
+            if(auto res=getCached(url, &key, &filepath)){
+                cb(res);
             }else{
-                auto filename=this->imageFileName(key);
-                auto filepath=this->documentsPath()+'/'+filename;
-//                cout<<"filepath = "<<filepath<<endl;
-#ifdef __APPLE__
-                if(auto res=UI::Image::createWithContentsOfFile(filepath)){
-#else
-//                java::util::HashMap<java::lang::Object,java::lang::Object>::create();
-                if(auto res=android::graphics::BitmapFactory::decodeFile(filepath)){
-#endif
-#ifdef __APPLE__
-                    this->ramCache()[keyString]=res;
-#else
-//                    cout<<"this->ramCache().put(keyString,res);"<<endl;
-                    this->ramCache().put(keyString,res);
-#endif
-                    cb(res);
-                }else{
-//                    cout<<"requestRoutine = "<<bool(requestRoutine)<<endl;
-                    if(requestRoutine){
-//                        cout<<"if(requestRoutine){"<<endl;
-                        auto it=this->callbacks.find(url);
-                        if(it==this->callbacks.end()){
-                            callbacks[url].push_back(cb);
-                            ++[=]{
-                                if(auto r=requestRoutine){
-                                    auto imageAsString=std::move(r(url));
-                                    --[imageAsString=std::move(imageAsString),filepath,keyString,this,url]{
-//                                        cout<<"imageAsString length = "<<imageAsString.length()<<endl;
-                                        std::ofstream out(filepath,std::ios::binary);
-                                        if(out){
-                                            out.write(imageAsString.c_str(), imageAsString.length());
-                                            out.close();
-//                                            cout<<"file wrote"<<endl;
-#ifdef __APPLE__
-                                            if(auto res=UI::Image::createWithContentsOfFile(filepath)){
-                                                _ramCache[keyString]=res;
-#else
-                                            if(auto res=android::graphics::BitmapFactory::decodeFile(filepath)){
-                                                _ramCache.put(keyString,res);
-//                                                cout<<"put done"<<endl;
-#endif
-                                                auto it=this->callbacks.find(url);
-                                                if(it != this->callbacks.end()){
-                                                    for(auto &cb:it->second){
-                                                        cb(res);
-                                                    }
-                                                    this->callbacks.erase(it);
-                                                }else{
-                                                    std::cerr<<"callback not found for url *"<<url<<"*"<<std::endl;
+                if(requestRoutine){
+                    auto it=this->callbacks.find(url);
+                    if(it==this->callbacks.end()){
+                        callbacks[url].push_back(cb);
+                        ++[=]{
+                            if(auto r=requestRoutine){
+                                auto imageAsString=std::move(r(url));
+                                --[imageAsString=std::move(imageAsString),filepath,key,this,url]{
+                                    std::ofstream out(filepath,std::ios::binary);
+                                    if(out){
+                                        out.write(imageAsString.c_str(), imageAsString.length());
+                                        out.close();
+                                        auto res=getImageFromFS(filepath);
+                                        if(res){
+                                            putIntoRAM(key,res);
+                                            auto it=this->callbacks.find(url);
+                                            if(it != this->callbacks.end()){
+                                                for(auto &cb:it->second){
+                                                    cb(res);
                                                 }
+                                                this->callbacks.erase(it);
                                             }else{
-                                                cout<<"decode failed"<<endl;
+                                                std::cerr<<"callback not found for url *"<<url<<"*"<<std::endl;
                                             }
                                         }else{
-                                            std::cerr<<"unable to save image to file *"<<filepath<<"*"<<std::endl;
+                                            std::cerr<<"getImageFromFS failed"<<std::endl;
                                         }
-                                    };
-                                }
-                            };
-                        }else{
-                            callbacks[url].push_back(cb);
-                        }
+                                    }else{
+                                        std::cerr<<"unable to save image to file *"<<filepath<<"*"<<std::endl;
+                                    }
+                                };
+                            }
+                        };
+                    }else{
+                        callbacks[url].push_back(cb);
                     }
                 }
             }
         }
+        
+        /**
+         *  Returns cached image from RAM or FS or null if one isn't cached.
+         *  Doesn't perform request.
+         */
+        Image getCached(const std::string &url, std::string *keyPointer=nullptr, std::string *filepathPointer=nullptr){
+            sha256_t digest;
+            ::sha256((unsigned char*)url.c_str(), url.length(), digest);
+            auto key=getHexRepresentation(digest, sizeof(digest));
+            if(keyPointer){
+                *keyPointer=key;
+            }
+            auto res=getImageFromRAM(key);
+            if(res){
+//                cb(res);
+                return res;
+            }else{
+                auto filename=this->imageFileName(key);
+                auto filepath=this->documentsPath()+'/'+filename;
+                if(filepathPointer){
+                    *filepathPointer=filepath;
+                }
+                auto res=getImageFromFS(filepath);
+                if(res){
+                    putIntoRAM(key, res);
+//                    cb(res);
+                    return res;
+                }else{
+                    return {};
+                }
+            }
+        }
+            
         
         /**
          *  Documents path is an absolute path of a diretory where client
@@ -173,6 +164,34 @@ namespace Viper {
     protected:
         std::map<std::string, std::vector<Callback>> callbacks;
         
+        void putIntoRAM(const std::string &key,Image image){
+#ifdef __APPLE__
+            auto keyString=CF::String::create(key);
+            this->ramCache()[keyString]=image;
+#else
+            auto keyString=java::lang::String::create(key);
+            this->ramCache().put(keyString,image);
+#endif
+        }
+        
+        Image getImageFromRAM(const std::string &key){
+#ifdef __APPLE__
+            auto keyString=CF::String::create(key);
+            return this->ramCache()[keyString].as<UI::Image>();
+#else
+            auto keyString=java::lang::String::create(key);
+            return this->ramCache().get(keyString);
+#endif
+        }
+        
+        Image getImageFromFS(const std::string &filepath){
+#ifdef __APPLE__
+            return UI::Image::createWithContentsOfFile(filepath);
+#else
+            return android::graphics::BitmapFactory::decodeFile(filepath);
+#endif
+        }
+        
 #ifdef __APPLE__
         NS::MutableDictionary _ramCache;
         
@@ -189,9 +208,9 @@ namespace Viper {
             if(!_ramCache){
                 cout<<"if(!_ramCache){"<<endl;
                 _ramCache=java::util::HashMap<java::lang::String,Image>::create();
-                cout<<"_ramCache=java::util::HashMap<java::lang::String,Image>::create();"<<endl;
+//                cout<<"_ramCache=java::util::HashMap<java::lang::String,Image>::create();"<<endl;
                 _ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);
-                cout<<"_ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);"<<endl;
+//                cout<<"_ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);"<<endl;
             }
             return _ramCache;
         }

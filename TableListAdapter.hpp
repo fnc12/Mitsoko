@@ -10,6 +10,7 @@
 #include <iostream>
 #include <functional>
 #include <stdexcept>
+#include "Disposable.hpp"
 
 namespace Viper {
     using std::cout;
@@ -75,8 +76,9 @@ namespace Viper {
     /**
      *  This is a base ckass for adapter. All adapters are stored as pointers to
      *  instances of this class.
+     *  Disposable is inherited for image caching callbacks.
      */
-    struct AdapterBase{
+    struct AdapterBase:public Viper::Disposable{
         
         /**
          *  UITableViewCellStyle mirror enum. Used in iOS only.
@@ -103,6 +105,10 @@ namespace Viper {
 #endif
             ,
         };
+        
+        virtual ~AdapterBase(){
+            this->dispose();
+        }
         
         /**
          *  This function should be bound to presenter cause in Viper
