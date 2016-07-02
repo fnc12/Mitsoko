@@ -283,11 +283,11 @@ void sha256(unsigned char *data,size_t len,unsigned char output[32]){
     sha256_finish(&ctx,output);
 }
 
-std::string shaString(const std::string &str){
+/*std::string shaString(const std::string &str){
     sha256_t res;
     ::sha256((unsigned char*)str.c_str(), str.length(), res);
     return {(const char*)res,sizeof(res)};
-}
+}*/
 
 int sha256_file(const char *filename,uint8 digest[32]){
     int res=0;
@@ -311,7 +311,7 @@ int sha256_file(const char *filename,uint8 digest[32]){
             sha256_finish(&ctx,digest);
             delete[] data;
         }else{
-            printf("can not allocate %ld bytes\n",portionSize);
+            printf("can not allocate %ld bytes\n",long(portionSize));
         }
     }else{
         res=1;

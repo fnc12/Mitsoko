@@ -22,9 +22,12 @@
 #include "java/io/FilterOutputStream.hpp"
 #include "java/io/OutputStream.hpp"
 
-#include "java/util/Locale.hpp"
+#include "java/util/AbstractMap.hpp"
 #include "java/util/Calendar.hpp"
 #include "java/util/Date.hpp"
+#include "java/util/HashMap.hpp"
+#include "java/util/Locale.hpp"
+#include "java/util/Map.hpp"
 
 #include "android/app/Activity.hpp"
 #include "android/app/Fragment.hpp"
@@ -39,6 +42,7 @@
 #include "android/content/DialogInterface.hpp"
 
 #include "android/graphics/Bitmap.hpp"
+#include "android/graphics/BitmapFactory.hpp"
 
 #include "android/net/Uri.hpp"
 

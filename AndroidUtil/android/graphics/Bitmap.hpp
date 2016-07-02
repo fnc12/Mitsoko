@@ -48,6 +48,43 @@ namespace android {
                 }
             };
             
+            struct Config:public java::lang::Object{
+                using Object::Object;
+                STATIC_VAR(const std::string, signature, "android/graphics/Bitmap$Config");
+                
+                static int ALPHA_8(){
+                    if(java::lang::Class cls=java::lang::Class::find<Config>()){
+                        return cls.getStaticField<int>("ALPHA_8");
+                    }else{
+                        return -1;
+                    }
+                }
+                
+                static int RGB_565(){
+                    if(java::lang::Class cls=java::lang::Class::find<Config>()){
+                        return cls.getStaticField<int>("RGB_565");
+                    }else{
+                        return -1;
+                    }
+                }
+                
+                static int ARGB_4444(){
+                    if(java::lang::Class cls=java::lang::Class::find<Config>()){
+                        return cls.getStaticField<int>("ARGB_4444");
+                    }else{
+                        return -1;
+                    }
+                }
+                
+                static int ARGB_8888(){
+                    if(java::lang::Class cls=java::lang::Class::find<Config>()){
+                        return cls.getStaticField<int>("ARGB_8888");
+                    }else{
+                        return -1;
+                    }
+                }
+            };
+            
             bool compress(int format,int quality,const java::io::OutputStream &stream){
                 return this->sendMessage<bool>("compress",format,quality,stream);
             }

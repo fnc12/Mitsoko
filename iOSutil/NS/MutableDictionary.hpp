@@ -24,6 +24,32 @@ namespace NS {
         void removeObjectForKey(const NS::Object &aKey){
             this->sendMessage<void>("removeObjectForKey:", aKey.handle);
         }
+        
+        struct ValueAdapter{
+        protected:
+            MutableDictionary &dictionary;
+            const NS::Object key;
+        public:
+            ValueAdapter(decltype(dictionary)d,decltype(key)k):dictionary(d),key(k){}
+            
+            operator NS::Object()const{
+                return dictionary.objectForKey(this->key);
+            }
+            
+            template<class T>
+            T as(){
+                return std::move(dictionary.objectForKey(this->key).as<T>());
+            }
+            
+            void operator=(NS::Object value){
+                dictionary.setObject(value, this->key);
+            }
+        };
+        
+        ValueAdapter operator[](const NS::Object &key){
+            return ValueAdapter{*this,key};
+        }
 #endif
+        
     };
 }

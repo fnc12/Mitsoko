@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Viper/AndroidUtil/android/view/View.hpp"
+#include "Viper/AndroidUtil/android/graphics/Bitmap.hpp"
 
 namespace android{
     namespace widget{
@@ -32,6 +33,10 @@ namespace android{
             
             void setImageResource(int resId){
                 this->sendMessage<void>("setImageResource",resId);
+            }
+            
+            void setImageBitmap(const android::graphics::Bitmap &bm){
+                this->sendMessage<void>("setImageBitmap",bm);
             }
 #endif
         };
