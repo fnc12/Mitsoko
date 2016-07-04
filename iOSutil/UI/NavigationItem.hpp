@@ -7,6 +7,7 @@ namespace UI {
     struct NavigationItem:public NS::Object{
         using Object::Object;
 #ifdef __APPLE__
+        STATIC_VAR(const std::string, className, "UINavigationItem");
         
         void setHidesBackButton(bool newValue){
             this->sendMessage<void>("setHidesBackButton:", BOOL(newValue));

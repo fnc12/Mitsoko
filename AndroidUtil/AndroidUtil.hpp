@@ -63,6 +63,7 @@
 #include "android/text/Editable.hpp"
 #include "android/text/InputType.hpp"
 
+#include "android/view/MenuItem.hpp"
 #include "android/view/View.hpp"
 #include "android/view/ViewGroup.hpp"
 #include "android/view/ViewManager.hpp"

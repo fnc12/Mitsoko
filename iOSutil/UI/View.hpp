@@ -26,12 +26,20 @@ namespace UI {
             BottomRight = UIViewContentModeBottomRight,
         };
         
+        void addSubview(const UI::View &view){
+            this->sendMessage<void>("addSubview:", view.handle);
+        }
+        
         void setBackgroundColor(const UI::Color &newValue){
             this->sendMessage<void>("setBackgroundColor:", newValue.handle);
         }
         
         UI::Color backgroundColor(){
             return this->sendMessage<Handle>("backgroundColor");
+        }
+        
+        void setFrame(const CG::Rect &newValue){
+            this->sendMessage<void>("setFrame:", CGRect(newValue));
         }
         
         CG::Rect frame(){

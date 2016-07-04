@@ -62,6 +62,14 @@ namespace android{
                 return this->sendMessage<bool>("isEnabled");
             }
             
+            int getWidth(){
+                return this->sendMessage<int>("getWidth");
+            }
+            
+            int getHeight(){
+                return this->sendMessage<int>("getHeight");
+            }
+            
             static int VISIBLE(){
                 if(java::lang::Class cls=java::lang::Class::find<View>()){
                     return cls.getStaticField<int>("VISIBLE");
@@ -76,19 +84,6 @@ namespace android{
                 }else{
                     return -1;
                 }
-                /*if(auto env=java::lang::JNI::Env()){
-                    if(auto cls=java::lang::Class::find<View>()){
-                        if(auto fieldId=env->GetStaticFieldID(cls, "GONE", TypeSignatureGenerator<int>()().c_str())){
-                            return env->GetStaticIntField(cls,fieldId);
-                        }else{
-                            return -1;
-                        }
-                    }else{
-                        return -1;
-                    }
-                }else{
-                    return -1;
-                }*/
             }
 #endif
         };

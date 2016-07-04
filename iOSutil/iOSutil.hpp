@@ -10,7 +10,10 @@
 #define iOSutil_h
 
 #include "CG/AffineTransform.hpp"
+#include "CG/CG.hpp"
+#include "CG/Point.hpp"
 #include "CG/Rect.hpp"
+#include "CG/Size.hpp"
 
 #include "CF/String.hpp"
 
@@ -45,6 +48,7 @@
 #include "UI/NavigationBar.hpp"
 #include "UI/NavigationController.hpp"
 #include "UI/NavigationItem.hpp"
+#include "UI/PageControl.hpp"
 #include "UI/RefreshControl.hpp"
 #include "UI/Responder.hpp"
 #include "UI/ScrollView.hpp"

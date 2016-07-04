@@ -3,7 +3,7 @@
 
 #include "View.hpp"
 #include "Viper/iOSutil/NS/Data.hpp"
-#include "Viper/iOSutil/CG/CG.hpp"
+#include "Viper/iOSutil/CG/Size.hpp"
 
 namespace UI {
     struct Image:public NS::Object{
@@ -32,6 +32,10 @@ namespace UI {
             auto res=CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
             CFRelease(res);
             return res;
+        }
+        
+        CG::Size size(){
+            return this->sendMessage<CGSize>("size");
         }
         
 #endif
