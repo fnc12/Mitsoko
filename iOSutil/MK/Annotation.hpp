@@ -3,6 +3,7 @@
 
 #include "Viper/iOSutil/NS/Object.hpp"
 #include "Viper/iOSutil/NS/MutableDictionary.hpp"
+#include "Viper/iOSutil/CL/Location.hpp"
 #include <experimental/optional>
 #include <iostream>
 
@@ -26,6 +27,10 @@ namespace MK {
                 std::cout<<"newAnnotation is nil"<<std::endl;
                 return {};
             }
+        }
+        
+        CL::Location::Coordinate2D coordinate(){
+            return this->sendMessage<CLLocationCoordinate2D>("coordinate");
         }
 #endif
     };

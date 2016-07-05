@@ -136,4 +136,15 @@ struct MessageSender<int>{
         return -1;
     }
 };
+
+template<>
+struct MessageSender<double>{
+    template<class ...Args>
+    double operator()(JNIEnv *java_env,jobject receiver,jmethodID methodId,const Args& ...args)const{
+        return java_env->CallDoubleMethod(receiver,methodId,ArgumentProxy<Args>::cast(args)...);
+    }
+    double failure()const{
+        return -1;
+    }
+};
 #endif
