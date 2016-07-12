@@ -7,7 +7,7 @@ namespace UI {
     struct Color:public NS::Object{
         using Object::Object;
 #ifdef __APPLE__
-        STATIC_VAR(std::string, className, "UIColor");
+        STATIC_VAR(const std::string, className, "UIColor");
         
 #define COLOR_UI_STATIC_FUNC(name) static UI::Color name(){\
     auto cls=NS::getClass(className());\

@@ -208,9 +208,9 @@ namespace Viper {
             if(!_ramCache){
                 cout<<"if(!_ramCache){"<<endl;
                 _ramCache=java::util::HashMap<java::lang::String,Image>::create();
-//                cout<<"_ramCache=java::util::HashMap<java::lang::String,Image>::create();"<<endl;
+                cout<<"_ramCache=java::util::HashMap<java::lang::String,Image>::create();"<<endl;
                 _ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);
-//                cout<<"_ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);"<<endl;
+                cout<<"_ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);"<<endl;
             }
             return _ramCache;
         }

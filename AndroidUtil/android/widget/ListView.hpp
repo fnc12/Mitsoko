@@ -8,8 +8,9 @@ namespace android{
     namespace widget{
         struct ListView:public AbsListView{
             using AbsListView::AbsListView;
-            STATIC_VAR(const std::string, signature, "android/widget/ListView");
 #ifdef __ANDROID__
+            STATIC_VAR(const std::string, signature, "android/widget/ListView");
+            
             ListAdapter getAdapter(){
                 return this->sendMessage<ListAdapter>("getAdapter");
             }
