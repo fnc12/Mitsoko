@@ -42,15 +42,19 @@ namespace Viper{
         {
             typedef typename TupleCutter<T>::Head_t PageType;
             typedef typename PageType::wireframe_type Wireframe_t;
+//            cout<<"_createView "<<Wireframe_t::viewName()<<"/"<<viewName<<endl;
             if(Wireframe_t::viewName()==viewName){
-                
+            
                 //  create view..
                 auto viewPointer=std::make_shared<typename PageType::view_type>(handle);
+//                cout<<"viewPointer = "<<viewPointer<<endl;
                 const auto arguments=viewPointer->arguments();
+//                cout<<"arguments = "<<arguments<<endl;
                 
                 //  create presenter..
                 typedef typename PageType::presenter_type Presenter_t;
                 auto presenterPointer=std::make_shared<Presenter_t>();
+//                cout<<"presenterPointer = "<<presenterPointer<<endl;
                 
                 //  chain view and presenter..
                 viewPointer->setEventHandler(presenterPointer);
@@ -58,27 +62,25 @@ namespace Viper{
                 
                 //  create interactor..
                 auto interactorPointer=std::make_shared<typename PageType::interactor_type>();
+//                cout<<"interactorPointer = "<<interactorPointer<<endl;
                 
                 //  chain interactor and presenter..
                 presenterPointer->setInput(interactorPointer);
                 interactorPointer->setOutput(presenterPointer);
                 
+//                cout<<"interactorPointer->setOutput(presenterPointer);"<<endl;
+                
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(viewPointer));
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(presenterPointer));
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
+//                cout<<"disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));"<<endl;
                 
-                viewPointer->init();
                 interactorPointer->initWithArguments(arguments);
-                /*if(!std::is_same<typename Wireframe_t::argument_type, void>::value){
-                    if(Wireframe_t::staticArgument()){
-                        presenterPointer->init(std::move(*Wireframe_t::staticArgument()));
-                        Wireframe_t::staticArgument() = {};
-                    }
-                }else{
-                    presenterPointer->init();
-                }*/
-                typedef typename Presenter_t::P PresenterBase_t;
-                presenterPointer->PresenterBase_t::init();
+                typedef typename Wireframe_t::argument_type Argument_t;
+//                cout<<"typedef typename Wireframe_t::argument_type Argument_t;"<<endl;
+                PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
+//                cout<<"PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);"<<endl;
+                viewPointer->init();
                 
                 return std::dynamic_pointer_cast<ViewBase>(viewPointer);
             }else{

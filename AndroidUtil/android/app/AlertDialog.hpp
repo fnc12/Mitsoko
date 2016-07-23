@@ -97,7 +97,6 @@ namespace android{
                 {
                     android::content::DialogInterface::OnClickListener l;
                     if(cb){
-//                        auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
                         auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
                         auto callbackObject=java::lang::Object::create(classSignature);
                         auto callbackId=callbackObject.getField<int>("mId");

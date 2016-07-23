@@ -99,6 +99,23 @@ namespace Viper{
         std::map<ViewId, std::vector<std::shared_ptr<Disposable>>> disposables;
         ViewId nextViewId=0;
     };
+    
+    template<class Arg,class W,class P>
+    struct PresenterIniter{
+        void init(std::shared_ptr<P> presenterPointer) const{
+            if(W::staticArgument()){
+                presenterPointer->init(std::move(*W::staticArgument()));
+                W::staticArgument() = {};
+            }
+        }
+    };
+    
+    template<class W,class P>
+    struct PresenterIniter<void,W,P>{
+        void init(std::shared_ptr<P> presenterPointer) const{
+            presenterPointer->init();
+        }
+    };
 }
 
 #endif /* ViperGodBase_h */
