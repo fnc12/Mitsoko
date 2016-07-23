@@ -11,7 +11,7 @@
 #include "Util.hpp"
 #include "Selfish.hpp"
 
-#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Selfish<Wireframe>
+#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Viper::WireframeBase,Selfish<Wireframe>
 
 namespace Viper{
     
@@ -64,11 +64,21 @@ namespace Viper{
          *  Tempopary storage for argument. Must be assigned from called module wireframe before 
          *  switching to another module.
          */
-        STATIC_VAR(std::experimental::optional<argument_type>, staticArgument, {});
+        static std::experimental::optional<argument_type>& staticArgument(){
+            static std::experimental::optional<argument_type> res;
+            return res;
+        }
+//        STATIC_VAR(std::experimental::optional<argument_type>, staticArgument, {});
     };
     
     template<class W>
     struct Argumentable<void,W>{
         typedef void argument_type;
+    };
+    
+    struct WireframeBase{
+        const void *handle=nullptr;
+        
+//        WireframeBase(decltype(handle)handle_):handle(handle_){};
     };
 }
