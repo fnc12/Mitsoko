@@ -2,6 +2,9 @@
 #pragma once
 
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include <functional>
+#include <map>
+#include "Viper/Disposable.hpp"
 
 namespace android{
     namespace view{
@@ -10,6 +13,41 @@ namespace android{
             using Object::Object;
 #ifdef __ANDROID__
             STATIC_VAR(const std::string, signature, "android/view/View");
+            
+            typedef std::function<void(Handle)> OnClick;
+            
+            typedef std::map<int,OnClick> OnClickMap;
+            STATIC_VAR(OnClickMap, onClickMap, {});
+            
+            typedef std::map<Viper::Disposable::Id,int> DisposablesMap;
+            STATIC_VAR(DisposablesMap, disposablesMap, {});
+            
+            struct OnClickListener:public java::lang::Object{
+                using Object::Object;
+                STATIC_VAR(const std::string, signature, "android/view/View$OnClickListener");
+            };
+            
+            static void onClick(int id,android::view::View v){
+                auto it=onClickMap().find(id);
+                if(it != onClickMap().end()){
+                    it->second(v);
+                }else{
+                    std::cerr<<"callback not found with id "<<id<<std::endl;
+                }
+            }
+            
+            void setOnClickListener(OnClick cb,const Viper::Disposable &disposable){
+                OnClickListener l;
+                if(onClick){
+                    auto classSignature="kz/outlawstudio/viper/EventHandlers$ViewOnClickListener";
+                    auto callbackObject=java::lang::Object::create(classSignature);
+                    auto callbackId=callbackObject.getField<int>("mId");
+                    onClickMap().insert({callbackId,cb});
+                    l=(OnClickListener)callbackObject;
+                    disposablesMap().insert({disposable.id,callbackId});
+                }
+                this->sendMessage<void>("setOnClickListener",l);
+            }
             
             /**
              *  Implemented in ViewGroup.hpp"
