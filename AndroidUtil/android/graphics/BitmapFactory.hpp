@@ -13,7 +13,6 @@ namespace android {
             
             static Bitmap decodeFile(const std::string &pathName){
                 auto s=java::lang::String::create(pathName);
-//                java::lang::JNI::Env()->ExceptionCheck();
                 return std::move(decodeFile(s));
             }
             

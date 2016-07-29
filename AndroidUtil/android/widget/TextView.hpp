@@ -3,6 +3,7 @@
 
 #include "Viper/AndroidUtil/android/view/View.hpp"
 #include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Viper/AndroidUtil/android/graphics/Color.hpp"
 
 namespace android{
     namespace widget{
@@ -19,6 +20,10 @@ namespace android{
                 auto res=this->sendMessage<java::lang::CharSequence>("getText").toString();
                 return res.c_str();
             }*/
+            
+            void setTextColor(int color){
+                this->sendMessage<void>("setTextColor",color);
+            }
             
             void setText(const std::string &value){
 //                if(auto java_env=java::lang::JNI::Env()){
