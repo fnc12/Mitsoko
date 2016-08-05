@@ -91,6 +91,8 @@
 
 #ifdef __ANDROID__
 
+#include <android/log.h>
+
 /**
  *  This is a cool class that allows redirecting std::cout to
  *  android log.

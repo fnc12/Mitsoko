@@ -155,7 +155,7 @@ namespace Viper {
                 NSString *dp=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
                 _documentsPath=dp.UTF8String;
 #else
-                _documentsPath="/data/data/"+java::lang::JNI::appId();
+                _documentsPath="/data/data/"+java::lang::JNI::appId;
 #endif
             }
             return _documentsPath;

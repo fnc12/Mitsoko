@@ -64,19 +64,10 @@ namespace Viper{
          *  Tempopary storage for argument. Must be assigned from called module wireframe before 
          *  switching to another module.
          */
-//<<<<<<< HEAD
-//=======
-//        STATIC_VAR(std::experimental::optional<argument_type>, staticArgument, {});
-        
-//>>>>>>> 0b21d31a0f0243201cd3a19d736a20d0512e468a
         static std::experimental::optional<argument_type>& staticArgument(){
             static std::experimental::optional<argument_type> res;
             return res;
         }
-//<<<<<<< HEAD
-//        STATIC_VAR(std::experimental::optional<argument_type>, staticArgument, {});
-//=======
-//>>>>>>> 0b21d31a0f0243201cd3a19d736a20d0512e468a
     };
     
     template<class W>

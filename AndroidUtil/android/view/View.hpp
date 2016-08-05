@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Viper/AndroidUtil/android/content/Context.hpp"
 #include <functional>
 #include <map>
 #include "Viper/Disposable.hpp"

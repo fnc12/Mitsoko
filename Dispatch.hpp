@@ -10,9 +10,11 @@
 #define Dispatch_h
 
 #ifdef __APPLE__
-#include <dispatch/dispatch.h>
+//    #ifdef __OBJC__
+        #include <dispatch/dispatch.h>
+//    #endif
 #else
-#include "AndroidUtil/AndroidUtil.hpp"
+    #include "AndroidUtil/AndroidUtil.hpp"
 #endif
 #include <functional>
 #include <map>
@@ -59,7 +61,7 @@ namespace Viper{
             if(f){
                 f();
             }else{
-                LOGI("callback not found with id %d",callbackId);
+                std::cout<<"callback not found with id "<<callbackId<<std::endl;
             }
         }
         
@@ -72,7 +74,7 @@ namespace Viper{
                 auto globalHandler=java::lang::JNI::Env()->NewGlobalRef((jobject)handler.handle);
                 mainThreadHandler()=globalHandler;
             }else{
-                LOGI("handler is null");
+                std::cout<<"handler is null"<<std::endl;
             }
         }
 #endif
@@ -99,7 +101,7 @@ namespace Viper{
                 auto thread=Thread::create(backgroundRunnable);
                 thread.start();
             }else{
-                LOGI("java::lang::JNI::Env is null");
+                std::cout<<"java::lang::JNI::Env is null"<<std::endl;
             }
 #endif
         }
@@ -125,7 +127,7 @@ namespace Viper{
                 mainThreadHandler().post(backgroundRunnable);
                 
             }else{
-                LOGI("java::lang::JNI::Env is null");
+                std::cout<<"java::lang::JNI::Env is null"<<std::endl;
             }
 #endif
         }

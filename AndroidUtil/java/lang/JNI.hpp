@@ -6,6 +6,10 @@
 #include <mutex>
 #include <string>
 
+#ifdef __ANDROID__
+#include <jni.h>
+#endif
+
 namespace java{
     namespace lang{
 #ifdef __ANDROID__
@@ -26,42 +30,21 @@ namespace java{
          *  If you need to access JNIEnv pointer for this thread in your code write `auto env=java::lang::JNI::Env();`.
          */
         struct JNI{
-            JNI(JNIEnv *env){
-                if(!Env()){
-                    insertEnv(env);
-                    this->hasValue=true;
-                }
-            }
+            JNI(JNIEnv *env);
             
-            ~JNI(){
-                if(this->hasValue){
-                    removeEnv();
-                    this->hasValue=false;
-                }
-            }
+            ~JNI();
             
             /**
              *  Common public function for accessing current thread JNIEnv pointer.
              */
-            static JNIEnv* Env(){
-                JNIEnv *res=nullptr;
-                
-                envMapMutex().lock();
-                const auto threadId=std::this_thread::get_id();
-                const auto it=envMap().find(threadId);
-                if(it!=envMap().end()){
-                    res=it->second;
-                }
-                envMapMutex().unlock();
-                
-                return res;
-            }
+            static JNIEnv* Env();
             
             /**
              *  This variable is assigned once after NI library is loaded on android.
              *  This variable contains appId like `kz.outlawstudio.groozim`.
              */
-            STATIC_VAR(std::string, appId, {});
+            static std::string appId;
+//            STATIC_VAR(std::string, appId, {});
             
             /**
              *  This variable contains `appId` but with '.' characters replaced with '/'
@@ -69,36 +52,24 @@ namespace java{
              *  chars every time from appId when appNamespace is needed). `appNamespace` is neede in Viper
              *  classes for accessing helper classes like `ViperTableViewAdapter`.
              */
-            STATIC_VAR(std::string, appNamespace, {});
+            static std::string appNamespace;
+//            STATIC_VAR(std::string, appNamespace, {});
         protected:
             bool hasValue=false;
             
             typedef std::map<std::thread::id, JNIEnv*> JNIEnvMap;
-            STATIC_VAR(JNIEnvMap, envMap, {});
+            static JNIEnvMap envMap;
+//            STATIC_VAR(JNIEnvMap, envMap, {});
             
-            void insertEnv(JNIEnv *env){
-                const auto threadId=std::this_thread::get_id();
-                
-                envMapMutex().lock();
-                envMap().insert({threadId,env});
-                envMapMutex().unlock();
-            }
+            void insertEnv(JNIEnv *env);
             
-            void removeEnv(){
-                const auto threadId=std::this_thread::get_id();
-                
-                envMapMutex().lock();
-                const auto it=envMap().find(threadId);
-                if(it!=envMap().end()){
-                    envMap().erase(it);
-                }
-                envMapMutex().unlock();
-            }
+            void removeEnv();
             
-            static std::mutex& envMapMutex(){
+            static std::mutex envMapMutex;
+            /*static std::mutex& envMapMutex(){
                 static std::mutex res;
                 return res;
-            }
+            }*/
         };
 #endif
     }

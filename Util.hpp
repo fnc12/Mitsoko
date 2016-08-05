@@ -36,7 +36,7 @@
  */
 #define JSON_PAIR(name) {name##Key(),this->name}
 
-#ifdef __ANDROID__
+/*#ifdef __ANDROID__
 #include <android/log.h>
 
 #define  LOG_TAG    "ViperLog"
@@ -50,6 +50,6 @@
 #define  LOGI(...) printf(__VA_ARGS__)
 #define  LOGD(...) printf(__VA_ARGS__)
 #define  LOGE(...) printf(__VA_ARGS__)
-#endif
+#endif*/
 
 #endif /* Util_h */

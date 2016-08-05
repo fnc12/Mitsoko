@@ -46,10 +46,7 @@ namespace android{
         }
         
         template<>
-        void View::setLayoutParams<ViewGroup::LayoutParams>(const ViewGroup::LayoutParams &params){
-//            auto baseParams=(ViewGroup::LayoutParams)params;
-            this->sendMessage<void>("setLayoutParams",params);
-        }
+        void View::setLayoutParams<ViewGroup::LayoutParams>(const ViewGroup::LayoutParams &params);
 #endif
     }
 }

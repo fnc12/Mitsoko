@@ -7,7 +7,7 @@ namespace android{
     namespace widget{
         struct CheckBox:public CompoundButton{
             using CompoundButton::CompoundButton;
-#ifdef __APPLE__
+#ifdef __ANDROID__
             STATIC_VAR(const std::string, signature, "android/widget/CheckBox");
 #endif
         };

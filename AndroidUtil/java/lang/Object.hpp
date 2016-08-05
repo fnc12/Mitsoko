@@ -3,7 +3,9 @@
 
 #include "JNI.hpp"
 #include "JavaRuntime.hpp"
+#include "Viper/Util.hpp"
 #include <type_traits>
+#include <iostream>
 
 namespace java{
     namespace lang{
@@ -14,13 +16,11 @@ namespace java{
             /**
              *  Default constructor means `null`.
              */
-            Object():Object(nullptr){}
+            Object();
             
-            Object(Handle handle_):handle(handle_){}
+            Object(Handle handle_);
             
-            operator bool()const{
-                return this->handle != nullptr;
-            }
+            operator bool() const;
             
             operator Handle()const{
                 return this->handle;
@@ -36,15 +36,7 @@ namespace java{
                 java_env->SetObjectField((jobject)this->handle, fieldId, ArgumentProxy<T>::cast(value));
             }
         public:
-            virtual ~Object(){
-                if(this->isGlobal){
-                    if(auto java_env=JNI::Env()){
-                        java_env->DeleteGlobalRef((jobject)this->handle);
-                        this->isGlobal=false;
-                        this->handle=nullptr;
-                    }
-                }
-            }
+            virtual ~Object();
             
             /**
              *  Java `instanceof` operator analog.
@@ -88,13 +80,13 @@ namespace java{
                         if(auto field = java_env->GetFieldID(clazz, fieldName, signature.c_str())){
                             this->_setField(java_env, field, value);
                         }else{
-                            LOGI("field is null");
+                            std::cout<<"field is null"<<std::endl;
                         }
                     }else{
-                        LOGI("clazz is null");
+                        std::cout<<"clazz is null"<<std::endl;
                     }
                 }else{
-                    LOGI("java_env is null");
+                    std::cout<<"java_env is null"<<std::endl;
                 }
             }
             
@@ -205,44 +197,13 @@ namespace java{
 #ifdef __ANDROID__
         
         template<>
-        void Object::_setField<int>(JNIEnv *java_env,jfieldID fieldId,const int &value){
-            LOGI("java_env->SetIntField((jobject)this->handle, fieldId, ArgumentProxy<int>::cast(value));");
-            java_env->SetIntField((jobject)this->handle, fieldId, ArgumentProxy<int>::cast(value));
-        }
+        void Object::_setField<int>(JNIEnv *java_env,jfieldID fieldId,const int &value);
         
         template<>
-        int Object::getField<int>(const char *fieldName){
-            if(auto java_env=JNI::Env()){
-                if(auto clazz=this->getClass()){
-                    if(auto field = java_env->GetFieldID(clazz, fieldName, TypeSignatureGenerator<int>()().c_str())){
-                        return java_env->GetIntField((jobject)this->handle, field);
-                    }else{
-                        return MessageSender<int>().failure();
-                    }
-                }else{
-                    return MessageSender<int>().failure();;
-                }
-            }else{
-                return MessageSender<int>().failure();;
-            }
-        }
+        int Object::getField<int>(const char *fieldName);
         
         template<>
-        bool Object::getField<bool>(const char *fieldName){
-            if(auto java_env=JNI::Env()){
-                if(auto clazz=this->getClass()){
-                    if(auto field = java_env->GetFieldID(clazz, fieldName, TypeSignatureGenerator<bool>()().c_str())){
-                        return java_env->GetBooleanField((jobject)this->handle, field);
-                    }else{
-                        return MessageSender<bool>().failure();
-                    }
-                }else{
-                    return MessageSender<bool>().failure();
-                }
-            }else{
-                return MessageSender<bool>().failure();
-            }
-        }
+        bool Object::getField<bool>(const char *fieldName);
 #endif
     }
 }

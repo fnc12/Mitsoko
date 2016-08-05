@@ -500,7 +500,7 @@ namespace Viper {
                 auto res=dataSource->getSectionsCount();
                 return res;
             }else{
-                LOGI("tableOrListView not found in %s",__func__);
+                std::cout<<"tableOrListView not found in "<<__func__<<std::endl;
                 return 0;
             }
         }

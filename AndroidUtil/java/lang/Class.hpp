@@ -10,35 +10,23 @@ namespace java{
 #ifdef __ANDROID__
             STATIC_VAR(const std::string, signature, "java/lang/Class");
             
-            static jclass find(const std::string &signature){
-                if(auto env=JNI::Env()){
-                    return env->FindClass(signature.c_str());
-                }else{
-                    LOGI("env is null");
-                    return nullptr;
-                }
-            }
+            static jclass find(const std::string &signature);
             
             template<class T>
             static jclass find(){
                 return find(T::signature());
             }
             
-            /*template<class T>
-            Class():Class(find<T>()){}*/
-            
             template<class T>
             T getStaticField(const char *name){
                 if(auto env=java::lang::JNI::Env()){
-//                    if(auto cls=java::lang::Class::find<View>()){
-                        if(auto fieldId=env->GetStaticFieldID(jclass(this->handle),
-                                                              name,
-                                                              TypeSignatureGenerator<T>()().c_str())){
-                            return this->_getStaticField<T>(fieldId,env);
-                        }else{
-//                            return -1;
-                            return MessageSender<T>().failure();
-                        }
+                    if(auto fieldId=env->GetStaticFieldID(jclass(this->handle),
+                                                          name,
+                                                          TypeSignatureGenerator<T>()().c_str())){
+                        return this->_getStaticField<T>(fieldId,env);
+                    }else{
+                        return MessageSender<T>().failure();
+                    }
                 }else{
                     return MessageSender<T>().failure();
                 }
@@ -60,9 +48,7 @@ namespace java{
         
 #ifdef __ANDROID__
         template<>
-        int Class::_getStaticField<int>(jfieldID fieldID,JNIEnv *env){
-            return env->GetStaticIntField(jclass(this->handle),fieldID);
-        }
+        int Class::_getStaticField<int>(jfieldID fieldID,JNIEnv *env);
 #endif
     }
 }
