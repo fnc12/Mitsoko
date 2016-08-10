@@ -9,6 +9,8 @@
 #include "ImageCache.hpp"
 #include <iostream>
 
+Viper::ImageCache Viper::ImageCache::shared;
+
 Viper::ImageCache::Callback::Callback(type fun_,const Disposable &disposable):fun(fun_),disposableId(disposable.id){
     Disposable::subscribe(this);
 }
