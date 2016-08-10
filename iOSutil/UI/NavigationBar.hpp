@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__NAVIGATION_BAR__
+#define __VIPER__IOS_UTIL__UI__NAVIGATION_BAR__
 
 #include "View.hpp"
 #include "Color.hpp"
@@ -8,23 +9,20 @@ namespace UI {
     struct NavigationBar:public UI::View{
         using View::View;
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UINavigationBar");
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UINavigationBar");
         
-        void setBarTintColor(const UI::Color &newValue){
-            this->sendMessage<void>("setBarTintColor:", newValue.handle);
-        }
+        static UI::NavigationBar appearance();
         
-        UI::Color barTintColor(){
-            return this->sendMessage<Handle>("barTintColor");
-        }
+        void setBarTintColor(const UI::Color &newValue);
         
-        void setTintColor(const UI::Color &newValue){
-            this->sendMessage<void>("setTintColor:", newValue.handle);
-        }
+        UI::Color barTintColor();
         
-        UI::Color tintColor(){
-            return this->sendMessage<Handle>("tintColor");
-        }
+        void setTintColor(const UI::Color &newValue);
+        
+        UI::Color tintColor();
 #endif
     };
 }
+
+#endif
