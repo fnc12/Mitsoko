@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__CG__POINT__
+#define __VIPER__IOS_UTIL__CG__POINT__
 
 #ifdef __APPLE__
 
@@ -8,14 +9,13 @@
 namespace CG {
     struct Point:public CGPoint{
         
-        Point():Point(0,0){}
+        Point();
         
-        Point(CGPoint r):CGPoint(r){}
+        Point(CGPoint r);
         
-        Point(decltype(x) x_,decltype(y) y_){
-            this->x=x_;
-            this->y=y_;
-        }
+        Point(decltype(x) x_,decltype(y) y_);
     };
 }
 #endif
+
+#endif  //__VIPER__IOS_UTIL__CG__POINT__

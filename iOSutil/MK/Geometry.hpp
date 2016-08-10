@@ -1,34 +1,31 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__MK__GEOMETRY__
+#define __VIPER__IOS_UTIL__MK__GEOMETRY__
 
 #ifdef __APPLE__
-#import <MapKit/MKGeometry.h>
+#import <MapKit/MapKit.h>
+#include "Viper/iOSutil/CL/Location.hpp"
 
 namespace MK {
     namespace Coordinate{
         
         struct Span:public MKCoordinateSpan{
-            Span(MKCoordinateSpan s):MKCoordinateSpan(s){}
+            Span(MKCoordinateSpan s);
             
-            static MK::Coordinate::Span Make(CL::Location::Degrees latitudeDelta,CL::Location::Degrees longitudeDelta){
-                return MKCoordinateSpanMake(latitudeDelta, longitudeDelta);
-            }
+            static MK::Coordinate::Span make(CL::Location::Degrees latitudeDelta,CL::Location::Degrees longitudeDelta);
         };
         
         struct Region:public MKCoordinateRegion{
-            Region(MKCoordinateRegion r):MKCoordinateRegion(r){}
+            Region(MKCoordinateRegion r);
             
-            static MK::Coordinate::Region Make(CL::Location::Coordinate2D centerCoordinate, MK::Coordinate::Span span){
-                return MKCoordinateRegionMake(centerCoordinate, span);
-            }
+            static MK::Coordinate::Region make(CL::Location::Coordinate2D centerCoordinate, MK::Coordinate::Span span);
             
-            static MK::Coordinate::Region MakeWithDistance(CL::Location::Coordinate2D centerCoordinate,
+            static MK::Coordinate::Region makeWithDistance(CL::Location::Coordinate2D centerCoordinate,
                                                            CL::Location::Distance latitudinalMeters,
-                                                           CL::Location::Distance longitudinalMeters)
-            {
-                return MKCoordinateRegionMakeWithDistance(centerCoordinate, latitudinalMeters, longitudinalMeters);
-            }
+                                                           CL::Location::Distance longitudinalMeters);
         };
     }
 }
-#endif
+#endif  //__APPLE__
+
+#endif  //__VIPER__IOS_UTIL__MK__GEOMETRY__

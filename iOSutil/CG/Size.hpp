@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__CG__SIZE__
+#define __VIPER__IOS_UTIL__CG__SIZE__
 
 #ifdef __APPLE__
 
@@ -8,14 +9,13 @@
 namespace CG {
     struct Size:public CGSize{
         
-        Size():Size(0,0){}
+        Size();
         
-        Size(CGSize s):CGSize(s){}
+        Size(CGSize s);
         
-        Size(decltype(width) w,decltype(height) h){
-            this->width=w;
-            this->height=h;
-        }
+        Size(decltype(width) w,decltype(height) h);
     };
 }
 #endif
+
+#endif  //__VIPER__IOS_UTIL__CG__SIZE__

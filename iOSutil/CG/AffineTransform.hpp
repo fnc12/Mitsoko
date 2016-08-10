@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__CG__AFFINE_TRANSFORM__
+#define __VIPER__IOS_UTIL__CG__AFFINE_TRANSFORM__
 
 #ifdef __APPLE__
 
@@ -8,17 +9,11 @@
 namespace CG {
     struct AffineTransform:public CGAffineTransform{
         
-        AffineTransform& operator=(const CGAffineTransform &other){
-            this->CGAffineTransform::operator=(other);
-            return *this;
-        }
+        AffineTransform& operator=(const CGAffineTransform &other);
         
-        static CG::AffineTransform makeScale(CG::Float sx,CG::Float sy){
-            CG::AffineTransform res;
-            auto t=CGAffineTransformMakeScale(sx, sy);
-            res=t;
-            return res;
-        }
+        static CG::AffineTransform makeScale(CG::Float sx,CG::Float sy);
     };
 }
 #endif
+
+#endif  //__VIPER__IOS_UTIL__CG__AFFINE_TRANSFORM__

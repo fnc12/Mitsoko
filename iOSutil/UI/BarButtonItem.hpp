@@ -73,7 +73,7 @@ namespace UI {
             if(it != touchedMap().end()){
                 it->second(handle);
             }else{
-                std::cerr<<"touched callback not found for UI::BarButtonItem for handle "<<handle<<endl;
+                std::cerr<<"touched callback not found for UI::BarButtonItem for handle "<<handle<<std::endl;
             }
         }
         

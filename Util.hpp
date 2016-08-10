@@ -17,25 +17,6 @@
  */
 #define STATIC_VAR(type,name,value) static type& name(){ static type res(value); return res; }
 
-//#warning typeof(errno)##ototo
-
-/**
- *  Macro used for member and json key declaration. Created member and name+"Key" key static constant.
- */
-#define JSON_MEMBER(type,name) type name; STATIC_VAR(const std::string, name##Key, #name);
-
-/**
- *  Used in initializer list in constructors during deserialization.
- */
-#define INIT_JSON(name) name(JsonUtil::parseJson<decltype(name)>(json,name##Key()))
-
-#define ASSIGN_JSON(name) name=JsonUtil::parseJson<decltype(name)>(json,name##Key())
-
-/**
- *  Used during serialization.
- */
-#define JSON_PAIR(name) {name##Key(),this->name}
-
 /*#ifdef __ANDROID__
 #include <android/log.h>
 

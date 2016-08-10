@@ -15,10 +15,15 @@
 #include <iostream>
 
 namespace Viper{
-    using std::cout;
-    using std::endl;
+//    using std::cout;
+//    using std::endl;
     
     struct Disposable{
+        
+        /**
+         *  Every disposable has unique id. Once disposed every observer receives callback with id 
+         *  of disposable which disposed.
+         */
         typedef unsigned Id;
         
         const Id id;
@@ -26,55 +31,33 @@ namespace Viper{
         struct Observer{
             virtual void disposableDidDispose(Id id)=0;
             
-            virtual ~Observer(){
-                Disposable::unsubscribe(this);
-            }
+            virtual ~Observer();
         };
         
-        Disposable():id(generateId()){}
+        Disposable();
         
-        virtual void dispose(){
-            for(auto observer:observers()){
-                const auto id=this->id;
-                observer->disposableDidDispose(id);
-            }
-        }
+        virtual void dispose();
         
-        static void subscribe(Observer *observer){
-            observersMutex().lock();
-            observers().emplace_back(observer);
-            observersMutex().unlock();
-        }
+        static void subscribe(Observer *observer);
         
-        static void unsubscribe(Observer *observer){
-            observersMutex().lock();
-            const auto it=std::find(observers().begin(), observers().end(), observer);
-            if(observers().end()!=it){
-                observers().erase(it);
-            }
-            observersMutex().unlock();
-        }
+        static void unsubscribe(Observer *observer);
         
     protected:
         
-        static std::mutex& observersMutex(){
+        static std::mutex observersMutex;
+        /*static std::mutex& observersMutex(){
             static std::mutex res;
             return res;
-        }
+        }*/
         
-        static std::vector<Observer*>& observers(){
+        static std::vector<Observer*> observers;
+        
+        /*static std::vector<Observer*>& observers(){
             static std::vector<Observer*> res;
             return res;
-        }
+        }*/
         
-        static Id generateId(){
-            static Id previousId=0;
-            static std::mutex idLock;
-            idLock.lock();
-            const auto res=previousId++;
-            idLock.unlock();
-            return res;
-        }
+        static Id generateId();
     };
 }
 

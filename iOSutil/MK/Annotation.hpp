@@ -1,11 +1,11 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__MK__ANNOTATION__
+#define __VIPER__IOS_UTIL__MK__ANNOTATION__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 #include "Viper/iOSutil/NS/MutableDictionary.hpp"
 #include "Viper/iOSutil/CL/Location.hpp"
 #include <experimental/optional>
-#include <iostream>
 
 namespace MK {
     struct Annotation:public NS::Object{
@@ -14,24 +14,11 @@ namespace MK {
         
         static MK::Annotation create(CL::Location::Coordinate2D coordinate,
                                      std::experimental::optional<std::string> title={},
-                                     std::experimental::optional<std::string> subtitle={})
-        {
-            if(auto newAnnotation=NS::Object::create<Annotation>("ViperMKAnnotation")){
-                newAnnotation.sendMessage<void>("setCoordinate:", CLLocationCoordinate2D(coordinate));
-                auto t=CF::String::create(title);
-                newAnnotation.sendMessage<void>("setTitle:", t.handle);
-                auto s=CF::String::create(subtitle);
-                newAnnotation.sendMessage<void>("setSubtitle:", s.handle);
-                return newAnnotation;
-            }else{
-                std::cout<<"newAnnotation is nil"<<std::endl;
-                return {};
-            }
-        }
+                                     std::experimental::optional<std::string> subtitle={});
         
-        CL::Location::Coordinate2D coordinate(){
-            return this->sendMessage<CLLocationCoordinate2D>("coordinate");
-        }
+        CL::Location::Coordinate2D coordinate();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__MK__ANNOTATION__

@@ -52,7 +52,7 @@ static std::vector<std::string> SplitEnumArgs(const char* szArgs, int nMax)
     }
     return std::move(res);
 };
-#define DECLARE_ENUM(ename, ...) \
+#define ENUM_DECL(ename, ...) \
 enum class ename { __VA_ARGS__ }; \
 struct Incorrect##ename##StringException{};\
 static constexpr const int MAX_NUMBER_OF_##ename=PP_NARG(__VA_ARGS__);\

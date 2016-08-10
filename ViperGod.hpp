@@ -9,31 +9,76 @@
 #ifndef ViperGod_h
 #define ViperGod_h
 
-#include "ViperGodBase.hpp"
+#include <string>
+#include <tuple>
+#include <type_traits>
+#include <memory>
+#include <map>
+#include <cstring>
+#include <vector>
 #include "R/Modules.hpp"
+#include "Module.hpp"
+#include "Disposable.hpp"
+#include "View.hpp"
+#include "Dispatch.hpp"
 
 namespace Viper{
-    using namespace Modules;
-    struct God:public Viper::ViperGodBase{
-        
-        static God& shared(){
-            static God res;
-            return res;
-        }
-        
-        ViewId createView(const std::string &viewName,const void *handle){
-            std::vector<std::shared_ptr<Disposable>> disposablesVector;
-            auto viewPointer=this->_createView<R::ModulesTuple>(viewName,handle,disposablesVector);
-            if(viewPointer){
-                const auto viewId=this->nextViewId++;
-                this->viewPool.insert({viewId,viewPointer});
-                this->disposables.insert({viewId,std::move(disposablesVector)});
-                return viewId;
-            }else{
-                return -1;
+//    using namespace Modules;
+    
+    template<class Arg,class W,class P>
+    struct PresenterIniter{
+        void init(std::shared_ptr<P> presenterPointer) const{
+            if(W::staticArgument()){
+                presenterPointer->init(std::move(*W::staticArgument()));
+                W::staticArgument() = {};
             }
         }
+    };
+    
+    template<class W,class P>
+    struct PresenterIniter<void,W,P>{
+        void init(std::shared_ptr<P> presenterPointer) const{
+            presenterPointer->init();
+        }
+    };
+    
+    struct God/*:public Viper::ViperGodBase*/{
+        typedef long ViewId;
+        
+        static God shared;
+        /*static God& shared(){
+            static God res;
+            return res;
+        }*/
+        
+        void viewWillAppear(ViewId viewId);
+        
+        void viewDidAppear(ViewId viewId);
+        
+        void viewWillDisappear(ViewId viewId);
+        
+        const void* destroyView(ViewId viewId);
+        
+        void sendMessageToView(ViewId viewId,int messageCode,std::string argumentsString="");
+        
+#ifdef __ANDROID__
+        void onActivityResult(ViewId viewId,int requestCode,int resultCode,jobject data);
+#endif
+        
+        ViewId createView(const std::string &viewName,const void *handle);
     protected:
+        std::map<ViewId, std::shared_ptr<ViewBase>> viewPool;
+        std::map<ViewId, std::vector<std::shared_ptr<Disposable>>> disposables;
+        ViewId nextViewId=0;
+        
+        template<typename H,typename... Tail>
+        struct TupleCutter;
+        
+        template<typename H,typename... Tail>
+        struct TupleCutter<std::tuple<H,Tail...>>{
+            typedef H Head_t;
+            typedef std::tuple<Tail...> Tail_t;
+        };
         
         template<class T>
         std::shared_ptr<ViewBase> _createView(const std::string &viewName,
@@ -42,19 +87,15 @@ namespace Viper{
         {
             typedef typename TupleCutter<T>::Head_t PageType;
             typedef typename PageType::wireframe_type Wireframe_t;
-//            cout<<"_createView "<<Wireframe_t::viewName()<<"/"<<viewName<<endl;
             if(Wireframe_t::viewName()==viewName){
             
                 //  create view..
                 auto viewPointer=std::make_shared<typename PageType::view_type>(handle);
-//                cout<<"viewPointer = "<<viewPointer<<endl;
                 const auto arguments=viewPointer->arguments();
-//                cout<<"arguments = "<<arguments<<endl;
                 
                 //  create presenter..
                 typedef typename PageType::presenter_type Presenter_t;
                 auto presenterPointer=std::make_shared<Presenter_t>();
-//                cout<<"presenterPointer = "<<presenterPointer<<endl;
                 
                 //  chain view and presenter..
                 viewPointer->setEventHandler(presenterPointer);
@@ -64,24 +105,18 @@ namespace Viper{
                 
                 //  create interactor..
                 auto interactorPointer=std::make_shared<typename PageType::interactor_type>();
-//                cout<<"interactorPointer = "<<interactorPointer<<endl;
                 
                 //  chain interactor and presenter..
                 presenterPointer->setInput(interactorPointer);
                 interactorPointer->setOutput(presenterPointer);
                 
-//                cout<<"interactorPointer->setOutput(presenterPointer);"<<endl;
-                
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(viewPointer));
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(presenterPointer));
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
-//                cout<<"disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));"<<endl;
                 
                 interactorPointer->initWithArguments(arguments);
                 typedef typename Wireframe_t::argument_type Argument_t;
-//                cout<<"typedef typename Wireframe_t::argument_type Argument_t;"<<endl;
                 PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
-//                cout<<"PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);"<<endl;
                 viewPointer->init();
                 
                 return std::dynamic_pointer_cast<ViewBase>(viewPointer);
@@ -94,10 +129,7 @@ namespace Viper{
     template<>
     std::shared_ptr<ViewBase> God::_createView<std::tuple<>>(const std::string &viewName,
                                                              const void *handle,
-                                                             std::vector<std::shared_ptr<Disposable>> &disposables)
-    {
-        return {};
-    }
+                                                             std::vector<std::shared_ptr<Disposable>> &disposables);
 }
 
 #endif /* ViperGod_h */

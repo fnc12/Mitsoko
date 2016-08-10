@@ -77,7 +77,5 @@ namespace Viper{
     
     struct WireframeBase{
         const void *handle=nullptr;
-        
-//        WireframeBase(decltype(handle)handle_):handle(handle_){};
     };
 }

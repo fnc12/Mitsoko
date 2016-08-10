@@ -17,6 +17,7 @@
 #define PRESENTER_DECL(module) struct Presenter:public Viper::Presenter<module::UserInterface, module::EventHandler, module::Input, module::Output, module::Wireframe, module::Wireframe::argument_type>,Selfish<Presenter>
 
 namespace Viper{
+    
     template<class UI,class EH,class I,class O,class W>
     struct PresenterBase:public EH,public O,public Disposable{
         std::shared_ptr<UI> userInterface;
@@ -44,14 +45,14 @@ namespace Viper{
     struct Presenter:public PresenterBase<UI,EH,I,O,W>{
         typedef Presenter<UI,EH,I,O,W,Arg> P;
         
-        virtual auto init()->void{
+        virtual void init(){
             if(W::staticArgument()){
                 this->init(std::move(*W::staticArgument()));
                 W::staticArgument() = {};
             }
         }
         
-        virtual auto init(Arg arg)->void{
+        virtual void init(Arg arg){
             //..
         }
     };
@@ -60,7 +61,7 @@ namespace Viper{
     struct Presenter<UI,EH,I,O,W,void>:public PresenterBase<UI,EH,I,O,W>{
         typedef Presenter<UI,EH,I,O,W,void> P;
         
-        virtual auto init()->void{
+        virtual void init(){
             //..
         }
     };

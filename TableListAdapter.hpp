@@ -2,9 +2,17 @@
 #pragma once
 
 #include "Util.hpp"
+
 #ifdef __APPLE__
+
 #include <UIKit/UIKit.h>
+
+#else
+
+#include <jni.h>
+
 #endif
+
 #include <map>
 #include <memory>
 #include <iostream>
@@ -13,39 +21,21 @@
 #include "Disposable.hpp"
 
 namespace Viper {
-    using std::cout;
-    using std::endl;
+//    using std::cout;
+//    using std::endl;
     
     struct DataSourceBase{
         std::function<int()> getSectionsCountLambda;
         
-        virtual auto getSectionsCount()->int{
-            if(this->getSectionsCountLambda){
-                return getSectionsCountLambda();
-            }else{
-                return 1;
-            }
-        }
+        virtual int getSectionsCount();
         
         std::function<int(int)> getRowsCountLambda;
         
-        virtual auto getRowsCount(int section)->int{
-            if(this->getRowsCountLambda){
-                return this->getRowsCountLambda(section);
-            }else{
-                return 0;
-            }
-        };
+        virtual int getRowsCount(int section);
         
         std::function<std::string(int,int)> getItemIdLambda;
         
-        virtual auto getItemId(int section,int row)->std::string{
-            if(this->getItemIdLambda){
-                return std::move(this->getItemIdLambda(section,row));
-            }else{
-                return {};
-            }
-        };
+        virtual std::string getItemId(int section,int row);
     };
     
     /**
@@ -64,7 +54,7 @@ namespace Viper {
         
         std::function<data_type(int,int)> getItemLambda;
         
-        virtual auto getItem(int section,int row) throw (std::runtime_error) ->data_type{
+        virtual data_type getItem(int section,int row) throw (std::runtime_error){
             if(this->getItemLambda){
                 return std::move(this->getItemLambda(section,row));
             }else{
@@ -106,9 +96,7 @@ namespace Viper {
             ,
         };
         
-        virtual ~AdapterBase(){
-            this->dispose();
-        }
+        virtual ~AdapterBase();
         
         /**
          *  This function should be bound to presenter cause in Viper
@@ -127,63 +115,36 @@ namespace Viper {
         const void *activityHandle=nullptr;
 #endif
         
-        virtual auto onRowSelected(int section,int row)->void {
-            if(this->rowSelectedLambda){
-                this->rowSelectedLambda(section,row);
-            }
-        }
+        virtual void onRowSelected(int section,int row);
         
-        virtual auto onCreateCell(const void *cell,int section,int row)->void =0;
+        virtual void onCreateCell(const void *cell,int section,int row)=0;
         
-        virtual auto onDisplayCell(const void *cell,int section,int row)->void =0;
+        virtual void onDisplayCell(const void *cell,int section,int row)=0;
         
-        virtual auto getViewClass(int section,int row)->std::string =0;
+        virtual std::string getViewClass(int section,int row)=0;
         
-        virtual auto getRowStyle(int section,int row)->RowStyle =0;
+        virtual RowStyle getRowStyle(int section,int row)=0;
         
-        virtual auto getRowHeight(int section,int row)->double=0;
+        virtual double getRowHeight(int section,int row)=0;
         
         /**
          *  Optional.
          */
         std::function<std::string(int)> getHeaderClassLambda;
-        virtual auto getHeaderClass(int section)->std::string{
-            if(this->getHeaderClassLambda){
-                return std::move(this->getHeaderClassLambda(section));
-            }else{
-                return {};
-            }
-        }
+        
+        virtual std::string getHeaderClass(int section);
         
         /**
          *  Optional.
          */
         std::function<double(int)> getHeaderHeightLambda;
-        virtual auto getHeaderHeight(int section)->double{
-            if(this->getHeaderHeightLambda){
-                return this->getHeaderHeightLambda(section);
-            }else{
-                return 0;
-            }
-        }
+        virtual double getHeaderHeight(int section);
         
         /**
          *  Optional.
          */
         std::function<void(const void*,int)> onCreateHeaderLambda;
-        virtual auto onCreateHeader(const void *headerHandle,int section)->void{
-            if(this->onCreateHeaderLambda){
-                this->onCreateHeaderLambda(headerHandle,section);
-            }
-        }
-        
-//        virtual auto getRowHeight(int section,int row)->double=0;/*{
-/*            if(this->getRowHeightLambda){
-                return this->getRowHeightLambda(section,row);
-            }else{
-                return 44;
-            }
-        }*/
+        virtual void onCreateHeader(const void *headerHandle,int section);
         
         virtual auto getDataSource()->std::shared_ptr<DataSourceBase> =0;
     };
@@ -294,237 +255,40 @@ namespace Viper {
         
         constexpr static AdapterId adapterIdNull=nullptr;
         
-        static AdapterId registerAdapter(const void *tableOrListView,AdapterBasePointer adapter,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-//#ifdef __APPLE__
-            it=adaptersMap().find(tableOrListView);
-/*#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif*/
-            if(it != adaptersMap().end()){
-                if(adapter){
-                    it->second=adapter;
-                }else{
-                    adaptersMap().erase(it);
-                }
-            }else{
-                if(adapter){
-//#ifdef __APPLE__
-                    adaptersMap().insert({tableOrListView,adapter});
-/*#else
-                    adaptersMap().insert({(const void*)adapterId,adapter});
-#endif*/
-                }else{
-                    cout<<"table or list view not found ("<<tableOrListView<<")"<<endl;
-                }
-            }
-//#ifdef __APPLE__
-            return tableOrListView;
-/*#else
-            return AdapterId(adapterId);
-#endif*/
-        }
+        static AdapterId registerAdapter(const void *tableOrListView,AdapterBasePointer adapter,const void *jni=nullptr);
         
-        static void willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                it->second->onDisplayCell(cell, section, row);
-            }else{
-                //  not found..
-            }
-        }
+        static void willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr);
         
-        static void didSelectRow(const void *tableOrListView,int section,int row,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                it->second->onRowSelected(section, row);
-            }else{
-                //  not found..
-            }
-        }
+        static void didSelectRow(const void *tableOrListView,int section,int row,const void *jni=nullptr);
         
-        static double rowHeight(const void *tableOrListView,int section,int row){
-            auto it=adaptersMap().find(tableOrListView);
-            if(it != adaptersMap().end()){
-                return it->second->getRowHeight(section, row);
-            }else{
-                return 0;
-            }
-        }
+        static double rowHeight(const void *tableOrListView,int section,int row);
         
-        static void cellCreated(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                it->second->onCreateCell(cell, section, row);
-            }else{
-                //  not found..
-            }
-        }
+        static void cellCreated(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr);
         
         /*** iOS only ***/
-        static AdapterBase::RowStyle cellStyle(const void *tableOrListView,int section,int row){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            /*auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);*/
-#endif
-            if(it != adaptersMap().end()){
-                return it->second->getRowStyle(section,row);
-            }else{
-                return AdapterBase::RowStyle::Default;
-            }
-        }
+        static AdapterBase::RowStyle cellStyle(const void *tableOrListView,int section,int row);
         
-        static void headerCreated(const void *tableOrListView,const void *header,int section,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-//#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-/*#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif*/
-            if(it != adaptersMap().end()){
-                it->second->onCreateHeader(header, section);
-            }else{
-                //  not found..
-            }
-        }
+        static void headerCreated(const void *tableOrListView,const void *header,int section,const void *jni=nullptr);
         
-        static double headerHeight(const void *tableOrListView,int section,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-//#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-/*#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif*/
-            if(it != adaptersMap().end()){
-                return it->second->getHeaderHeight(section);
-            }else{
-                return 0;
-            }
-        }
+        static double headerHeight(const void *tableOrListView,int section,const void *jni=nullptr);
         
-        static std::string headerViewClassName(const void *tableOrListView,int section,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-//#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-/*#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif*/
-            if(it != adaptersMap().end()){
-                return std::move(it->second->getHeaderClass(section));
-            }else{
-                return "";
-            }
-        }
+        static std::string headerViewClassName(const void *tableOrListView,int section,const void *jni=nullptr);
         
-        static std::string cellClassName(const void *tableOrListView,int section,int row,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                return std::move(it->second->getViewClass(section, row));
-            }else{
-                return 0;
-            }
-        }
+        static std::string cellClassName(const void *tableOrListView,int section,int row,const void *jni=nullptr);
         
-        static std::string rowId(const void *tableOrListView,int section,int row,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                return std::move(it->second->getDataSource()->getItemId(section, row));
-            }else{
-                return 0;
-            }
-        }
+        static std::string rowId(const void *tableOrListView,int section,int row,const void *jni=nullptr);
         
-        static int rowsCount(const void *tableOrListView,int section,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif
-            if(it != adaptersMap().end()){
-                return it->second->getDataSource()->getRowsCount(section);
-            }else{
-                return 0;
-            }
-        }
+        static int rowsCount(const void *tableOrListView,int section,const void *jni=nullptr);
         
-        static int sectionsCount(const void *tableOrListView,const void *jni=nullptr){
-            auto it=adaptersMap().end();
-//#ifdef __APPLE__
-            it = adaptersMap().find(tableOrListView);
-/*#else
-            auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
-            it = adaptersMap().find((const void*)adapterId);
-#endif*/
-            if(it != adaptersMap().end()){
-                auto adapterBase=it->second;
-                auto dataSource=adapterBase->getDataSource();
-                auto res=dataSource->getSectionsCount();
-                return res;
-            }else{
-                std::cout<<"tableOrListView not found in "<<__func__<<std::endl;
-                return 0;
-            }
-        }
+        static int sectionsCount(const void *tableOrListView,const void *jni=nullptr);
         
 #ifdef __ANDROID__
-        static int getAdapterId(const void *tableOrListView,JNIEnv *java_env){
-            if(java_env){
-                auto listView=static_cast<jobject>(const_cast<void*>(tableOrListView));
-                auto listViewClazz=java_env->GetObjectClass(listView);
-                auto getAdapterMethodId=java_env->GetMethodID(listViewClazz,"getAdapter","()Landroid/widget/ListAdapter;");
-                auto adapter=java_env->CallObjectMethod(listView,getAdapterMethodId);
-                
-                auto adapterClazz=java_env->GetObjectClass(adapter);
-                auto fieldId=java_env->GetFieldID(adapterClazz,"adapterId","I");
-                auto adapterId=java_env->GetIntField(adapter,fieldId);
-                return adapterId;
-            }else{
-                return -1;
-            }
-        }
+        static int getAdapterId(const void *tableOrListView,JNIEnv *java_env);
 #endif
         
     protected:
         typedef std::map<AdapterId, AdapterBasePointer> AdaptersMap;
-        STATIC_VAR(AdaptersMap, adaptersMap, {});
+        static AdaptersMap adaptersMap;
+//        STATIC_VAR(AdaptersMap, adaptersMap, {});
     };
 }

@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__CF__STRING__
+#define __VIPER__IOS_UTIL__CF__STRING__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 #include <experimental/optional>
@@ -9,24 +10,13 @@ namespace CF {
         using Object::Object;
 #ifdef __APPLE__
         
-        static String create(std::experimental::optional<std::string> str){
-            if(str){
-                return std::move(create(*str));
-            }else{
-                return {};
-            }
-        }
+        static String create(std::experimental::optional<std::string> str);
         
-        static String create(const std::string &str){
-            return std::move(create(str.c_str()));
-        }
+        static String create(const std::string &str);
         
-        static String create(const char *cString){
-            auto cfStr=CFStringCreateWithCString(nullptr, cString, kCFStringEncodingUTF8);
-            String res(cfStr);
-//            res.shouldClearOnDestroy=true;
-            return std::move(res);
-        }
+        static String create(const char *cString);
 #endif
     };
 }
+
+#endif  //  __VIPER__IOS_UTIL__CF__STRING__

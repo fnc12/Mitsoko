@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__CG__RECT__
+#define __VIPER__IOS_UTIL__CG__RECT__
 
 #ifdef __APPLE__
 
@@ -9,23 +10,18 @@
 
 namespace CG {
     struct Rect:public CGRect{
-        Rect():Rect(CG::Point(),CG::Size()){}
+        Rect();
         
-        Rect(CGRect r):CGRect(r){}
+        Rect(CGRect r);
         
-        Rect(const CG::Point &o,const CG::Size &s){
-            this->origin=CGPoint(o);
-            this->size=CGSize(s);
-        }
+        Rect(const CG::Point &o,const CG::Size &s);
         
-        CG::Float width() const{
-            return this->size.width;
-        }
+        CG::Float width() const;
         
-        CG::Float height() const{
-            return this->size.height;
-        }
+        CG::Float height() const;
         
     };
 }
 #endif
+
+#endif  //__VIPER__IOS_UTIL__CG__RECT__
