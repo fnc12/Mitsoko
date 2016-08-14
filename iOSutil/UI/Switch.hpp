@@ -1,18 +1,22 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__SWITCH__
+#define __VIPER__IOS_UTIL__UI__SWITCH__
 
 #include "Control.hpp"
 
 namespace UI {
     struct Switch:public UI::Control{
         using Control::Control;
+        
 #ifdef __APPLE__
-        void setOn(bool newValue){
-            this->sendMessage<void>("setOn:",newValue);
-        }
-        bool on(){
-            return this->sendMessage<bool>("isOn");
-        }
+        
+        static const std::string className;
+        
+        void setOn(bool newValue);
+        
+        bool on();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__SWITCH__

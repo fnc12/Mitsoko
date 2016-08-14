@@ -1,15 +1,21 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__TABLE_VIEW__
+#define __VIPER__IOS_UTIL__UI__TABLE_VIEW__
 
 #include "ScrollView.hpp"
 #include "Viper/TableListAdapter.hpp"
 #include "ImageView.hpp"
+#include "Label.hpp"
+#include "Viper/iOSutil/NS/IndexSet.hpp"
 
 namespace UI {
     struct TableView:public UI::ScrollView{
         using ScrollView::ScrollView;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UITableView");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UITableView");
         
         enum class RowAnimation{
             Fade = UITableViewRowAnimationFade,
@@ -22,18 +28,11 @@ namespace UI {
             Automatic = UITableViewRowAnimationAutomatic,
         };
         
-        void reloadSections(const NS::IndexSet &indexSet,RowAnimation animation){
-            auto is=indexSet.handle;
-            this->sendMessage<void>("reloadSections:withRowAnimation:", is,UITableViewRowAnimation(animation));
-        }
+        void reloadSections(const NS::IndexSet &indexSet,RowAnimation animation);
         
-        void reloadData(){
-            this->sendMessage<void>(this->handle, "reloadData");
-        }
+        void reloadData();
         
-        void beginUpdates(){
-            this->sendMessage<void>(this->handle, "beginUpdates");
-        }
+        void beginUpdates();
         
         /**
          *  This function doesn't exist in UIKit. This is a special function 
@@ -45,18 +44,10 @@ namespace UI {
         Viper::TableListAdapter::AdapterId setAdapter(T ad){
             auto pointer=std::make_shared<T>(std::move(ad));
             return this->setAdapter(pointer);
-            /*auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
-            auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
-            auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
-            auto sharedAdapter=NS::Object::sendMessage<Handle>(sharedAdapterClass,"shared");
-            this->sendMessage<void>("setDataSource:", sharedAdapter);
-            this->sendMessage<void>("setDelegate:", sharedAdapter);
-            return adapterId;*/
         }
         
         template<class T>
         Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
-//            auto pointer=std::make_shared<T>(std::move(ad));
             auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
             auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
             auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
@@ -78,26 +69,18 @@ namespace UI {
                 DetailButton=UITableViewCellAccessoryDetailButton,
             };
             
-            UI::ImageView imageView(){
-                return this->sendMessage<Handle>("imageView");
-            }
+            UI::ImageView imageView();
             
-            UI::Label detailTextLabel(){
-                return this->sendMessage<Handle>("detailTextLabel");
-            }
+            UI::Label detailTextLabel();
             
-            UI::Label textLabel(){
-                return this->sendMessage<Handle>("textLabel");
-            }
+            UI::Label textLabel();
             
-            void setAccessoryType(AccessoryType newValue){
-                this->sendMessage<void>("setAccessoryType:", UITableViewCellAccessoryType(newValue));
-            }
+            void setAccessoryType(AccessoryType newValue);
             
-            AccessoryType accessoryType(){
-                return AccessoryType(this->sendMessage<UITableViewCellAccessoryType>("accessoryType"));
-            }
+            AccessoryType accessoryType();
         };
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__TABLE_VIEW__

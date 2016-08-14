@@ -7,10 +7,15 @@
 #include "Viper/iOSutil/CF/String.hpp"
 
 namespace UI {
+    
     struct TextView:public UI::ScrollView{
+        
         using ScrollView::ScrollView;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UITextView");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UITextView");
         
         void setText(const CF::String &newValue);
         

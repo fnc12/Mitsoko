@@ -10,6 +10,8 @@
 
 #ifdef __APPLE__
 
+const std::string UI::View::className="UIView";
+
 void UI::View::addSubview(const UI::View &view){
     this->sendMessage<void>("addSubview:", view.handle);
 }
@@ -24,6 +26,10 @@ UI::Color UI::View::backgroundColor(){
 
 void UI::View::setFrame(const CG::Rect &newValue){
     this->sendMessage<void>("setFrame:", CGRect(newValue));
+}
+
+CG::Rect UI::View::frame(){
+    return this->sendMessage<CGRect>("frame");
 }
 
 void UI::View::setContentMode(ContentMode newValue){

@@ -98,7 +98,7 @@ namespace NS {
         
         template<class T>
         bool isKindOfClass(){
-            if(auto cls=NS::getClass(T::className())){
+            if(auto cls=NS::getClass(T::className)){
                 return this->sendMessage<BOOL>("isKindOfClass:", cls);
             }else{
                 return false;
@@ -107,7 +107,7 @@ namespace NS {
         
         template<class T>
         bool isMemberOfClass(){
-            if(auto cls=NS::getClass(T::className())){
+            if(auto cls=NS::getClass(T::className)){
                 return this->sendMessage<BOOL>("isMemberOfClass:", cls);
             }else{
                 return false;
@@ -176,7 +176,7 @@ namespace NS {
         
         template<class T>
         static T create(){
-            const auto &className=T::className();
+            const auto &className=T::className;
             return std::move(create<T>(className));
         }
 #endif

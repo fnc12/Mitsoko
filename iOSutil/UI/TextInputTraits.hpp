@@ -26,7 +26,11 @@ namespace UI {
      */
     struct TextInputTraits: public NS::Object{
         using Object::Object;
+        
 #ifdef __APPLE__
+        
+        static const std::string className;
+        
         void setKeyboardType(UI::KeyboardType newValue);
         
         UI::KeyboardType keyboardType();

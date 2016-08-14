@@ -1,77 +1,47 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__CONTROL__
+#define __VIPER__IOS_UTIL__UI__CONTROL__
 
 #include "View.hpp"
+#include "Viper/Util.hpp"
 #include <functional>
+#include <map>
 
 namespace UI {
     struct Control:public UI::View{
         using View::View;
+
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIControl");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIControl");
         
         typedef std::function<void(Handle)> Callback;
         
-        void setEnabled(bool newValue){
-            this->sendMessage<void>("setEnabled:",newValue);
-        }
+        void setEnabled(bool newValue);
         
-        bool enabled(){
-            return this->sendMessage<bool>("isEnabled");
-        }
+        bool enabled();
         
-        void setOnValueChanged(Callback cb){
-            if(cb){
-                ValueChangedEventHandler::add(this->handle, cb);
-                auto cls=NS::getClass("UIControlValueChangedEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(cls,"shared");
-                auto sel=sel_getUid("actionDidHappen:");
-                this->sendMessage<void>("addTarget:action:forControlEvents:", sharedEventHandler, sel, UIControlEventValueChanged);
-            }else{
-                ValueChangedEventHandler::remove(this->handle);
-            }
-        }
+        void setOnValueChanged(Callback cb);
         
         struct ValueChangedEventHandler{
             typedef std::map<Handle, Callback> Callbacks;
-            STATIC_VAR(Callbacks, callbacks, {});
+            static Callbacks callbacks;
+//            STATIC_VAR(Callbacks, callbacks, {});
             
             /**
              *  Assumes *cb* ≠ null.
              */
-            static void add(Handle handle,Callback cb){
-                auto it=ValueChangedEventHandler::callbacks().find(handle);
-                if(it != ValueChangedEventHandler::callbacks().end()){
-                    it->second=cb;
-                }else{
-                    ValueChangedEventHandler::callbacks().insert({handle,cb});
-                }
-            }
+            static void add(Handle handle,Callback cb);
             
-            static Callback get(Handle handle){
-                auto it=ValueChangedEventHandler::callbacks().find(handle);
-                if(it != ValueChangedEventHandler::callbacks().end()){
-                    return it->second;
-                }else{
-                    return {};
-                }
-            }
+            static Callback get(Handle handle);
             
-            static void remove(Handle handle){
-                auto it=ValueChangedEventHandler::callbacks().find(handle);
-                if(it != ValueChangedEventHandler::callbacks().end()){
-                    ValueChangedEventHandler::callbacks().erase(it);
-                }else{
-//                    ValueChangedEventHandler::callbacks().insert({handle,cb});
-                }
-            }
+            static void remove(Handle handle);
             
-            static void actionDidHappen(Handle sender){
-                if(auto cb=get(sender)){
-                    cb(sender);
-                }
-            }
+            static void actionDidHappen(Handle sender);
         };
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__CONTROL__

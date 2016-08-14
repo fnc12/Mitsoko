@@ -10,7 +10,11 @@
 namespace UI {
     struct View:public UI::Responder{
         using Responder::Responder;
+        
 #ifdef __APPLE__
+        
+        static const std::string className;
+        
         enum class ContentMode{
             ScaleToFill = UIViewContentModeScaleToFill,
             ScaleAspectFit = UIViewContentModeScaleAspectFit,
@@ -35,9 +39,7 @@ namespace UI {
         
         void setFrame(const CG::Rect &newValue);
         
-        CG::Rect frame(){
-            return this->sendMessage<CG::Rect>("frame");
-        }
+        CG::Rect frame();
         
         void setContentMode(ContentMode newValue);
         

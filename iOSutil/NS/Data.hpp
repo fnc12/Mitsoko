@@ -2,6 +2,8 @@
 #pragma once
 
 #include "Object.hpp"
+#include "Viper/Util.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
 
 namespace NS {
     struct Data:public NS::Object{

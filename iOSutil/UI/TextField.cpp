@@ -10,6 +10,8 @@
 
 #ifdef __APPLE__
 
+const std::string UI::TextField::className="UITextField";
+
 UI::TextField::TextField():
 UI::Control(),
 UI::TextInput(){}

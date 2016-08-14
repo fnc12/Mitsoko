@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__IMAGE_PICKER_CONTROLLER__
+#define __VIPER__IOS_UTIL__UI__IMAGE_PICKER_CONTROLLER__
 
 #include "NavigationController.hpp"
 #include "Viper/iOSutil/NS/Array.hpp"
@@ -10,8 +11,11 @@
 namespace UI {
     struct ImagePickerController:public UI::NavigationController{
         using NavigationController::NavigationController;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIImagePickerController");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIImagePickerController");
         
         typedef std::function<void(UI::ImagePickerController)> DidCancel;
         typedef std::function<void(UI::ImagePickerController,NS::Dictionary)> DidFinishPickingMediaWithInfo;
@@ -22,116 +26,48 @@ namespace UI {
             SavedPhotosAlbum = UIImagePickerControllerSourceTypeSavedPhotosAlbum,
         };
         
-        static UI::ImagePickerController create(){
-            auto cls=NS::getClass(className());
-            assert(cls);
-            auto handle=sendMessage<Handle>(cls, "new");
-            ImagePickerController res(handle);
-            return std::move(res);
-        }
+        static UI::ImagePickerController create();
         
-        static bool isSourceTypeAvailable(UI::ImagePickerController::SourceType sourceType){
-            auto cls=NS::getClass(className());
-            return sendMessage<BOOL>(cls,"isSourceTypeAvailable:", UIImagePickerControllerSourceType(sourceType));
-        }
+        static bool isSourceTypeAvailable(UI::ImagePickerController::SourceType sourceType);
         
-        static NS::Array availableMediaTypesForSourceType(UI::ImagePickerController::SourceType sourceType){
-            auto cls=NS::getClass(className());
-            return sendMessage<Handle>(cls,"availableMediaTypesForSourceType:", UIImagePickerControllerSourceType(sourceType));
-        }
+        static NS::Array availableMediaTypesForSourceType(UI::ImagePickerController::SourceType sourceType);
         
-        static NS::String OriginalImage(){
-            auto res=CFBridgingRetain(UIImagePickerControllerOriginalImage);
-            CFRelease(res);
-            return res;
-        }
+        static NS::String OriginalImage();
         
-        void setDidCancel(DidCancel f){
-            if(!DelegateEventHandler::get(this->handle)){
-                auto sharedEventHandlerClass=NS::getClass("UIImagePickerControllerDelegateEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
-                this->sendMessage<void>("setDelegate:", sharedEventHandler);
-            }
-            DelegateEventHandler::getOrCreate(this->handle).didCancel=f;
-        }
+        void setDidCancel(DidCancel f);
         
-        void setDidFinishPickingMediaWithInfo(DidFinishPickingMediaWithInfo f){
-            if(!DelegateEventHandler::get(this->handle)){
-                auto sharedEventHandlerClass=NS::getClass("UIImagePickerControllerDelegateEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
-                this->sendMessage<void>("setDelegate:", sharedEventHandler);
-            }
-            DelegateEventHandler::getOrCreate(this->handle).didFinishPickingMediaWithInfo=f;
-        }
+        void setDidFinishPickingMediaWithInfo(DidFinishPickingMediaWithInfo f);
         
-        void setMediaTypes(const NS::Array &newValue){
-            this->sendMessage<void>("setMediaTypes:", newValue.handle);
-        }
+        void setMediaTypes(const NS::Array &newValue);
         
-        NS::Array mediaTypes(){
-            return this->sendMessage<Handle>("mediaTypes");
-        }
+        NS::Array mediaTypes();
         
-        void setSourceType(UI::ImagePickerController::SourceType newValue){
-            this->sendMessage<void>("setSourceType:", UIImagePickerControllerSourceType(newValue));
-        }
+        void setSourceType(UI::ImagePickerController::SourceType newValue);
         
-        SourceType sourceType(){
-            return SourceType(this->sendMessage<UIImagePickerControllerSourceType>("sourceType"));
-        }
+        SourceType sourceType();
         
         struct DelegateEventHandler{
             DidCancel didCancel;
             DidFinishPickingMediaWithInfo didFinishPickingMediaWithInfo;
             
-            static void imagePickerControllerDidCancel(const void *sender){
-                if(auto d=get(sender)){
-                    if(d->didCancel){
-                        d->didCancel(sender);
-                    }
-                    DelegateEventHandler::remove(sender);
-                }
-            }
+            static void imagePickerControllerDidCancel(const void *sender);
             
-            static void imagePickerControllerDidFinishPickingMediaWithInfo(const void *sender,const void *info){
-                if(auto d=get(sender)){
-                    if(d->didFinishPickingMediaWithInfo){
-                        d->didFinishPickingMediaWithInfo(sender,info);
-                    }
-                    DelegateEventHandler::remove(sender);
-                }
-            }
+            static void imagePickerControllerDidFinishPickingMediaWithInfo(const void *sender,const void *info);
             
-            static DelegateEventHandler& getOrCreate(const void *sender){
-                auto it=delegateEventHandlers().find(sender);
-                if(it != delegateEventHandlers().end()){
-                    return it->second;
-                }else{
-                    return delegateEventHandlers().insert({sender,{}}).first->second;
-                }
-            }
+            static DelegateEventHandler& getOrCreate(const void *sender);
             
-            static DelegateEventHandler* get(const void *aw){
-                auto it=delegateEventHandlers().find(aw);
-                if(it != delegateEventHandlers().end()){
-                    return &it->second;
-                }else{
-                    return nullptr;
-                }
-            }
+            static DelegateEventHandler* get(const void *aw);
             
         protected:
             typedef std::map<Handle, DelegateEventHandler> DelegateEventHandlersMap;
-            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});
+            static DelegateEventHandlersMap delegateEventHandlers;
+//            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});
             
-            static void remove(const void *aw){
-                auto it=delegateEventHandlers().find(aw);
-                if(it != delegateEventHandlers().end()){
-                    delegateEventHandlers().erase(it);
-                }
-            }
+            static void remove(const void *aw);
         };
         
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__IMAGE_PICKER_CONTROLLER__

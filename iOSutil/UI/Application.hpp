@@ -1,27 +1,29 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__APPLICATION__
+#define __VIPER__IOS_UTIL__UI__APPLICATION__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 
 namespace UI {
+    
     struct Application:public NS::Object{
+        
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIApplication");
         
-        static Application sharedApplication(){
-            auto cls=NS::getClass(className());
-            return NS::Object::sendMessage<Handle>(cls,"sharedApplication");
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIApplication");
         
-        bool networkActivityIndicatorVisible(){
-            return this->sendMessage<bool>("networkActivityIndicatorVisible");
-        }
+        static Application sharedApplication();
         
-        void setNetworkActivityIndicatorVisible(bool newValue){
-            this->sendMessage<void>("setNetworkActivityIndicatorVisible:", newValue);
-        }
+        bool networkActivityIndicatorVisible();
         
-#endif
+        void setNetworkActivityIndicatorVisible(bool newValue);
+        
+#endif  //__APPLE__
+        
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__APPLICATION__

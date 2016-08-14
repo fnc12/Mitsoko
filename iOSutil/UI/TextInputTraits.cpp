@@ -10,6 +10,8 @@
 
 #ifdef __APPLE__
 
+const std::string UI::TextInputTraits::className="UITextInputTraits";
+
 void UI::TextInputTraits::setKeyboardType(UI::KeyboardType newValue){
     this->sendMessage<void>("setKeyboardType:", UIKeyboardType(newValue));
 }

@@ -10,6 +10,8 @@ namespace UI {
     struct TextField:public virtual UI::Control, public virtual UI::TextInput{
         
 #ifdef __APPLE__
+        static const std::string className;
+        
         TextField();
         
         TextField(Handle handle);

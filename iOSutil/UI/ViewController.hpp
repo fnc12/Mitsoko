@@ -11,8 +11,11 @@ namespace UI {
     template<class NavC>
     struct _ViewController:public UI::Responder{
         using Responder::Responder;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIViewController");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIViewController");
         
         typedef _ViewController<NavC> Self;
         
@@ -58,3 +61,10 @@ namespace UI {
 #endif
     };
 }
+
+#ifdef __APPLE__
+
+template<class NavC>
+const std::string UI::_ViewController<NavC>::className="UIViewController";
+
+#endif  //__APPLE__

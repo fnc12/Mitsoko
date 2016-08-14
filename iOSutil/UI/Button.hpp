@@ -1,17 +1,25 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__BUTTON__
+#define __VIPER__IOS_UTIL__UI__BUTTON__
 
 #include "Control.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
 
 namespace UI {
     
     struct Button:public UI::Control{
+        
         using Control::Control;
+        
 #ifdef __APPLE__
-        void setTitle(const std::string &title,UIControlState state){
-            auto str=CF::String::create(title);
-            this->sendMessage<void>("setTitle:forState:", str.handle,state);
-        }
-#endif
+        
+        static const std::string className;
+        
+        void setTitle(const std::string &title,UIControlState state);
+
+#endif  //__APPLE__
+        
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__BUTTON__

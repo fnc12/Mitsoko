@@ -10,6 +10,8 @@
 
 #ifdef __APPLE__
 
+const std::string UI::TextView::className="UITextView";
+
 void UI::TextView::setText(const CF::String &newValue){
     this->sendMessage<void>("setText:", newValue.handle);
 }

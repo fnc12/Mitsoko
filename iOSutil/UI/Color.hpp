@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__COLOR__
+#define __VIPER__IOS_UTIL__UI__COLOR__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 
@@ -33,3 +34,5 @@ namespace UI {
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__COLOR__

@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__SEGMENTED_CONTROL__
+#define __VIPER__IOS_UTIL__UI__SEGMENTED_CONTROL__
 
 #include "Control.hpp"
 #include "Viper/iOSutil/CF/String.hpp"
@@ -8,37 +9,27 @@
 namespace UI {
     struct SegmentedControl:public UI::Control{
         using Control::Control;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UISegmentedControl");
         
-        void setTintColor(const UI::Color &newValue){
-            this->sendMessage<void>("setTintColor:", newValue.handle);
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UISegmentedControl");
         
-        UI::Color tintColor(){
-            return this->sendMessage<Handle>("tintColor");
-        }
+        void setTintColor(const UI::Color &newValue);
         
-        void setSelectedSegmentIndex(int newValue){
-            this->sendMessage<void>("setSelectedSegmentIndex:", NSInteger(newValue));
-        }
+        UI::Color tintColor();
         
-        int selectedSegmentIndex(){
-            return int(this->sendMessage<NSInteger>("selectedSegmentIndex"));
-        }
+        void setSelectedSegmentIndex(int newValue);
         
-        void setTitle(const std::string &title,int segment){
-            auto t=CF::String::create(title);
-            this->setTitle(t, segment);
-        }
+        int selectedSegmentIndex();
         
-        void setTitle(const CF::String &title,int segment){
-            this->sendMessage<void>("setTitle:forSegmentAtIndex:", title.handle, NSUInteger(segment));
-        }
+        void setTitle(const std::string &title,int segment);
         
-        std::string titleForSegmentAtIndex(int segment){
-            return this->sendMessage<NSString*>("titleForSegmentAtIndex:", NSUInteger(segment)).UTF8String;
-        }
+        void setTitle(const CF::String &title,int segment);
+        
+        std::string titleForSegmentAtIndex(int segment);
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__SEGMENTED_CONTROL__

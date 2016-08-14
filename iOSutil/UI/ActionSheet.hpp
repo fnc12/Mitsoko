@@ -1,99 +1,58 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__ACTION_SHEET__
+#define __VIPER__IOS_UTIL__UI__ACTION_SHEET__
 
 #include "View.hpp"
+#include "Viper/iOSutil/NS/String.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
+#include <map>
 
 namespace UI {
+    
     struct ActionSheet:public UI::View{
+        
         using View::View;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIActionSheet");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIActionSheet");
         
         typedef std::function<void(UI::ActionSheet,int)> ClickedButtonAtIndex;
         typedef std::function<void(UI::ActionSheet,int)> WillDismissWithButtonIndex;
         typedef std::function<void(UI::ActionSheet,int)> DidDismissWithButtonIndex;
         
-        static UI::ActionSheet create(){
-            return NS::Object::create<UI::ActionSheet>();
-        }
+        static UI::ActionSheet create();
         
-        void setDidDismissWithButtonIndex(DidDismissWithButtonIndex f){
-            if(!DelegateEventHandler::get(this->handle)){
-                auto sharedEventHandlerClass=NS::getClass("UIActionSheetDelegateEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
-                this->sendMessage<void>("setDelegate:", sharedEventHandler);
-            }
-            DelegateEventHandler::getOrCreate(this->handle).didDismissWithButtonIndex=f;
-        }
+        void setDidDismissWithButtonIndex(DidDismissWithButtonIndex f);
         
-        void setWillDismissWithButtonIndex(WillDismissWithButtonIndex f){
-            if(!DelegateEventHandler::get(this->handle)){
-                auto sharedEventHandlerClass=NS::getClass("UIActionSheetDelegateEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
-                this->sendMessage<void>("setDelegate:", sharedEventHandler);
-            }
-            DelegateEventHandler::getOrCreate(this->handle).willDismissWithButtonIndex=f;
-        }
+        void setWillDismissWithButtonIndex(WillDismissWithButtonIndex f);
         
-        void setClickedButtonAtIndex(ClickedButtonAtIndex f){
-            if(!DelegateEventHandler::get(this->handle)){
-                auto sharedEventHandlerClass=NS::getClass("UIActionSheetDelegateEventHandler");
-                auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
-                this->sendMessage<void>("setDelegate:", sharedEventHandler);
-            }
-            DelegateEventHandler::getOrCreate(this->handle).clickedButtonAtIndex=f;
-        }
+        void setClickedButtonAtIndex(ClickedButtonAtIndex f);
         
-        void showInView(const UI::View &view){
-            this->sendMessage<void>("showInView:", view.handle);
-        }
+        void showInView(const UI::View &view);
         
-        void setDestructiveButtonIndex(int newValue){
-            this->sendMessage<void>("setDestructiveButtonIndex:", NSInteger(newValue));
-        }
+        void setDestructiveButtonIndex(int newValue);
         
-        int destructiveButtonIndex(){
-            return int(this->sendMessage<NSInteger>("destructiveButtonIndex"));
-        }
+        int destructiveButtonIndex();
         
-        void setCancelButtonIndex(int newValue){
-            this->sendMessage<void>("setCancelButtonIndex:", NSInteger(newValue));
-        }
+        void setCancelButtonIndex(int newValue);
         
-        int cancelButtonIndex(){
-            return int(this->sendMessage<NSInteger>("cancelButtonIndex"));
-        }
+        int cancelButtonIndex();
         
-        int numberOfButtons(){
-            return int(this->sendMessage<NSInteger>("numberOfButtons"));
-        }
+        int numberOfButtons();
         
-        NS::String buttonTitleAtIndex(int index){
-            return this->sendMessage<Handle>("buttonTitleAtIndex:", NSInteger(index));
-        }
+        NS::String buttonTitleAtIndex(int index);
         
-        int addButtonWithTitle(const std::string &t){
-            auto str=CF::String::create(t);
-            return this->addButtonWithTitle(str);
-        }
+        int addButtonWithTitle(const std::string &t);
         
-        int addButtonWithTitle(const CF::String &t){
-            return int(this->sendMessage<NSInteger>("addButtonWithTitle:", t.handle));
-        }
+        int addButtonWithTitle(const CF::String &t);
         
-        void setTitle(const std::string &newValue){
-            auto str=CF::String::create(newValue);
-            this->setTitle(str);
-        }
+        void setTitle(const std::string &newValue);
         
-        void setTitle(const CF::String &newValue){
-            this->sendMessage<void>("setTitle:", newValue.handle);
-        }
+        void setTitle(const CF::String &newValue);
         
-        std::string title(){
-            NS::String res=this->sendMessage<Handle>("title");
-            return res.UTF8String();
-        }
+        std::string title();
         
         /**
          *  Class which implements all UIActionSheetDelegate callbacks.
@@ -102,65 +61,29 @@ namespace UI {
          */
         struct DelegateEventHandler{
             typedef std::map<Handle, DelegateEventHandler> DelegateEventHandlersMap;
-            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});
+            static DelegateEventHandlersMap delegateEventHandlers;
+//            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});
             
             ClickedButtonAtIndex clickedButtonAtIndex;
             WillDismissWithButtonIndex willDismissWithButtonIndex;
             DidDismissWithButtonIndex didDismissWithButtonIndex;
             
-            static DelegateEventHandler& getOrCreate(const void *as){
-                auto it=delegateEventHandlers().find(as);
-                if(it != delegateEventHandlers().end()){
-                    return it->second;
-                }else{
-                    return delegateEventHandlers().insert({as,{}}).first->second;
-                }
-            }
+            static DelegateEventHandler& getOrCreate(const void *as);
             
-            static DelegateEventHandler* get(const void *as){
-                auto it=delegateEventHandlers().find(as);
-                if(it != delegateEventHandlers().end()){
-                    return &it->second;
-                }else{
-                    return nullptr;
-                }
-            }
+            static DelegateEventHandler* get(const void *as);
             
-            static void remove(const void *as){
-                auto it=delegateEventHandlers().find(as);
-                if(it != delegateEventHandlers().end()){
-                    delegateEventHandlers().erase(it);
-                }
-            }
+            static void remove(const void *as);
             
-            static void actionSheetDidDismissWithButtonIndex(const void *as,int buttonIndex){
-                if(auto e=get(as)){
-                    if(e->didDismissWithButtonIndex){
-                        e->didDismissWithButtonIndex(as,buttonIndex);
-                    }
-                    
-                    //  expliclty specifying class name cause there is int remove(const char *) function
-                    //  in C standard library..
-                    DelegateEventHandler::remove(as);
-                }
-            }
+            static void actionSheetDidDismissWithButtonIndex(const void *as,int buttonIndex);
             
-            static void actionSheetWillDismissWithButtonIndex(const void *as,int buttonIndex){
-                if(auto e=get(as)){
-                    if(e->willDismissWithButtonIndex){
-                        e->willDismissWithButtonIndex(as,buttonIndex);
-                    }
-                }
-            }
+            static void actionSheetWillDismissWithButtonIndex(const void *as,int buttonIndex);
             
-            static void actionSheetClickedButtonAtIndex(const void *as,int buttonIndex){
-                if(auto e=get(as)){
-                    if(e->clickedButtonAtIndex){
-                        e->clickedButtonAtIndex(as,buttonIndex);
-                    }
-                }
-            }
+            static void actionSheetClickedButtonAtIndex(const void *as,int buttonIndex);
         };
-#endif
+
+#endif  //__APPLE__
+    
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__ACTION_SHEET__

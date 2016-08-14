@@ -1,42 +1,34 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__NAVIGATION_ITEM__
+#define __VIPER__IOS_UTIL__UI__NAVIGATION_ITEM__
 
 #include "Viper/iOSutil/NS/Object.hpp"
+#include "BarButtonItem.hpp"
 
 namespace UI {
     struct NavigationItem:public NS::Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UINavigationItem");
         
-        void setHidesBackButton(bool newValue){
-            this->sendMessage<void>("setHidesBackButton:", BOOL(newValue));
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UINavigationItem");
         
-        bool hidesBackButton(){
-            return this->sendMessage<BOOL>("hidesBackButton");
-        }
+        void setHidesBackButton(bool newValue);
         
-        void setTitle(const std::string &newValue){
-            auto str=CF::String::create(newValue);
-            this->sendMessage<void>("setTitle:", str.handle);
-        }
+        bool hidesBackButton();
         
-        void setBackBarButtonItem(const UI::BarButtonItem &newValue){
-            this->sendMessage<void>("setBackBarButtonItem:", newValue.handle);
-        }
+        void setTitle(const std::string &newValue);
         
-        UI::BarButtonItem backBarButtonItem(){
-            return this->sendMessage<Handle>("backBarButtonItem");
-        }
+        void setBackBarButtonItem(const UI::BarButtonItem &newValue);
         
-        void setRightBarButtonItem(const UI::BarButtonItem &item){
-            this->sendMessage<void>("setRightBarButtonItem:",item.handle);
-        }
+        UI::BarButtonItem backBarButtonItem();
         
-        UI::BarButtonItem rightBarButtonItem(){
-            return this->sendMessage<Handle>("rightBarButtonItem");
-        }
+        void setRightBarButtonItem(const UI::BarButtonItem &item);
+        
+        UI::BarButtonItem rightBarButtonItem();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__NAVIGATION_ITEM__

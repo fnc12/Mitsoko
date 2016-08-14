@@ -1,27 +1,28 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__LABEL__
+#define __VIPER__IOS_UTIL__UI__LABEL__
 
 #include "View.hpp"
 #include "Viper/iOSutil/UI/Color.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
+#include "Viper/Util.hpp"
 
 namespace UI {
     struct Label:public UI::View{
         using View::View;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UILabel");
         
-        void setText(const std::string &newValue){
-            auto str=CF::String::create(newValue);
-            this->sendMessage<void>("setText:", str.handle);
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UILabel");
         
-        void setTextColor(const UI::Color &newValue){
-            this->sendMessage<void>("setTextColor:", newValue.handle);
-        }
+        void setText(const std::string &newValue);
         
-        UI::Color textColor(){
-            return this->sendMessage<Handle>("textColor");
-        }
+        void setTextColor(const UI::Color &newValue);
+        
+        UI::Color textColor();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__LABEL__

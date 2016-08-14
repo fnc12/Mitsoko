@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Object.hpp"
+#include "Viper/Util.hpp"
 
 namespace NS {
     struct String:public NS::Object{

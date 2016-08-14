@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__IMAGE__
+#define __VIPER__IOS_UTIL__UI__IMAGE__
 
 #include "View.hpp"
 #include "Viper/iOSutil/NS/Data.hpp"
@@ -8,36 +9,24 @@
 namespace UI {
     struct Image:public NS::Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "UIImage");
         
-        static UI::Image create(const std::string &named){
-            auto cls=NS::getClass(className());
-            auto str=CF::String::create(named);
-            return NS::Object::sendMessage<Handle>(cls,"imageNamed:", str.handle);
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "UIImage");
         
-        static UI::Image createWithContentsOfFile(const std::string &filename){
-            auto s=CF::String::create(filename);
-            return std::move(createWithContentsOfFile(s));
-        }
+        static UI::Image create(const std::string &named);
         
-        static UI::Image createWithContentsOfFile(const CF::String &filename){
-            auto cls=NS::getClass(className());
-            return NS::Object::sendMessage<Handle>(cls,"imageWithContentsOfFile:", filename.handle);
-        }
+        static UI::Image createWithContentsOfFile(const std::string &filename);
         
-        static NS::Data JPEGRepresentation(UI::Image image,CG::Float compressionQuality){
-            image.retain();
-            auto res=CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
-            CFRelease(res);
-            return res;
-        }
+        static UI::Image createWithContentsOfFile(const CF::String &filename);
         
-        CG::Size size(){
-            return this->sendMessage<CGSize>("size");
-        }
+        static NS::Data JPEGRepresentation(UI::Image image,CG::Float compressionQuality);
+        
+        CG::Size size();
         
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__IMAGE__
