@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__OBJECT__
+#define __VIPER__IOS_UTIL__NS__OBJECT__
 
 #ifdef __APPLE__
 #include <objc/message.h>
@@ -14,87 +15,55 @@
 
 namespace NS {
 #ifdef __APPLE__
-    inline Class getClass(const std::string &className){
-        return objc_getClass(className.c_str());
-    }
+    Class getClass(const std::string &className);
 #endif
     
     struct Object{
         typedef const void *Handle;
         Handle handle;
         
+#ifdef __APPLE__
+        static const std::string className;
+        
         /**
          *  Empty constructor. Equals nil reference.
          */
-        Object():Object(nullptr){}
+        Object();
         
         /**
          *  Strong reference creation constructor.
          */
-        Object(decltype(handle)handle_):
-        handle(handle_){
-#ifdef __APPLE__
-            if(this->handle){
-                this->retain();
-            }
-#endif
-        }
+        Object(decltype(handle)handle_);
         
         /**
          *  Copy strong reference on init.
          */
         Object(const Object &other):
         handle(other.handle){
-#ifdef __APPLE__
             if(this->handle){
                 this->retain();
             }
-#endif
         }
         
         /**
          *  Copy strong reference on assign.
          */
-        Object& operator=(const Object &other){
-            this->cleanUp();
-            this->handle=other.handle;
-#ifdef __APPLE__
-            if(this->handle){
-                this->retain();
-            }
-#endif
-            return *this;
-        }
+        Object& operator=(const Object &other);
         
         /**
          *  Move constructor. Has not retain/release.
          */
-        Object(Object &&object):handle(object.handle)/*,shouldClearOnDestroy(object.shouldClearOnDestroy)*/{
-            object.handle=nullptr;
-//            object.shouldClearOnDestroy=false;
-        }
+        Object(Object &&object);
         
         /**
          *  Move assignment. Also hasn't retain/release.
          */
-        Object& operator=(Object &&object){
-            this->cleanUp();
-            this->handle=object.handle;
-//            this->shouldClearOnDestroy=object.shouldClearOnDestroy;
-            object.handle=nullptr;
-//            object.shouldClearOnDestroy=false;
-            return *this;
-        }
+        Object& operator=(Object &&object);
         
-        virtual ~Object(){
-            this->cleanUp();
-        }
-        
-#ifdef __APPLE__
-        std::string description(){
-            NS::Object s=this->sendMessage<Handle>("description");
-            return s.sendMessage<const char*>("UTF8String");
-        }
+        virtual ~Object();
+//#endif
+//#ifdef __APPLE__
+        std::string description();
         
         template<class T>
         bool isKindOfClass(){
@@ -139,27 +108,21 @@ namespace NS {
             return sendMessage<RT>(this->handle, message, args...);
         }
 
-        Class getClass(){
-            return this->sendMessage<Class>("class");
-        }
-#endif
-        operator bool()const{
-            return this->handle != nullptr;
-        }
+        Class getClass();
         
-        operator Handle()const{
-            return this->handle;
-        }
+        operator bool() const;
         
+        operator Handle() const;
+//#endif
         template<class RT,class R,class ...Args>
         static RT sendMessage(const R &receiver,const std::string &message,const Args& ...args){
-#ifdef __APPLE__
+//#ifdef __APPLE__
             return reinterpret_cast<RT(*)(R,SEL,Args...)>(objc_msgSend)(receiver,sel_getUid(message.c_str()),args...);
-#else
-            return {};
-#endif
+//#else
+//            return {};
         }
-#ifdef __APPLE__
+//#endif
+//#ifdef __APPLE__
         template<class T>
         static T create(const std::string &className){
             static_assert(std::is_base_of<Object, T>::value,"T must derive NS::Object");
@@ -179,42 +142,29 @@ namespace NS {
             const auto &className=T::className;
             return std::move(create<T>(className));
         }
-#endif
+//#endif
     protected:
 //        bool shouldClearOnDestroy=false;
-#ifdef __APPLE__
+//#ifdef __APPLE__
         
         /**
          *  This functions must not be called explictly. They called automtacally
          *  in object`s constructor and destructor with ARC-like style.
          */
-        void retain(){
-            CFRetain(CFTypeRef(this->handle));
-        }
+        void retain();
         
-        void release(){
-            CFRelease(CFTypeRef(this->handle));
-        }
+        void release();
         
     public:
-        int retainCount(){
-            return int(CFGetRetainCount(CFTypeRef(this->handle)));
-        }
-#endif
+        int retainCount();
+//#endif
     private:
-        void cleanUp(){
-#ifdef __APPLE__
-            if(this->handle){
-                this->release();
-                this->handle=nullptr;
-            }
+        void cleanUp();
 #endif
-        }
     };
-#ifdef __APPLE__
-    inline std::ostream& operator<<(std::ostream &os,NS::Object &obj){
-        os<<obj.description();
-        return os;
-    }
-#endif
+//#endif
+//#ifdef __APPLE__
+    std::ostream& operator<<(std::ostream &os,NS::Object &obj);
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__OBJECT__

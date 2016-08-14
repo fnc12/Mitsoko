@@ -1,22 +1,19 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__INDEX_SET__
+#define __VIPER__IOS_UTIL__NS__INDEX_SET__
 
 #include "Object.hpp"
 
 namespace NS {
     struct IndexSet:public Object{
         using Object::Object;
-#ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "NSIndexSet");
         
-        static IndexSet create(int index){
-            auto cls=NS::getClass(className());
-            assert(cls);
-            auto handle=sendMessage<Handle>(cls, "indexSetWithIndex:",NSUInteger(index));
-            IndexSet res(handle);
-//            res.shouldClearOnDestroy=true;
-            return std::move(res);
-        }
+#ifdef __APPLE__
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "NSIndexSet");
+        
+        static IndexSet create(int index);
         
     protected:
         /*Handle initWithIndex(int index){
@@ -25,3 +22,5 @@ namespace NS {
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__INDEX_SET__

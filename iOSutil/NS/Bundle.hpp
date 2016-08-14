@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__BUNDLE__
+#define __VIPER__IOS_UTIL__NS__BUNDLE__
 
 #include "Object.hpp"
 #include "Array.hpp"
@@ -7,18 +8,17 @@
 namespace NS {
     struct Bundle:public Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "NSBundle");
         
-        static Bundle mainBundle(){
-            auto cls=NS::getClass(className());
-            assert(cls);
-            return sendMessage<Handle>(cls, "mainBundle");
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "NSBundle");
         
-        NS::Array preferredLocalizations(){
-            return this->sendMessage<Handle>("preferredLocalizations");
-        }
+        static Bundle mainBundle();
+        
+        NS::Array preferredLocalizations();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__BUNDLE__

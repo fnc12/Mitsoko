@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__DICTIONARY__
+#define __VIPER__IOS_UTIL__NS__DICTIONARY__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 #include "Viper/Util.hpp"
@@ -7,27 +8,24 @@
 namespace NS {
     struct Dictionary:public NS::Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "NSDictionary");
         
-        NS::Object objectForKey(const NS::Object &aKey){
-            return this->sendMessage<Handle>("objectForKey:", aKey.handle);
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "NSDictionary");
         
-        int count(){
-            return int(this->sendMessage<NSUInteger>("count"));
-        }
+        NS::Object objectForKey(const NS::Object &aKey);
+        
+        int count();
         
         struct ValueAdapter{
         protected:
             Dictionary &dictionary;
             const NS::Object key;
         public:
-            ValueAdapter(decltype(dictionary)d,decltype(key)k):dictionary(d),key(k){}
+            ValueAdapter(decltype(dictionary)d,decltype(key)k);
             
-            operator NS::Object()const{
-                return dictionary.objectForKey(this->key);
-            }
+            operator NS::Object() const;
             
             template<class T>
             T as(){
@@ -35,9 +33,9 @@ namespace NS {
             }
         };
         
-        ValueAdapter operator[](const NS::Object &key){
-            return ValueAdapter{*this,key};
-        }
+        ValueAdapter operator[](const NS::Object &key);
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__DICTIONARY__

@@ -1,13 +1,17 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__ARRAY__
+#define __VIPER__IOS_UTIL__NS__ARRAY__
 
 #include "Object.hpp"
 
 namespace NS {
     struct Array:public Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "NSArray");
+        
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "NSArray");
         
         /*template<class ...Args>
         static NS::Array create(Args ...args);
@@ -19,16 +23,14 @@ namespace NS {
             return std::move(res);
         }*/
         
-        int count(){
-            return int(this->sendMessage<NSUInteger>("count"));
-        }
+        int count();
         
         /**
          *  Operator replacement for `objectAtIndex:` function.
          */
-        Handle operator[](int i){
-            return this->sendMessage<Handle>("objectAtIndex:", NSUInteger(i));
-        }
+        Handle operator[](int i);
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__ARRAY__

@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__NS__DATA__
+#define __VIPER__IOS_UTIL__NS__DATA__
 
 #include "Object.hpp"
 #include "Viper/Util.hpp"
@@ -8,32 +9,23 @@
 namespace NS {
     struct Data:public NS::Object{
         using Object::Object;
+        
 #ifdef __APPLE__
-        STATIC_VAR(const std::string, className, "NSData");
         
-        static NS::Data createWithContentsOfFile(const std::string &path){
-            auto s=CF::String::create(path);
-            return std::move(createWithContentsOfFile(s));
-        }
+        static const std::string className;
+//        STATIC_VAR(const std::string, className, "NSData");
         
-        static NS::Data createWithContentsOfFile(const CF::String &path){
-            auto cls=NS::getClass(className());
-            assert(cls);
-            return sendMessage<Handle>(cls, "dataWithContentsOfFile:",path.handle);
-        }
+        static NS::Data createWithContentsOfFile(const std::string &path);
         
-        int length(){
-            return int(this->sendMessage<NSUInteger>("length"));
-        }
+        static NS::Data createWithContentsOfFile(const CF::String &path);
         
-        const void *bytes(){
-            return this->sendMessage<const void*>("bytes");
-        }
+        int length();
         
-        bool writeToFile(const std::string &path,bool useAuxiliaryFile){
-            auto p=CF::String::create(path);
-            return this->sendMessage<BOOL>("writeToFile:atomically:", p.handle, BOOL(useAuxiliaryFile));
-        }
+        const void *bytes();
+        
+        bool writeToFile(const std::string &path,bool useAuxiliaryFile);
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__NS__DATA__
