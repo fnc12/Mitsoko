@@ -1,7 +1,10 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__TEXTVIEW__
+#define __VIPER__IOS_UTIL__UI__TEXTVIEW__
 
 #include "ScrollView.hpp"
+#include "Viper/Util.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
 
 namespace UI {
     struct TextView:public UI::ScrollView{
@@ -9,18 +12,13 @@ namespace UI {
 #ifdef __APPLE__
         STATIC_VAR(const std::string, className, "UITextView");
         
-        void setText(const CF::String &newValue){
-            this->sendMessage<void>("setText:", newValue.handle);
-        }
+        void setText(const CF::String &newValue);
         
-        void setText(const std::string &newValue){
-            auto t=CF::String::create(newValue);
-            this->setText(t);
-        }
+        void setText(const std::string &newValue);
         
-        std::string text(){
-            return this->sendMessage<NSString*>("text").UTF8String;
-        }
+        std::string text();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__TEXTVIEW__

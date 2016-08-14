@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__VIEW__
+#define __VIPER__IOS_UTIL__UI__VIEW__
 
 #include "Responder.hpp"
 #include "Viper/iOSutil/CG/AffineTransform.hpp"
@@ -26,45 +27,29 @@ namespace UI {
             BottomRight = UIViewContentModeBottomRight,
         };
         
-        void addSubview(const UI::View &view){
-            this->sendMessage<void>("addSubview:", view.handle);
-        }
+        void addSubview(const UI::View &view);
         
-        void setBackgroundColor(const UI::Color &newValue){
-            this->sendMessage<void>("setBackgroundColor:", newValue.handle);
-        }
+        void setBackgroundColor(const UI::Color &newValue);
         
-        UI::Color backgroundColor(){
-            return this->sendMessage<Handle>("backgroundColor");
-        }
+        UI::Color backgroundColor();
         
-        void setFrame(const CG::Rect &newValue){
-            this->sendMessage<void>("setFrame:", CGRect(newValue));
-        }
+        void setFrame(const CG::Rect &newValue);
         
         CG::Rect frame(){
             return this->sendMessage<CG::Rect>("frame");
         }
         
-        void setContentMode(ContentMode newValue){
-            this->sendMessage<void>("setContentMode:", UIViewContentMode(newValue));
-        }
+        void setContentMode(ContentMode newValue);
         
-        ContentMode contentMode(){
-            return ContentMode(this->sendMessage<UIViewContentMode>("contentMode"));
-        }
+        ContentMode contentMode();
         
-        void setHidden(bool newValue){
-            this->sendMessage<void>("setHidden:", newValue);
-        }
+        void setHidden(bool newValue);
         
-        void setTransform(const CG::AffineTransform &newValue){
-            this->sendMessage<void>("setTransform:", newValue);
-        }
+        void setTransform(const CG::AffineTransform &newValue);
         
-        CG::AffineTransform transform(){
-            return this->sendMessage<CG::AffineTransform>("transform");
-        }
+        CG::AffineTransform transform();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__VIEW__

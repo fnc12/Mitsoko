@@ -8,8 +8,9 @@
 
 namespace CG {
     struct AffineTransform:public CGAffineTransform{
+        AffineTransform(CGAffineTransform s);
         
-        AffineTransform& operator=(const CGAffineTransform &other);
+//        AffineTransform& operator=(const CGAffineTransform &other);
         
         static CG::AffineTransform makeScale(CG::Float sx,CG::Float sy);
     };

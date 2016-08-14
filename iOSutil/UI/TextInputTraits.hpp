@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL_UI__TEXT_INPUT_TRAITS__
+#define __VIPER__IOS_UTIL_UI__TEXT_INPUT_TRAITS__
 
 #include "Viper/iOSutil/NS/Object.hpp"
 
@@ -26,13 +27,11 @@ namespace UI {
     struct TextInputTraits: public NS::Object{
         using Object::Object;
 #ifdef __APPLE__
-        void setKeyboardType(UI::KeyboardType newValue){
-            this->sendMessage<void>("setKeyboardType:", UIKeyboardType(newValue));
-        }
+        void setKeyboardType(UI::KeyboardType newValue);
         
-        UI::KeyboardType keyboardType(){
-            return KeyboardType(this->sendMessage<UIKeyboardType>("keyboardType"));
-        }
+        UI::KeyboardType keyboardType();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL_UI__TEXT_INPUT_TRAITS__

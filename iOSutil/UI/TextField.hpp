@@ -1,39 +1,28 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__TEXT_FIELD__
+#define __VIPER__IOS_UTIL__UI__TEXT_FIELD__
 
 #include "Control.hpp"
 #include "TextInput.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
 
 namespace UI {
     struct TextField:public virtual UI::Control, public virtual UI::TextInput{
         
-        TextField():
-        UI::Control(),
-        UI::TextInput(){}
+#ifdef __APPLE__
+        TextField();
         
-        TextField(Handle handle):
-        UI::Control(handle),
-        UI::TextInput(handle){}
+        TextField(Handle handle);
         
         typedef UI::Control Super;
-#ifdef __APPLE__
-        void setText(const std::string &newValue){
-            auto s=CF::String::create(newValue);
-            this->setText(s);
-        }
         
-        void setText(const CF::String &newValue){
-            this->Super::sendMessage<void>("setText:", newValue.handle);
-        }
+        void setText(const std::string &newValue);
         
-        std::string text(){
-            auto t=this->Super::sendMessage<NSString*>("text");
-            if(t){
-                return t.UTF8String;
-            }else{
-                return {};
-            }
-        }
+        void setText(const CF::String &newValue);
+        
+        std::string text();
 #endif
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__TEXT_FIELD__

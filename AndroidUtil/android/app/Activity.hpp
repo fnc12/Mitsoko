@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__
+#define __VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__
 
 #include "Viper/AndroidUtil/android/content/Context.hpp"
 #include "Viper/AndroidUtil/android/content/Intent.hpp"
@@ -11,54 +12,26 @@ namespace android{
 #ifdef __ANDROID__
             STATIC_VAR(const std::string, signature, "android/app/Activity");
             
-            static int RESULT_CANCELED(){
-                if(java::lang::Class cls=java::lang::Class::find<Activity>()){
-                    return cls.getStaticField<int>("RESULT_CANCELED");
-                }else{
-                    return -1;
-                }
-            }
+            static int RESULT_CANCELED();
             
-            static int RESULT_OK(){
-                if(java::lang::Class cls=java::lang::Class::find<Activity>()){
-                    return cls.getStaticField<int>("RESULT_OK");
-                }else{
-                    return -1;
-                }
-            }
+            static int RESULT_OK();
             
-            static int RESULT_FIRST_USER(){
-                if(java::lang::Class cls=java::lang::Class::find<Activity>()){
-                    return cls.getStaticField<int>("RESULT_FIRST_USER");
-                }else{
-                    return -1;
-                }
-            }
+            static int RESULT_FIRST_USER();
             
-            void finish(){
-                this->sendMessage<void>("finish");
-            }
+            void finish();
             
-            void startActivity(const content::Intent &intent){
-                this->sendMessage<void>("startActivity",intent);
-            }
+            void startActivity(const content::Intent &intent);
             
-            void startActivityForResult(const content::Intent &intent, int requestCode){
-                this->sendMessage<void>("startActivityForResult",intent,requestCode);
-            }
+            void startActivityForResult(const content::Intent &intent, int requestCode);
             
-            void setResult(int resultCode){
-                this->sendMessage<void>("setResult",resultCode);
-            }
+            void setResult(int resultCode);
             
-            void setResult(int resultCode,const content::Intent &intent){
-                this->sendMessage<void>("setResult",resultCode,intent);
-            }
+            void setResult(int resultCode,const content::Intent &intent);
             
-            void runOnUiThread(const java::lang::Runnable &runnable){
-                this->sendMessage<void>("runOnUiThread",runnable);
-            }
+            void runOnUiThread(const java::lang::Runnable &runnable);
 #endif
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__

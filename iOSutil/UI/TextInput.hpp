@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__IOS_UTIL__UI__TEXT_INPUT__
+#define __VIPER__IOS_UTIL__UI__TEXT_INPUT__
 
 #include "TextInputTraits.hpp"
 
@@ -23,3 +24,5 @@ namespace UI {
         
     };
 }
+
+#endif  //__VIPER__IOS_UTIL__UI__TEXT_INPUT__
