@@ -1,15 +1,21 @@
 
-#ifndef __VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__
-#define __VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__APP__ACTIVITY__
+#define __VIPER__ANDROID_UTIL__ANDROID__APP__ACTIVITY__
 
 #include "Viper/AndroidUtil/android/content/Context.hpp"
 #include "Viper/AndroidUtil/android/content/Intent.hpp"
 
 namespace android{
+    
     namespace app{
+        
         struct Activity:public content::Context{
+            
             using Context::Context;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/app/Activity");
             
             static int RESULT_CANCELED();
@@ -29,9 +35,9 @@ namespace android{
             void setResult(int resultCode,const content::Intent &intent);
             
             void runOnUiThread(const java::lang::Runnable &runnable);
-#endif
+#endif  //__ANDROID__
         };
     }
 }
 
-#endif  //__VIPER__ANDROID_UTIL__ANDROID__APP_ACTIVITY__
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__APP__ACTIVITY__

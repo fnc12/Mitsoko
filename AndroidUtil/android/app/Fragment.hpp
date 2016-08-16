@@ -1,19 +1,29 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__APP__FRAGMENT__
+#define __VIPER__ANDROID_UTIL__ANDROID__APP__FRAGMENT__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
 #include "Activity.hpp"
 
 namespace android{
+    
     namespace app{
+        
         struct Fragment:public java::lang::Object{
+            
             using Object::Object;
-            STATIC_VAR(const std::string, signature, "android/app/Fragment");
+            
 #ifdef __ANDROID__
-            Activity getActivity(){
-                return this->sendMessage<Activity>("getActivity");
-            }
-#endif
+            
+//            const std::string signature;
+            STATIC_VAR(const std::string, signature, "android/app/Fragment");
+            
+            Activity getActivity();
+            
+#endif  //__ANDROID__
+            
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__APP__FRAGMENT__

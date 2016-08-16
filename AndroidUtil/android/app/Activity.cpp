@@ -10,6 +10,8 @@
 
 #ifdef __ANDROID__
 
+//const std::string java::app::Activity::signature="android/app/Activity";
+
 int android::app::Activity::RESULT_CANCELED(){
     if(java::lang::Class cls=java::lang::Class::find<Activity>()){
         return cls.getStaticField<int>("RESULT_CANCELED");

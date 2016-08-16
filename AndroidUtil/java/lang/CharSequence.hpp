@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__CHAR_SEQUENCE__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__CHAR_SEQUENCE__
 
 #include "Object.hpp"
 
@@ -12,13 +13,25 @@ namespace java{
         template<class S>
         struct _CharSequence:public Object{
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/lang/CharSequence");
             
             S toString(){
                 return this->sendMessage<S>("toString");
             }
-#endif
+#endif  //__ANDROID__
         };
     }
 }
+
+#ifdef __ANDROID__
+
+/*template<class S>
+const std::string java::lang::_CharSequence<S>::signature="java/lang/CharSequence";*/
+
+#endif  //__ANDROID__
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__CHAR_SEQUENCE__

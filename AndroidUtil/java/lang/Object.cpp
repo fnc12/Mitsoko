@@ -18,6 +18,8 @@ java::lang::Object::operator bool() const{
 
 #ifdef __ANDROID__
 
+//const std::string java::lang::Object::signature="java/lang/Object";
+
 java::lang::Object::~Object(){
     if(this->isGlobal){
         if(auto java_env=JNI::Env()){
@@ -67,4 +69,21 @@ bool java::lang::Object::getField<bool>(const char *fieldName){
     }
 }
 
-#endif
+jclass java::lang::Object::getClass(){
+    if(auto java_env=JNI::Env()){
+        return java_env->GetObjectClass(static_cast<jobject>(const_cast<void*>(this->handle)));
+    }else{
+        return nullptr;
+    }
+}
+
+void java::lang::Object::makeGlobal(){
+    if(!this->isGlobal){
+        if(auto java_env=JNI::Env()){
+            this->handle=decltype(this->handle)(java_env->NewGlobalRef((jobject(this->handle))));
+            this->isGlobal=true;
+        }
+    }
+}
+
+#endif  //__ANDROID__

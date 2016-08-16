@@ -1,16 +1,20 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__JAVA_RUNTIME__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__JAVA_RUNTIME__
 
 #include <sstream>
 #include <string>
 #include <vector>
 
 #ifdef __ANDROID__
+
 #include <jni.h>
 #include "Array.hpp"
+
 #endif
 
 #ifdef __ANDROID__
+
 template<class T>
 struct TypeSignatureGenerator{
     std::string operator()()const{
@@ -88,13 +92,6 @@ struct ArgumentProxy<int>{
     }
 };
 
-/*template<class T>
-struct ArgumentProxy<std::vector<T>>{
-    static jobjectArray cast(const std::vector<T> &value){
-        return jobjectArray(value);
-    }
-};*/
-
 template<class RT>
 struct MessageSender{
     template<class ...Args>
@@ -147,4 +144,7 @@ struct MessageSender<double>{
         return -1;
     }
 };
-#endif
+
+#endif  //__ANDROID__
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__JAVA_RUNTIME__

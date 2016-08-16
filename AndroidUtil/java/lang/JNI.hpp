@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__JNI__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__JNI__
 
 #include <map>
 #include <thread>
@@ -7,12 +8,17 @@
 #include <string>
 
 #ifdef __ANDROID__
+
 #include <jni.h>
+
 #endif
 
 namespace java{
+    
     namespace lang{
+        
 #ifdef __ANDROID__
+        
         /**
          *  This class is a container for JNIEnv pointer needed in android to perform any actions with
          *  JVM objects. It has <i>envMap</i> static <b>std::map<std::thread::id, JNIEnv*></b> with
@@ -71,6 +77,8 @@ namespace java{
                 return res;
             }*/
         };
-#endif
+#endif  //__ANDROID__
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__JNI__

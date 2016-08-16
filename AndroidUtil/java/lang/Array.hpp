@@ -1,7 +1,9 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__ARRAY__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__ARRAY__
 
 #include "JNI.hpp"
+
 #ifdef __ANDROID__
 #include <jni.h>
 #endif
@@ -51,7 +53,9 @@ namespace java{
             ElementProxy operator[](int index){
                 return ElementProxy{*this,index};
             }
-#endif
+#endif  //__ANDROID__
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__ARRAY__

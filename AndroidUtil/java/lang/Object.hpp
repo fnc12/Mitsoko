@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__OBJECT__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__OBJECT__
 
 #include "JNI.hpp"
 #include "JavaRuntime.hpp"
@@ -8,8 +9,11 @@
 #include <iostream>
 
 namespace java{
+    
     namespace lang{
+        
         struct Object{
+            
             typedef const void *Handle;
             Handle handle;
             
@@ -25,7 +29,10 @@ namespace java{
             operator Handle()const{
                 return this->handle;
             }
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/lang/Object");
             
         protected:
@@ -64,13 +71,7 @@ namespace java{
                 }
             }
             
-            jclass getClass(){
-                if(auto java_env=JNI::Env()){
-                    return java_env->GetObjectClass(static_cast<jobject>(const_cast<void*>(this->handle)));
-                }else{
-                    return nullptr;
-                }
-            }
+            jclass getClass();
             
             template<class T>
             void setField(const char *fieldName,const T &value){
@@ -117,14 +118,7 @@ namespace java{
                 return std::move(this->getField<T>(fieldName.c_str()));
             }
             
-            void makeGlobal(){
-                if(!this->isGlobal){
-                    if(auto java_env=JNI::Env()){
-                        this->handle=decltype(this->handle)(java_env->NewGlobalRef((jobject(this->handle))));
-                        this->isGlobal=true;
-                    }
-                }
-            }
+            void makeGlobal();
             
             template<class RT,class ...Args>
             RT sendMessage(const std::string &message,const Args& ...args){
@@ -192,8 +186,11 @@ namespace java{
                     return {};
                 }
             }
-#endif
+            
+#endif  //__ANDROID__
+            
         };
+        
 #ifdef __ANDROID__
         
         template<>
@@ -204,6 +201,9 @@ namespace java{
         
         template<>
         bool Object::getField<bool>(const char *fieldName);
-#endif
+        
+#endif  //__ANDROID__
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__OBJECT__

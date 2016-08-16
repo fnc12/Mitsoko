@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__LANG__CLASS__
+#define __VIPER__ANDROID_UTIL__JAVA__LANG__CLASS__
 
 #include "Object.hpp"
 
@@ -7,7 +8,10 @@ namespace java{
     namespace lang{
         struct Class:public Object{
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/lang/Class");
             
             static jclass find(const std::string &signature);
@@ -43,12 +47,14 @@ namespace java{
             T _getStaticField(jfieldID fieldID,JNIEnv *env){
                 return env->GetStaticObjectField(jclass(this->handle),fieldID);
             }
-#endif
+#endif  //__ANDROID__
         };
         
 #ifdef __ANDROID__
         template<>
         int Class::_getStaticField<int>(jfieldID fieldID,JNIEnv *env);
-#endif
+#endif  //__ANDROID__
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__LANG__CLASS__
