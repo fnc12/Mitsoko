@@ -12,7 +12,7 @@
 
 //const std::string java::app::Fragment::signature="android/app/Fragment";
 
-auto java::app::Fragment::getActivity()->Activity{
+auto android::app::Fragment::getActivity()->Activity{
     return this->sendMessage<Activity>("getActivity");
 }
 

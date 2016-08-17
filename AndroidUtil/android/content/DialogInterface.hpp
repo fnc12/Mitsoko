@@ -1,32 +1,42 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__CONTENT__DIALOG_INTERFACE__
+#define __VIPER__ANDROID_UTIL__ANDROID__CONTENT__DIALOG_INTERFACE__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
 
 namespace android{
+    
     namespace content{
+        
         /**
          *  Interface.
          */
         struct DialogInterface:public java::lang::Object{
+            
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/content/DialogInterface");
             
-            void cancel(){
-                this->sendMessage<void>("cancel");
-            }
+            void cancel();
             
-            void dismiss(){
-                this->sendMessage<void>("dismiss");
-            }
+            void dismiss();
             
             struct OnClickListener:public java::lang::Object{
+                
                 using Object::Object;
+                
+//            const std::string signature;
                 STATIC_VAR(const std::string, signature, "android/content/DialogInterface$OnClickListener");
                 
             };
-#endif
+            
+#endif  //__ANDROID__
+            
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__CONTENT__DIALOG_INTERFACE__

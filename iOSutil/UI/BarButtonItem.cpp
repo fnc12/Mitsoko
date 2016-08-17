@@ -10,7 +10,7 @@
 
 #ifdef __APPLE__
 
-const std::string UI::BarButtonItem::className="UIBarItem";
+const std::string UI::BarButtonItem::className="UIBarButtonItem";
 
 UI::BarButtonItem::TouchedMap UI::BarButtonItem::touchedMap;
 

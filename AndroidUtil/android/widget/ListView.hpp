@@ -49,7 +49,7 @@ namespace android{
 //                            adapterPointer->activityHandle=context.handle;
                             auto adapterId=adapter.getField<int>("adapterId");
 //                            cout<<"adapterId = "<<adapterId<<endl;
-                            auto res=Viper::TableListAdapter::registerAdapter((const void*)adapterId, adapterPointer, java_env);
+                            auto res=Viper::TableListAdapter::registerAdapter((const void*)(intptr_t)adapterId, adapterPointer, java_env);
 //                            cout<<"res = "<<res<<endl;
                             this->setAdapter(adapter);
 //                            cout<<"this->setAdapter(adapter);"<<endl;

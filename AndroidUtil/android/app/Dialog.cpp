@@ -12,7 +12,7 @@
 
 //const std::string java::app::Dialog::signature="android/app/Dialog";
 
-auto java::app::Dialog::getWindow()->view::Window{
+auto android::app::Dialog::getWindow()->view::Window{
     return this->sendMessage<view::Window>("getWindow");
 }
 

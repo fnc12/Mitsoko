@@ -4,6 +4,7 @@
 
 #include "Viper/AndroidUtil/android/content/Context.hpp"
 #include "Viper/AndroidUtil/android/content/Intent.hpp"
+#include "Viper/AndroidUtil/java/lang/Runnable.hpp"
 
 namespace android{
     
