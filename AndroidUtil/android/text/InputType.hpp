@@ -1,17 +1,23 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__
+#define __VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
 
 namespace android{
+    
     namespace text{
         
         /**
          *  Interface.
          */
         struct InputType:public java::lang::Object{
+            
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/text/InputType");
             
 #define STATIC_JINT(name) static int name(){\
@@ -61,49 +67,10 @@ namespace android{
             STATIC_JINT(TYPE_DATETIME_VARIATION_DATE);
             STATIC_JINT(TYPE_DATETIME_VARIATION_TIME);
             
-            
-            /*static int TYPE_CLASS_PHONE(){
-                if(java::lang::Class cls=java::lang::Class::find<InputType>()){
-                    return cls.getStaticField<int>("TYPE_CLASS_PHONE");
-                }else{
-                    return -1;
-                }
-            }*/
-            
-            /*static int TYPE_NUMBER_FLAG_SIGNED(){
-                if(java::lang::Class cls=java::lang::Class::find<InputType>()){
-                    return cls.getStaticField<int>("TYPE_NUMBER_FLAG_SIGNED");
-                }else{
-                    return -1;
-                }
-            }*/
-            
-            /*static int TYPE_NUMBER_FLAG_DECIMAL(){
-                if(java::lang::Class cls=java::lang::Class::find<InputType>()){
-                    return cls.getStaticField<int>("TYPE_NUMBER_FLAG_DECIMAL");
-                }else{
-                    return -1;
-                }
-            }*/
-            
-            /*static int TYPE_CLASS_NUMBER(){
-                if(java::lang::Class cls=java::lang::Class::find<InputType>()){
-                    return cls.getStaticField<int>("TYPE_CLASS_NUMBER");
-                }else{
-                    return -1;
-                }
-            }*/
-            
-            /*static int TYPE_CLASS_TEXT(){
-                if(java::lang::Class cls=java::lang::Class::find<InputType>()){
-                    return cls.getStaticField<int>("TYPE_CLASS_TEXT");
-                }else{
-                    return -1;
-                }
-            }*/
-            
 #undef STATIC_JINT
 #endif
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__

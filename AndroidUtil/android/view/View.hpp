@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__VIEW__VIEW__
+#define __VIPER__ANDROID_UTIL__ANDROID__VIEW__VIEW__
 
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
 #include "Viper/AndroidUtil/android/content/Context.hpp"
@@ -8,47 +9,42 @@
 #include "Viper/Disposable.hpp"
 
 namespace android{
+    
     namespace view{
         
         struct View:public java::lang::Object{
+            
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/view/View");
             
             typedef std::function<void(Handle)> OnClick;
             
             typedef std::map<int,OnClick> OnClickMap;
-            STATIC_VAR(OnClickMap, onClickMap, {});
+            static OnClickMap onClickMap;
+            
+//            STATIC_VAR(OnClickMap, onClickMap, {});
             
             typedef std::map<Viper::Disposable::Id,int> DisposablesMap;
-            STATIC_VAR(DisposablesMap, disposablesMap, {});
+            static DisposablesMap disposablesMap;
+            
+//            STATIC_VAR(DisposablesMap, disposablesMap, {});
             
             struct OnClickListener:public java::lang::Object{
+                
                 using Object::Object;
+                
+//            const std::string signature;
+                
                 STATIC_VAR(const std::string, signature, "android/view/View$OnClickListener");
             };
             
-            static void onClick(int id,android::view::View v){
-                auto it=onClickMap().find(id);
-                if(it != onClickMap().end()){
-                    it->second(v);
-                }else{
-                    std::cerr<<"callback not found with id "<<id<<std::endl;
-                }
-            }
+            static void onClick(int id,android::view::View v);
             
-            void setOnClickListener(OnClick cb,const Viper::Disposable &disposable){
-                OnClickListener l;
-                if(onClick){
-                    auto classSignature="kz/outlawstudio/viper/EventHandlers$ViewOnClickListener";
-                    auto callbackObject=java::lang::Object::create(classSignature);
-                    auto callbackId=callbackObject.getField<int>("mId");
-                    onClickMap().insert({callbackId,cb});
-                    l=(OnClickListener)callbackObject;
-                    disposablesMap().insert({disposable.id,callbackId});
-                }
-                this->sendMessage<void>("setOnClickListener",l);
-            }
+            void setOnClickListener(OnClick cb,const Viper::Disposable &disposable);
             
             /**
              *  Implemented in ViewGroup.hpp"
@@ -56,9 +52,7 @@ namespace android{
             template<class T>
             void setLayoutParams(const T &params);
             
-            View findViewById(int id){
-                return this->sendMessage<View>("findViewById",id);
-            }
+            View findViewById(int id);
             
             /**
              *  This function actually doesn't exist in SDK but it is created
@@ -71,60 +65,26 @@ namespace android{
              *  client side. If you know the reason why context.getResources.getIdentifier doesn't work
              *  correctly please contact me fnc12@me.com. Thanks
              */
-            View findViewById(const std::string &idString,const content::Context &context){
-                if(auto java_env=java::lang::JNI::Env()){
-                    auto niClazz=java::lang::Class::find("kz/outlawstudio/viper/NI");
-                    auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
-                    auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
-                    auto resourseId=java::lang::String::create(idString);
-                    auto folderName=java::lang::String::create("id");
-                    auto resID=java_env->CallStaticIntMethod(niClazz,
-                                                             methodId,
-                                                             context.handle,
-                                                             resourseId.handle,
-                                                             folderName.handle);
-                    return this->findViewById(resID);
-                }else{
-                    return {};
-                }
-            }
+            View findViewById(const std::string &idString,const content::Context &context);
             
-            void setVisibility(int visibility){
-                this->sendMessage<void>("setVisibility",visibility);
-            }
+            void setVisibility(int visibility);
             
-            void setEnabled(bool enabled){
-                this->sendMessage<void>("setEnabled",enabled);
-            }
+            void setEnabled(bool enabled);
             
-            bool isEnabled(){
-                return this->sendMessage<bool>("isEnabled");
-            }
+            bool isEnabled();
             
-            int getWidth(){
-                return this->sendMessage<int>("getWidth");
-            }
+            int getWidth();
             
-            int getHeight(){
-                return this->sendMessage<int>("getHeight");
-            }
+            int getHeight();
             
-            static int VISIBLE(){
-                if(java::lang::Class cls=java::lang::Class::find<View>()){
-                    return cls.getStaticField<int>("VISIBLE");
-                }else{
-                    return -1;
-                }
-            }
+            static int VISIBLE();
             
-            static int GONE(){
-                if(java::lang::Class cls=java::lang::Class::find<View>()){
-                    return cls.getStaticField<int>("GONE");
-                }else{
-                    return -1;
-                }
-            }
-#endif
+            static int GONE();
+            
+#endif  //__ANDROID__
+            
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__VIEW__VIEW__

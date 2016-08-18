@@ -1,25 +1,26 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__ANDROID__WIDGET__LIST_VIEW__
+#define __VIPER__ANDROID_UTIL__ANDROID__WIDGET__LIST_VIEW__
 
 #include "AbsListView.hpp"
 #include "Viper/TableListAdapter.hpp"
 
 namespace android{
+    
     namespace widget{
+        
         struct ListView:public AbsListView{
+            
             using AbsListView::AbsListView;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/widget/ListView");
             
-            ListAdapter getAdapter(){
-                return this->sendMessage<ListAdapter>("getAdapter");
-            }
+            ListAdapter getAdapter();
             
-            void setAdapter(const ListAdapter &adapter){
-//                cout<<"setAdapter("<<adapter.handle<<")"<<endl;
-//                cout<<"this = "<<this<<endl;
-                this->sendMessage<void>("setAdapter",adapter);
-            }
+            void setAdapter(const ListAdapter &adapter);
             
             /**
              *  This function doesn't exist in SDK. This is a special function used for
@@ -30,7 +31,6 @@ namespace android{
                                                           const content::Context &context)
             {
                 auto pointer=std::make_shared<T>(std::move(ad));
-//                cout<<"pointer = "<<pointer<<endl;
                 return this->setAdapter(pointer,context);
             }
             
@@ -39,20 +39,14 @@ namespace android{
                                                           const content::Context &context)
             {
                 auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
-//                cout<<"adapterPointer = "<<adapterPointer<<endl;
                 if(auto java_env=java::lang::JNI::Env()){
                     if(auto clazz=java::lang::Class::find("kz/outlawstudio/viper/ViperTableViewAdapter")){
                         auto signature=java::lang::Object::generateMethodSignature<void,ListView,content::Context>();
                         if(auto ctor = java_env->GetMethodID(clazz, "<init>", signature.c_str())){
                             ListAdapter adapter=java_env->NewObject(clazz, ctor, this->handle,context.handle);
-//                            cout<<"adapter = "<<adapter.handle<<endl;
-//                            adapterPointer->activityHandle=context.handle;
                             auto adapterId=adapter.getField<int>("adapterId");
-//                            cout<<"adapterId = "<<adapterId<<endl;
                             auto res=Viper::TableListAdapter::registerAdapter((const void*)(intptr_t)adapterId, adapterPointer, java_env);
-//                            cout<<"res = "<<res<<endl;
                             this->setAdapter(adapter);
-//                            cout<<"this->setAdapter(adapter);"<<endl;
                             return res;
                         }else{
                             return 0;
@@ -64,7 +58,11 @@ namespace android{
                     return 0;
                 }
             }
-#endif
+            
+#endif  //__ANDROID__
+            
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__ANDROID__WIDGET__LIST_VIEW__
