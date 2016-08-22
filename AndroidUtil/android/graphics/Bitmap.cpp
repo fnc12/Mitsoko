@@ -7,6 +7,7 @@
 //
 
 #include "Bitmap.hpp"
+#include "Viper/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 

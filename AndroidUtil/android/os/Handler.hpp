@@ -3,6 +3,7 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__OS__HANDLER__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Viper/AndroidUtil/java/lang/Runnable.hpp"
 
 namespace android{
     

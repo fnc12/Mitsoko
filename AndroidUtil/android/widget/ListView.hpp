@@ -4,6 +4,7 @@
 
 #include "AbsListView.hpp"
 #include "Viper/TableListAdapter.hpp"
+#include "ListAdapter.hpp"
 
 namespace android{
     

@@ -3,6 +3,7 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__PROVIDER__MEDIA_STORE__
 
 #include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Viper/AndroidUtil/android/net/Uri.hpp"
 
 namespace android {
     

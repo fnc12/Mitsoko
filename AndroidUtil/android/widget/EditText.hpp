@@ -4,6 +4,7 @@
 
 #include "TextView.hpp"
 #include "Viper/AndroidUtil/android/content/Context.hpp"
+#include "Viper/AndroidUtil/android/text/Editable.hpp"
 
 namespace android{
     

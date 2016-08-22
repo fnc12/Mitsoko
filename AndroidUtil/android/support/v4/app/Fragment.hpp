@@ -4,6 +4,7 @@
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
 #include "Viper/AndroidUtil/android/content/Intent.hpp"
+#include "Viper/AndroidUtil/android/support/v4/app/FragmentActivity.hpp"
 
 namespace android{
     

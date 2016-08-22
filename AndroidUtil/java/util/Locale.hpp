@@ -1,33 +1,33 @@
 
-#pragma once
+#ifndef __VIPER__ANDROID_UTIL__JAVA__UTIL__LOCALE__
+#define __VIPER__ANDROID_UTIL__JAVA__UTIL__LOCALE__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Viper/AndroidUtil/java/lang/String.hpp"
 
 namespace java{
+    
     namespace util{
+        
         struct Locale final : public java::lang::Object{
+            
             using Object::Object;
+            
 #ifdef __ANDROID__
+            
+//            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/util/Locale");
-            void start(){
-                this->sendMessage<void>("start");
-            }
             
-            java::lang::String getLanguage(){
-                return this->sendMessage<java::lang::String>("getLanguage");
-            }
+            void start();
             
-            static Locale getDefault(){
-                if(auto java_env=java::lang::JNI::Env()){
-                    auto clazz = java_env->FindClass(signature().c_str());
-                    auto mid=java_env->GetStaticMethodID(clazz,"getDefault",generateMethodSignature<Locale>().c_str());
-//                    return java_env->NewObject(clazz, ctor, runnable);
-                    return java_env->CallStaticObjectMethod(clazz,mid);
-                }else{
-                    return {};
-                }
-            }
-#endif
+            java::lang::String getLanguage();
+            
+            static Locale getDefault();
+            
+#endif  //__ANDROID__
+            
         };
     }
 }
+
+#endif  //__VIPER__ANDROID_UTIL__JAVA__UTIL__LOCALE__

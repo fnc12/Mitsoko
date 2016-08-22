@@ -3,6 +3,7 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Viper/AndroidUtil/java/lang/Class.hpp"
 
 namespace android{
     

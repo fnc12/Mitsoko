@@ -8,6 +8,7 @@
 #include "Viper/AndroidUtil/android/os/Bundle.hpp"
 #include "Viper/AndroidUtil/android/net/Uri.hpp"
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Context.hpp"
 
 namespace android{
     
