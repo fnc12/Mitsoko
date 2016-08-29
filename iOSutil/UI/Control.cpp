@@ -10,9 +10,13 @@
 
 #ifdef __APPLE__
 
+static auto actionSelectorName="actionDidHappen:";
+
+using Viper::Disposable;
+
 const std::string UI::Control::className="UIControl";
 
-UI::Control::ValueChangedEventHandler::Callbacks UI::Control::ValueChangedEventHandler::callbacks;
+//UI::Control::ValueChangedEventHandler::Callbacks UI::Control::ValueChangedEventHandler::callbacks;
 
 void UI::Control::setEnabled(bool newValue){
     this->sendMessage<void>("setEnabled:",newValue);
@@ -24,17 +28,29 @@ bool UI::Control::enabled(){
 
 void UI::Control::setOnValueChanged(Callback cb){
     if(cb){
-        ValueChangedEventHandler::add(this->handle, cb);
+        EventHandler<Events::ValueChanged>::add(this->handle, cb);
         auto cls=NS::getClass("UIControlValueChangedEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(cls,"shared");
-        auto sel=sel_getUid("actionDidHappen:");
+        auto sel=sel_getUid(actionSelectorName);
         this->sendMessage<void>("addTarget:action:forControlEvents:", sharedEventHandler, sel, UIControlEventValueChanged);
     }else{
-        ValueChangedEventHandler::remove(this->handle);
+        EventHandler<Events::ValueChanged>::remove(this->handle);
     }
 }
 
-void UI::Control::ValueChangedEventHandler::add(Handle handle,Callback cb){
+void UI::Control::setOnTouchUpInside(Callback cb, Disposable *target){
+    if(cb && target){
+        EventHandler<Events::TouchUpInside>::add(this->handle, cb);
+        auto cls=NS::getClass("UIControlTouchUpInsideEventHandler");
+        auto sharedEventHandler=NS::Object::sendMessage<Handle>(cls,"shared");
+        auto sel=sel_getUid(actionSelectorName);
+        this->sendMessage<void>("addTarget:action:forControlEvents:", sharedEventHandler, sel, UIControlEventTouchUpInside);
+    }else{
+        EventHandler<Events::TouchUpInside>::remove(this->handle);
+    }
+}
+
+/*void UI::Control::ValueChangedEventHandler::add(Handle handle,Callback cb){
     auto it=ValueChangedEventHandler::callbacks.find(handle);
     if(it != ValueChangedEventHandler::callbacks.end()){
         it->second=cb;
@@ -65,6 +81,6 @@ void UI::Control::ValueChangedEventHandler::actionDidHappen(Handle sender){
     if(auto cb=get(sender)){
         cb(sender);
     }
-}
+}*/
 
 #endif  //__APPLE__

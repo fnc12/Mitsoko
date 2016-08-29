@@ -116,6 +116,7 @@ namespace Viper{
                 
                 interactorPointer->initWithArguments(arguments);
                 typedef typename Wireframe_t::argument_type Argument_t;
+//                cout<<"calling presenter init for "<<viewName<<endl;
                 PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
                 viewPointer->init();
                 

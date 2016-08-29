@@ -15,7 +15,7 @@ namespace UI {
         
         static const std::string className;
         
-        void setTitle(const std::string &title,UIControlState state);
+        void setTitle(const std::string &title,UI::Control::State state);
 
 #endif  //__APPLE__
         

@@ -17,7 +17,7 @@
  */
 #define STATIC_VAR(type,name,value) static type& name(){ static type res(value); return res; }
 
-/*#ifdef __ANDROID__
+#ifdef __ANDROID__
 #include <android/log.h>
 
 #define  LOG_TAG    "ViperLog"
@@ -26,11 +26,14 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+
 #else
-#define  LOGV(...) printf(__VA_ARGS__)
-#define  LOGI(...) printf(__VA_ARGS__)
-#define  LOGD(...) printf(__VA_ARGS__)
-#define  LOGE(...) printf(__VA_ARGS__)
-#endif*/
+
+#define  LOGV(...)
+#define  LOGI(...)
+#define  LOGD(...)
+#define  LOGE(...)
+
+#endif  //__ANDROID__
 
 #endif /* Util_h */

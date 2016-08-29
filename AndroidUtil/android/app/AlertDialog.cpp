@@ -97,11 +97,14 @@ auto android::app::AlertDialog::Builder::setNegativeButton(const std::string &te
 }
 
 auto android::app::AlertDialog::Builder::setNegativeButton(const java::lang::CharSequence &text,OnClickCallback cb)->Builder&{
-    auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
-    auto callbackObject=java::lang::Object::create(classSignature);
-    auto callbackId=callbackObject.getField<int>("mId");
-    onClickMap.insert({callbackId,cb});
-    auto l=(android::content::DialogInterface::OnClickListener)callbackObject;
+    android::content::DialogInterface::OnClickListener l;
+    if(cb){
+        auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
+        auto callbackObject=java::lang::Object::create(classSignature);
+        auto callbackId=callbackObject.getField<int>("mId");
+        onClickMap.insert({callbackId,cb});
+        l=(android::content::DialogInterface::OnClickListener)callbackObject;
+    }
     this->sendMessage<Builder>("setNegativeButton",text,l);
     return *this;
 }

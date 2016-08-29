@@ -12,9 +12,9 @@
 
 const std::string UI::Button::className="UIButton";
 
-void UI::Button::setTitle(const std::string &title,UIControlState state){
+void UI::Button::setTitle(const std::string &title,UI::Control::State state){
     auto str=CF::String::create(title);
-    this->sendMessage<void>("setTitle:forState:", str.handle,state);
+    this->sendMessage<void>("setTitle:forState:", str.handle,UIControlState(state));
 }
 
 #endif  //__APPLE__
