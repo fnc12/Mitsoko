@@ -7,10 +7,21 @@
 //
 
 #include "TextView.hpp"
+#include "Viper/AndroidUtil/android/text/TextWatcher.hpp"
 
 #ifdef __ANDROID__
 
 //const std::string android::widget::TextView::signature="android/widget/TextView";
+
+android::widget::TextView::TextWatcherEventHandler::OnTextChangedMap android::widget::TextView::TextWatcherEventHandler::onTextChangedMap;
+
+android::widget::TextView::TextWatcherEventHandler::BeforeTextChangedMap android::widget::TextView::TextWatcherEventHandler::beforeTextChangedMap;
+
+android::widget::TextView::TextWatcherEventHandler::AfterTextChangedMap android::widget::TextView::TextWatcherEventHandler::afterTextChangedMap;
+
+android::widget::TextView::TextWatcherEventHandler::DisposablesMap android::widget::TextView::TextWatcherEventHandler::disposablesMap;
+
+android::widget::TextView::TextWatcherEventHandler::Observer android::widget::TextView::TextWatcherEventHandler::observer;
 
 void android::widget::TextView::setInputType(int type){
     this->sendMessage<void>("setInputType",type);
@@ -27,6 +38,87 @@ void android::widget::TextView::setText(const std::string &value){
 
 void android::widget::TextView::setText(const java::lang::String &str){
     this->sendMessage<void>("setText",(java::lang::CharSequence)str);
+}
+
+void android::widget::TextView::addTextChangedListener(const android::text::TextWatcher &watcher){
+    this->sendMessage<void>("addTextChangedListener",watcher);
+}
+
+void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChanged,
+                                                       BeforeTextChanged beforeTextChanged,
+                                                       AfterTextChanged afterTextChanged,
+                                                       const Viper::Disposable &disposable)
+{
+//    android::text::TextWatcher textWatcher;
+    auto classSignature="kz/outlawstudio/viper/EventHandlers$TextViewTextChangedListener";
+    auto textWatcherObject=java::lang::Object::create(classSignature);
+    auto textWatcherId=textWatcherObject.getField<int>("mId");
+    if(onTextChanged){
+        TextWatcherEventHandler::onTextChangedMap.insert({textWatcherId,onTextChanged});
+    }
+    if(beforeTextChanged){
+        TextWatcherEventHandler::beforeTextChangedMap.insert({textWatcherId,beforeTextChanged});
+    }
+    if(afterTextChanged){
+        TextWatcherEventHandler::afterTextChangedMap.insert({textWatcherId,afterTextChanged});
+    }
+    TextWatcherEventHandler::disposablesMap[disposable.id].push_back(textWatcherId);
+//    this->sendMessage<void>("addTextChangedListener",textWatcher);
+    this->addTextChangedListener((android::text::TextWatcher)textWatcherObject);
+}
+
+android::widget::TextView::TextWatcherEventHandler::Observer::Observer(){
+    //  this object must be subscribed forever..
+    Viper::Disposable::subscribe(&TextWatcherEventHandler::observer);
+}
+
+void android::widget::TextView::TextWatcherEventHandler::Observer::disposableDidDispose(Viper::Disposable::Id id){
+    auto it=TextWatcherEventHandler::disposablesMap.find(id);
+    if(it != TextWatcherEventHandler::disposablesMap.end()){
+        auto &textWatcherIds=it->second;
+        for(auto textWatcherId:textWatcherIds){
+            auto onTextChangedIt=TextWatcherEventHandler::onTextChangedMap.find(textWatcherId);
+            if(onTextChangedIt != TextWatcherEventHandler::onTextChangedMap.end()){
+                TextWatcherEventHandler::onTextChangedMap.erase(onTextChangedIt);
+            }
+            auto beforeTextChangedIt=TextWatcherEventHandler::beforeTextChangedMap.find(textWatcherId);
+            if(beforeTextChangedIt != TextWatcherEventHandler::beforeTextChangedMap.end()){
+                TextWatcherEventHandler::beforeTextChangedMap.erase(beforeTextChangedIt);
+            }
+            auto afterTextChangedIt=TextWatcherEventHandler::afterTextChangedMap.find(textWatcherId);
+            if(afterTextChangedIt != TextWatcherEventHandler::afterTextChangedMap.end()){
+                TextWatcherEventHandler::afterTextChangedMap.erase(afterTextChangedIt);
+            }
+        }
+        TextWatcherEventHandler::disposablesMap.erase(it);
+    }
+}
+
+void android::widget::TextView::TextWatcherEventHandler::textViewOnTextChanged(int textWatcherId,jobject s,int start, int before, int count){
+    auto onTextChangedIt=TextWatcherEventHandler::onTextChangedMap.find(textWatcherId);
+    if(onTextChangedIt != TextWatcherEventHandler::onTextChangedMap.end()){
+        if(onTextChangedIt->second){
+            onTextChangedIt->second(java::lang::CharSequence(s), start, before, count);
+        }
+    }
+}
+
+void android::widget::TextView::TextWatcherEventHandler::textViewBeforeTextChanged(int textWatcherId,jobject s,int start, int before, int count){
+    auto beforeTextChangedIt=TextWatcherEventHandler::beforeTextChangedMap.find(textWatcherId);
+    if(beforeTextChangedIt != TextWatcherEventHandler::beforeTextChangedMap.end()){
+        if(beforeTextChangedIt->second){
+            beforeTextChangedIt->second(s, start, before, count);
+        }
+    }
+}
+
+void android::widget::TextView::TextWatcherEventHandler::textViewAfterTextChanged(int textWatcherId,jobject e){
+    auto afterTextChangedIt=TextWatcherEventHandler::afterTextChangedMap.find(textWatcherId);
+    if(afterTextChangedIt != TextWatcherEventHandler::afterTextChangedMap.end()){
+        if(afterTextChangedIt->second){
+            afterTextChangedIt->second(e);
+        }
+    }
 }
 
 #endif  //__ANDROID__

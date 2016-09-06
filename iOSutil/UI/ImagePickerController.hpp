@@ -61,7 +61,6 @@ namespace UI {
         protected:
             typedef std::map<Handle, DelegateEventHandler> DelegateEventHandlersMap;
             static DelegateEventHandlersMap delegateEventHandlers;
-//            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});
             
             static void remove(const void *aw);
         };

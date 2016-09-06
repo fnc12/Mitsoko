@@ -2,7 +2,7 @@
 #ifndef __VIPER__IOS_UTIL__UI__APPLICATION__
 #define __VIPER__IOS_UTIL__UI__APPLICATION__
 
-#include "Viper/iOSutil/NS/Object.hpp"
+#include "Viper/iOSutil/NS/URL.hpp"
 
 namespace UI {
     
@@ -20,6 +20,8 @@ namespace UI {
         bool networkActivityIndicatorVisible();
         
         void setNetworkActivityIndicatorVisible(bool newValue);
+        
+        bool openURL(NS::URL url);
         
 #endif  //__APPLE__
         

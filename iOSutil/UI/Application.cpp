@@ -12,6 +12,10 @@
 
 const std::string UI::Application::className="UIApplication";
 
+bool UI::Application::openURL(NS::URL url){
+    return bool(this->sendMessage<BOOL>("openURL:", url.handle));
+}
+
 UI::Application UI::Application::sharedApplication(){
     auto cls=NS::getClass(className);
     return NS::Object::sendMessage<Handle>(cls,"sharedApplication");

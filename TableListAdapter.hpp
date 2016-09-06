@@ -121,6 +121,8 @@ namespace Viper {
         
         virtual void onDisplayCell(const void *cell,int section,int row)=0;
         
+        virtual void didEndDisplayingCell(const void *cell,int section,int row)=0;
+        
         virtual std::string getViewClass(int section,int row)=0;
         
         virtual RowStyle getRowStyle(int section,int row)=0;
@@ -162,46 +164,53 @@ namespace Viper {
         
         /**
          *  Constructor from straight variable is comfortable if dataSource
-         *  is not subclassed but implemented with lambdas. If Your dataSource is
+         *  is not subclassed but implemented with lambdas. If your dataSource is
          *  subclassed - use c-stor `Adapter(std::shared_ptr<data_source_type>)`.
          */
         Adapter(data_source_type ds):Adapter(std::make_shared<data_source_type>(std::move(ds))){}
         
         /**
-         *  Constructor with smart pointer used if dataSource inherits from
+         *  Constructor with smart pointer used if your dataSource inherits from
          *  DataSource.
          */
         Adapter(std::shared_ptr<data_source_type> dsPointer):dataSource(std::move(dsPointer)){}
         
         std::function<void(const void*,int,int,const data_type&)> onCreateCellLambda;
         std::function<void(const void*,int,int,const data_type&)> onDisplayCellLambda;
+        std::function<void(const void*,int,int,const data_type&)> didEndDisplayingCellLambda;
         std::function<std::string(int,int,const data_type&)> getViewClassLambda;
         std::function<RowStyle(int,int,const data_type&)> getRowStyleLambda;
         std::function<double(int,int,const data_type&)> getRowHeightLambda;
         
-        virtual auto onCreateCell(const void *cellHandle,int section,int row,const data_type &item) throw (std::runtime_error) ->void{
+        virtual void onCreateCell(const void *cellHandle,int section,int row,const data_type &item) throw (std::runtime_error){
             if(this->onCreateCellLambda){
-                this->onCreateCellLambda(cellHandle,section,row,item);
+                this->onCreateCellLambda(cellHandle, section, row, item);
             }else{
                 throw std::runtime_error("onCreateCell is not implemented. Either implement it in you adapter subclass or assign onCreateCellLambda to your adapter instance");
             }
         }
         
-        virtual auto onDisplayCell(const void *cellHandle,int section,int row,const data_type &item)->void{
+        virtual void onDisplayCell(const void *cellHandle,int section,int row,const data_type &item){
             if(this->onDisplayCellLambda){
-                this->onDisplayCellLambda(cellHandle,section,row,item);
+                this->onDisplayCellLambda(cellHandle, section, row, item);
             }
-        };
+        }
         
-        virtual auto getRowStyle(int section,int row,const data_type &item)->RowStyle{
+        virtual void didEndDisplayingCell(const void *cell, int section, int row, const data_type &item){
+            if(this->didEndDisplayingCellLambda){
+                this->didEndDisplayingCellLambda(cell, section, row, item);
+            }
+        }
+        
+        virtual RowStyle getRowStyle(int section,int row,const data_type &item){
             if(this->getRowStyleLambda){
-                return this->getRowStyleLambda(section,row,item);
+                return this->getRowStyleLambda(section, row, item);
             }else{
                 return AdapterBase::RowStyle::Default;
             }
         }
         
-        virtual auto getViewClass(int section,int row,const data_type &item) throw (std::runtime_error) ->std::string{
+        virtual std::string getViewClass(int section,int row,const data_type &item) throw (std::runtime_error){
             if(this->getViewClassLambda){
                 return std::move(this->getViewClassLambda(section,row,item));
             }else{
@@ -209,7 +218,7 @@ namespace Viper {
             }
         }
         
-        virtual auto getRowHeight(int section,int row,const data_type &item)->double{
+        virtual double getRowHeight(int section,int row,const data_type &item){
             if(this->getRowHeightLambda){
                 return getRowHeightLambda(section,row,item);
             }else{
@@ -217,27 +226,31 @@ namespace Viper {
             }
         }
         
-        virtual auto getRowHeight(int section,int row)->double override final{
+        virtual void didEndDisplayingCell(const void *cell,int section,int row) override final{
+            this->didEndDisplayingCell(cell, section, row, this->dataSource->getItem(section,row));
+        }
+        
+        virtual double getRowHeight(int section,int row) override{
             return this->getRowHeight(section,row,this->dataSource->getItem(section,row));
         }
         
-        virtual auto getRowStyle(int section,int row)->RowStyle override final{
+        virtual RowStyle getRowStyle(int section,int row) override{
             return this->getRowStyle(section,row,this->dataSource->getItem(section,row));
         }
         
-        virtual auto getDataSource()->std::shared_ptr<DataSourceBase> override final{
+        virtual std::shared_ptr<DataSourceBase> getDataSource() override final{
             return std::dynamic_pointer_cast<DataSourceBase>(this->dataSource);
         }
         
-        virtual auto onCreateCell(const void *cell,int section,int row)->void override final{
+        virtual void onCreateCell(const void *cell,int section,int row) override{
             this->onCreateCell(cell,section,row,this->dataSource->getItem(section,row));
         }
         
-        virtual auto onDisplayCell(const void *cell,int section,int row)->void override final{
+        virtual void onDisplayCell(const void *cell,int section,int row) override{
             this->onDisplayCell(cell,section,row,this->dataSource->getItem(section,row));
         }
         
-        virtual auto getViewClass(int section,int row)->std::string override final{
+        virtual std::string getViewClass(int section,int row) override{
             return std::move(this->getViewClass(section,row,this->dataSource->getItem(section,row)));
         }
 
@@ -256,6 +269,8 @@ namespace Viper {
         constexpr static AdapterId adapterIdNull=nullptr;
         
         static AdapterId registerAdapter(const void *tableOrListView,AdapterBasePointer adapter,const void *jni=nullptr);
+        
+        static void didEndDisplayingCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr);
         
         static void willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni=nullptr);
         

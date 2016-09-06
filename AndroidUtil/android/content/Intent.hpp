@@ -31,11 +31,15 @@ namespace android{
             
             static java::lang::String ACTION_PICK();
             
+            static java::lang::String ACTION_CALL();
+            
             android::net::Uri getData();
             
             android::os::Bundle getExtras();
             
             Intent& putExtra(const std::string &name,const std::string &value);
+            
+            Intent& setData(const android::net::Uri &data);
             
 #endif  //__ANDROID__
             

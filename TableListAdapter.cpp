@@ -88,6 +88,21 @@ Viper::TableListAdapter::AdapterId Viper::TableListAdapter::registerAdapter(cons
     return tableOrListView;
 }
 
+void Viper::TableListAdapter::didEndDisplayingCell(const void *tableOrListView, const void *cell, int section, int row, const void *jni){
+    auto it=adaptersMap.end();
+#ifdef __APPLE__
+    it = adaptersMap.find(tableOrListView);
+#else
+    auto adapterId=getAdapterId(tableOrListView,(JNIEnv*)jni);
+    it = adaptersMap.find((const void*)(intptr_t)adapterId);
+#endif
+    if(it != adaptersMap.end()){
+        it->second->didEndDisplayingCell(cell, section, row);
+    }else{
+        //  not found..
+    }
+}
+
 void Viper::TableListAdapter::willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__

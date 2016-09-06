@@ -24,7 +24,7 @@ auto android::content::Intent::create(const java::lang::String &action)->Intent{
     return std::move(java::lang::Object::create<Intent>(action));
 }
 
-auto android::content::Intent::ACTION_PICK()->java::lang::String{
+java::lang::String android::content::Intent::ACTION_PICK(){
     if(java::lang::Class cls=java::lang::Class::find<Intent>()){
         return cls.getStaticField<java::lang::String>("ACTION_PICK");
     }else{
@@ -32,11 +32,19 @@ auto android::content::Intent::ACTION_PICK()->java::lang::String{
     }
 }
 
-auto android::content::Intent::getData()->android::net::Uri{
+java::lang::String android::content::Intent::ACTION_CALL(){
+    if(java::lang::Class cls=java::lang::Class::find<Intent>()){
+        return cls.getStaticField<java::lang::String>("ACTION_CALL");
+    }else{
+        return {};
+    }
+}
+
+android::net::Uri android::content::Intent::getData(){
     return this->sendMessage<android::net::Uri>("getData");
 }
 
-auto android::content::Intent::getExtras()->android::os::Bundle{
+android::os::Bundle android::content::Intent::getExtras(){
     return this->sendMessage<android::os::Bundle>("getExtras");
 }
 
@@ -44,6 +52,11 @@ auto android::content::Intent::putExtra(const std::string &name,const std::strin
     auto j_name=java::lang::String::create(name);
     auto j_value=java::lang::String::create(value);
     this->sendMessage<Intent>("putExtra",j_name,j_value);
+    return *this;
+}
+
+auto android::content::Intent::setData(const android::net::Uri &data)->Intent&{
+    this->sendMessage<Intent>("setData",data);
     return *this;
 }
 
