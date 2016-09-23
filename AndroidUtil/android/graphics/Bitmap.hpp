@@ -22,6 +22,8 @@ namespace android {
             
             int getHeight();
             
+            void recycle();
+            
             struct CompressFormat:public java::lang::Object{
                 
                 using Object::Object;

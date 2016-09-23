@@ -17,6 +17,10 @@
 
 //const std::string android::graphics::Bitmap::Config::signature="android/graphics/Bitmap$Config";
 
+void android::graphics::Bitmap::recycle(){
+    this->sendMessage<void>("recycle");
+}
+
 int android::graphics::Bitmap::getWidth(){
     return this->sendMessage<int>("getWidth");
 }
