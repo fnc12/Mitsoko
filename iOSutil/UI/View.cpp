@@ -29,7 +29,9 @@ void UI::View::setFrame(const CG::Rect &newValue){
 }
 
 CG::Rect UI::View::frame(){
-    return this->sendMessage<CGRect>("frame");
+//    auto res=this->sendMessage<CGRect>("frame");
+    auto res=((__bridge UIView*)this->handle).frame;
+    return res;
 }
 
 void UI::View::setContentMode(ContentMode newValue){

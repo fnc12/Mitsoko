@@ -117,7 +117,8 @@ namespace NS {
         template<class RT,class R,class ...Args>
         static RT sendMessage(const R &receiver,const std::string &message,const Args& ...args){
 //#ifdef __APPLE__
-            return reinterpret_cast<RT(*)(R,SEL,Args...)>(objc_msgSend)(receiver,sel_getUid(message.c_str()),args...);
+            auto sel=sel_getUid(message.c_str());
+            return reinterpret_cast<RT(*)(R,SEL,Args...)>(objc_msgSend)(receiver,sel,args...);
 //#else
 //            return {};
         }

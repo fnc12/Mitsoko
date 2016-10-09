@@ -26,14 +26,30 @@ namespace java{
             
             operator bool() const;
             
-            operator Handle()const{
+            operator Handle() const{
                 return this->handle;
             }
+            
+            /*Handle operator->() const{
+                return this->handle;
+            }*/
             
 #ifdef __ANDROID__
             
 //            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/lang/Object");
+            
+            static Handle newGlobalRef(const Object &object){
+                if(object){
+                    return java::lang::JNI::Env()->NewGlobalRef(jobject(object.handle));
+                }else{
+                    return nullptr;
+                }
+            }
+            
+            static void destroyGlobalRef(Handle handle){
+                java::lang::JNI::Env()->DeleteGlobalRef(jobject(handle));
+            }
             
         protected:
             bool isGlobal=false;

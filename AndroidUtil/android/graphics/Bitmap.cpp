@@ -9,6 +9,9 @@
 #include "Bitmap.hpp"
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
 
+using std::cout;
+using std::endl;
+
 #ifdef __ANDROID__
 
 //const std::string android::graphics::Bitmap::signature="android/graphics/Bitmap";
@@ -92,9 +95,12 @@ bool android::graphics::Bitmap::compress(int format,int quality,const java::io::
 auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter)->Bitmap{
     if(auto java_env=java::lang::JNI::Env()){
         auto clazz = java_env->FindClass(signature().c_str());
+//        cout<<"clazz = "<<clazz<<endl;
         auto methodSignature=generateMethodSignature<Bitmap,Bitmap,int,int,bool>();
+//        cout<<"methodSignature = "<<methodSignature<<endl;
         auto mid=java_env->GetStaticMethodID(clazz,"createScaledBitmap",methodSignature.c_str());
-        return java_env->CallStaticObjectMethod(clazz,mid);
+//        cout<<"mid = "<<mid<<endl;
+        return java_env->CallStaticObjectMethod(clazz, mid, src.handle, jint(dstWidth), jint(dstHeight), jboolean(filter));
     }else{
         return {};
     }
