@@ -18,7 +18,7 @@ NS::IndexSet NS::IndexSet::create(int index){
     auto handle=sendMessage<Handle>(cls, "indexSetWithIndex:",NSUInteger(index));
     IndexSet res(handle);
     //            res.shouldClearOnDestroy=true;
-    return std::move(res);
+    return res;
 }
 
 #endif  //__APPLE__

@@ -13,7 +13,6 @@ namespace NS {
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "NSData");
         
         static NS::Data createWithContentsOfFile(const std::string &path);
         

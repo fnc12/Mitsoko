@@ -14,11 +14,13 @@
 #include <ostream>
 
 namespace NS {
+    
 #ifdef __APPLE__
     Class getClass(const std::string &className);
 #endif
     
     struct Object{
+        
         typedef const void *Handle;
         Handle handle;
         

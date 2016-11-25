@@ -29,7 +29,7 @@ int Viper::DataSourceBase::getRowsCount(int section){
 
 std::string Viper::DataSourceBase::getItemId(int section,int row){
     if(this->getItemIdLambda){
-        return std::move(this->getItemIdLambda(section,row));
+        return this->getItemIdLambda(section,row);
     }else{
         return {};
     }
@@ -47,7 +47,7 @@ void Viper::AdapterBase::onRowSelected(int section,int row){
 
 std::string Viper::AdapterBase::getHeaderClass(int section){
     if(this->getHeaderClassLambda){
-        return std::move(this->getHeaderClassLambda(section));
+        return this->getHeaderClassLambda(section);
     }else{
         return {};
     }

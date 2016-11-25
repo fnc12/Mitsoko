@@ -6,13 +6,14 @@
 #include "Viper/Util.hpp"
 
 namespace NS {
-    struct Dictionary:public NS::Object{
+    
+    struct Dictionary : public NS::Object{
+        
         using Object::Object;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "NSDictionary");
         
         NS::Object objectForKey(const NS::Object &aKey);
         

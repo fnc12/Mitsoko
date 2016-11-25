@@ -14,8 +14,11 @@
 #import <Foundation/Foundation.h>
 
 namespace NS {
+    
     struct Range:public NSRange{
+        
         Range(const NSRange &s);
+        
     };
 }
 

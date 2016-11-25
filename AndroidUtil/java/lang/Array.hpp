@@ -25,7 +25,7 @@ namespace java{
             Array():Array(nullptr){}
             
             static Array<T> create(int size,const T &initialElement){
-                if(auto env=java::lang::JNI::Env()){
+                if(auto env = java::lang::JNI::Env()){
                     auto handle=env->NewObjectArray(size,
                                                     env->FindClass(T::signature().c_str()),
                                                     (jobject)initialElement.handle);

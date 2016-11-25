@@ -10,27 +10,37 @@
 
 #ifdef __APPLE__
 
-const std::string UI::Image::className="UIImage";
+const std::string UI::Image::className = "UIImage";
+
+UI::Image UI::Image::create(const char *named) {
+//    std::string str(named);
+    return create(std::string(named));
+}
 
 UI::Image UI::Image::create(const std::string &named){
-    auto cls=NS::getClass(className);
-    auto str=CF::String::create(named);
+    auto cls = NS::getClass(className);
+    auto str = CF::String::create(named);
     return NS::Object::sendMessage<Handle>(cls,"imageNamed:", str.handle);
 }
 
+UI::Image UI::Image::create(const NS::Data &data) {
+    auto cls = NS::getClass(className);
+    return NS::Object::sendMessage<Handle>(cls, "imageWithData:", data.handle);
+}
+
 UI::Image UI::Image::createWithContentsOfFile(const std::string &filename){
-    auto s=CF::String::create(filename);
+    auto s = CF::String::create(filename);
     return std::move(createWithContentsOfFile(s));
 }
 
 UI::Image UI::Image::createWithContentsOfFile(const CF::String &filename){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     return NS::Object::sendMessage<Handle>(cls,"imageWithContentsOfFile:", filename.handle);
 }
 
-NS::Data UI::Image::JPEGRepresentation(UI::Image image,CG::Float compressionQuality){
+NS::Data UI::Image::JPEGRepresentation(UI::Image image, CG::Float compressionQuality){
     image.retain();
-    auto res=CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
+    auto res = CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
     CFRelease(res);
     return res;
 }

@@ -10,6 +10,9 @@
 
 Viper::God Viper::God::shared;
 
+using std::cout;
+using std::endl;
+
 Viper::God::ViewId Viper::God::createView(const std::string &viewName,const void *handle){
     std::vector<std::shared_ptr<Disposable>> disposablesVector;
     auto viewPointer=this->_createView<R::ModulesTuple>(viewName,handle,disposablesVector);

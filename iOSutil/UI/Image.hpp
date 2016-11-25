@@ -7,15 +7,20 @@
 #include "Viper/iOSutil/CG/Size.hpp"
 
 namespace UI {
-    struct Image:public NS::Object{
+    
+    struct Image : public NS::Object {
+        
         using Object::Object;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UIImage");
+        
+        static UI::Image create(const char *named);
         
         static UI::Image create(const std::string &named);
+        
+        static UI::Image create(const NS::Data &data);
         
         static UI::Image createWithContentsOfFile(const std::string &filename);
         

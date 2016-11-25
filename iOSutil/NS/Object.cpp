@@ -58,7 +58,11 @@ NS::Object::~Object(){
 std::string NS::Object::description(){
     NS::String s=this->sendMessage<Handle>("description");
 //    return s.sendMessage<const char*>("UTF8String");
-    return s.UTF8String();
+    if(s){
+        return s.UTF8String();
+    }else{
+        return "(null)";
+    }
 }
 
 Class NS::Object::getClass(){

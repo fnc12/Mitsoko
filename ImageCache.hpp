@@ -3,25 +3,27 @@
 
 #include "iOSutil/iOSutil.hpp"
 #include "AndroidUtil/AndroidUtil.hpp"
+
 #include <functional>
 #include <fstream>
 #include <iomanip>
+
 #include "sha256.hpp"
 #include "Dispatch.hpp"
+#include "Viper/Image.hpp"
 
 namespace Viper {
+    
     struct ImageCache{
+        
         static ImageCache shared;
-        /*static ImageCache& shared(){
-            static ImageCache res;
-            return res;
-        }*/
-#ifdef __APPLE__
+        
+/*#ifdef __APPLE__
         typedef UI::Image Image;
 #else
         typedef android::graphics::Bitmap Image;
-#endif
-        struct Callback:Disposable::Observer{
+#endif*/
+        struct Callback : Disposable::Observer {
             typedef std::function<void(Image)> type;
             
             type fun;
@@ -45,18 +47,18 @@ namespace Viper {
          *  This routine called from background thread and must not dispatch functions
          *  to other threads.
          */
-        std::function<std::string(const std::string&)> requestRoutine;
+//        std::function<std::string(const std::string&)> requestRoutine;
         
         /**
          *  Should be called from main thread only. Otherwise data races may occur.
          */
-        void get(const std::string &url,Callback cb);
+        void get(const std::string &url, Callback cb);
         
         /**
          *  Returns cached image from RAM or FS or null if one isn't cached.
          *  Doesn't perform request.
          */
-        Image getCached(const std::string &url, std::string *keyPointer=nullptr, std::string *filepathPointer=nullptr);
+        Viper::Image getCached(const std::string &url, std::string *keyPointer = nullptr, std::string *filepathPointer = nullptr);
             
         
         /**
@@ -81,7 +83,7 @@ namespace Viper {
         
         NS::MutableDictionary& ramCache();
 #else
-        java::util::HashMap<java::lang::String,Image> _ramCache;
+        java::util::HashMap<java::lang::String, android::graphics::Bitmap> _ramCache;
         
         decltype(_ramCache)& ramCache();
 #endif

@@ -7,6 +7,7 @@
 //
 
 #include "Bundle.hpp"
+#include "Viper/iOSutil/CF/String.hpp"
 
 #ifdef __APPLE__
 
@@ -20,6 +21,13 @@ NS::Bundle NS::Bundle::mainBundle(){
 
 NS::Array NS::Bundle::preferredLocalizations(){
     return this->sendMessage<Handle>("preferredLocalizations");
+}
+
+std::string NS::Bundle::pathForResource(const std::string &name, const std::string &ext){
+    auto n=CF::String::create(name);
+    auto e=CF::String::create(ext);
+    NS::String res=this->sendMessage<Handle>("pathForResource:ofType:", n.handle, e.handle);
+    return res.UTF8String();
 }
 
 #endif  //__APPLE__

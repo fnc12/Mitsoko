@@ -4,6 +4,7 @@
 
 #include "Object.hpp"
 #include "Array.hpp"
+#include "String.hpp"
 
 namespace NS {
     struct Bundle:public Object{
@@ -15,6 +16,8 @@ namespace NS {
 //        STATIC_VAR(const std::string, className, "NSBundle");
         
         static Bundle mainBundle();
+        
+        std::string pathForResource(const std::string &name, const std::string &ext);
         
         NS::Array preferredLocalizations();
 #endif

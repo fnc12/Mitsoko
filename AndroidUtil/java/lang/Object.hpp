@@ -168,10 +168,10 @@ namespace java{
             
             template<class ...Args>
             static Object create(const std::string &className,Args ...args){
-                if(auto java_env=JNI::Env()){
-                    if(auto cls=java_env->FindClass(className.c_str())){
-                        auto methodSignature=std::move(generateMethodSignature<void,Args...>());
-                        if(auto methodId=java_env->GetMethodID(cls,"<init>",methodSignature.c_str())){
+                if(auto java_env = JNI::Env()){
+                    if(auto cls = java_env->FindClass(className.c_str())){
+                        auto methodSignature = std::move(generateMethodSignature<void,Args...>());
+                        if(auto methodId = java_env->GetMethodID(cls,"<init>",methodSignature.c_str())){
                             return java_env->NewObject(cls,methodId,ArgumentProxy<Args>::cast(args)...);
                         }else{
                             return {};
@@ -187,10 +187,10 @@ namespace java{
             template<class T,class ...Args>
             static T create(Args ...args){
                 static_assert(std::is_base_of<Object,T>::value,"T must inherit java::lang::Object");
-                if(auto java_env=JNI::Env()){
-                    if(auto cls=java_env->FindClass(T::signature().c_str())){
-                        auto methodSignature=std::move(generateMethodSignature<void,Args...>());
-                        if(auto methodId=java_env->GetMethodID(cls,"<init>",methodSignature.c_str())){
+                if(auto java_env = JNI::Env()){
+                    if(auto cls = java_env->FindClass(T::signature().c_str())){
+                        auto methodSignature = std::move(generateMethodSignature<void,Args...>());
+                        if(auto methodId = java_env->GetMethodID(cls,"<init>",methodSignature.c_str())){
                             return java_env->NewObject(cls,methodId,ArgumentProxy<Args>::cast(args)...);
                         }else{
                             return {};

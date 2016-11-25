@@ -54,8 +54,8 @@ int java::lang::Object::getField<int>(const char *fieldName){
 
 template<>
 bool java::lang::Object::getField<bool>(const char *fieldName){
-    if(auto java_env=JNI::Env()){
-        if(auto clazz=this->getClass()){
+    if(auto java_env = JNI::Env()){
+        if(auto clazz = this->getClass()){
             if(auto field = java_env->GetFieldID(clazz, fieldName, TypeSignatureGenerator<bool>()().c_str())){
                 return java_env->GetBooleanField((jobject)this->handle, field);
             }else{
@@ -70,7 +70,7 @@ bool java::lang::Object::getField<bool>(const char *fieldName){
 }
 
 jclass java::lang::Object::getClass(){
-    if(auto java_env=JNI::Env()){
+    if(auto java_env = JNI::Env()){
         return java_env->GetObjectClass(static_cast<jobject>(const_cast<void*>(this->handle)));
     }else{
         return nullptr;

@@ -7,6 +7,8 @@
 //
 
 #include "ImageCache.hpp"
+#include "Viper/Url/Request.hpp"
+
 #include <iostream>
 
 Viper::ImageCache Viper::ImageCache::shared;
@@ -33,24 +35,42 @@ void Viper::ImageCache::Callback::disposableDidDispose(Disposable::Id id){
     }
 }
 
-void Viper::ImageCache::get(const std::string &url,Callback cb){
-    std::string key,filepath;
-    if(auto res=getCached(url, &key, &filepath)){
+void Viper::ImageCache::get(const std::string &url, Callback cb){
+    std::string key, filepath;
+    if(auto res = getCached(url, &key, &filepath)){
         cb(res);
     }else{
-        if(requestRoutine){
-            auto it=this->callbacks.find(url);
-            if(it==this->callbacks.end()){
+//        if(requestRoutine){
+            auto it = this->callbacks.find(url);
+            if(it == this->callbacks.end()){
                 callbacks[url].push_back(cb);
-                ++[=]{
-                    if(auto r=requestRoutine){
-                        auto imageAsString=std::move(r(url));
-                        --[imageAsString=std::move(imageAsString),filepath,key,this,url]{
-                            std::ofstream out(filepath,std::ios::binary);
+                Url::Request request;
+                request.url(url);
+                request.performAsync<Image>([=](Url::Response response, Viper::Image image, Url::Error error) {
+                    LOGI("image callback fired (%d)",bool(image));
+                    if(image) {
+                        image.writeToFile(filepath);
+                        putIntoRAM(key, image);
+                        auto it = this->callbacks.find(url);
+                        if(it != this->callbacks.end()) {
+                            for(auto &cb : it->second) {
+                                cb(res);
+                            }
+                            this->callbacks.erase(it);
+                        }else{
+                            std::cerr<<"callback not found for url *"<<url<<"*"<<std::endl;
+                        }
+                    }
+                });
+//                ++[=]{
+//                    if(auto r=requestRoutine){
+//                        auto imageAsString = std::move(r(url));
+//                        --[imageAsString=std::move(imageAsString),filepath,key,this,url]{
+                            /*std::ofstream out(filepath,std::ios::binary);
                             if(out){
                                 out.write(imageAsString.c_str(), imageAsString.length());
                                 out.close();
-                                auto res=getImageFromFS(filepath);
+                                auto res = getImageFromFS(filepath);
                                 if(res){
                                     putIntoRAM(key,res);
                                     auto it=this->callbacks.find(url);
@@ -67,35 +87,35 @@ void Viper::ImageCache::get(const std::string &url,Callback cb){
                                 }
                             }else{
                                 std::cerr<<"unable to save image to file *"<<filepath<<"*"<<std::endl;
-                            }
-                        };
-                    }
-                };
+                            }*/
+//                        };
+//                    }
+//                };
             }else{
                 callbacks[url].push_back(cb);
             }
-        }
+//        }
     }
 }
 
-auto Viper::ImageCache::getCached(const std::string &url, std::string *keyPointer, std::string *filepathPointer)->Image{
+Viper::Image Viper::ImageCache::getCached(const std::string &url, std::string *keyPointer, std::string *filepathPointer) {
     sha256_t digest;
     ::sha256((unsigned char*)url.c_str(), url.length(), digest);
-    auto key=getHexRepresentation(digest, sizeof(digest));
+    auto key = getHexRepresentation(digest, sizeof(digest));
     if(keyPointer){
-        *keyPointer=key;
+        *keyPointer = key;
     }
-    auto res=getImageFromRAM(key);
+    auto res = getImageFromRAM(key);
     if(res){
         return res;
     }else{
-        auto filename=this->imageFileName(key);
-        auto filepath=this->documentsPath()+'/'+filename;
-        if(filepathPointer){
-            *filepathPointer=filepath;
+        auto filename = this->imageFileName(key);
+        auto filepath = this->documentsPath()+'/'+filename;
+        if(filepathPointer) {
+            *filepathPointer = filepath;
         }
-        auto res=getImageFromFS(filepath);
-        if(res){
+        auto res = getImageFromFS(filepath);
+        if(res) {
             putIntoRAM(key, res);
             return res;
         }else{
@@ -120,27 +140,27 @@ const std::string& Viper::ImageCache::documentsPath(){
     return _documentsPath;
 }
 
-void Viper::ImageCache::putIntoRAM(const std::string &key,Image image){
+void Viper::ImageCache::putIntoRAM(const std::string &key, Image image){
 #ifdef __APPLE__
-    auto keyString=CF::String::create(key);
-    this->ramCache()[keyString]=image;
+    auto keyString = CF::String::create(key);
+    this->ramCache()[keyString] = image.get();
 #else
-    auto keyString=java::lang::String::create(key);
-    this->ramCache().put(keyString,image);
+    auto keyString = java::lang::String::create(key);
+    this->ramCache().put(keyString, image.get());
 #endif
 }
 
-auto Viper::ImageCache::getImageFromRAM(const std::string &key)->Image{
+Viper::Image Viper::ImageCache::getImageFromRAM(const std::string &key) {
 #ifdef __APPLE__
-    auto keyString=CF::String::create(key);
+    auto keyString = CF::String::create(key);
     return this->ramCache()[keyString].as<UI::Image>();
 #else
-    auto keyString=java::lang::String::create(key);
+    auto keyString = java::lang::String::create(key);
     return this->ramCache().get(keyString);
 #endif
 }
 
-auto Viper::ImageCache::getImageFromFS(const std::string &filepath)->Image{
+auto Viper::ImageCache::getImageFromFS(const std::string &filepath) -> Image {
 #ifdef __APPLE__
     return UI::Image::createWithContentsOfFile(filepath);
 #else
@@ -152,7 +172,7 @@ auto Viper::ImageCache::getImageFromFS(const std::string &filepath)->Image{
 
 NS::MutableDictionary& Viper::ImageCache::ramCache(){
     if(!_ramCache){
-        _ramCache=NS::MutableDictionary::create();
+        _ramCache = NS::MutableDictionary::create();
     }
     return _ramCache;
 }
@@ -161,11 +181,8 @@ NS::MutableDictionary& Viper::ImageCache::ramCache(){
 
 auto Viper::ImageCache::ramCache()->decltype(_ramCache)&{
     if(!_ramCache){
-//        cout<<"if(!_ramCache){"<<endl;
-        _ramCache=java::util::HashMap<java::lang::String,Image>::create();
-//        cout<<"_ramCache=java::util::HashMap<java::lang::String,Image>::create();"<<endl;
-        _ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);
-//        cout<<"_ramCache.handle=java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);"<<endl;
+        _ramCache = java::util::HashMap<java::lang::String, android::graphics::Bitmap>::create();
+        _ramCache.handle = java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);
     }
     return _ramCache;
 }
@@ -180,7 +197,7 @@ std::string Viper::ImageCache::getHexRepresentation(const unsigned char *bytes, 
     std::ostringstream os;
     os.fill('0');
     os<<std::hex;
-    for(const unsigned char * ptr=bytes;ptr<bytes+length;ptr++)
-        os<<std::setw(2)<<(unsigned int)*ptr;
+    for(const unsigned char * ptr = bytes; ptr < bytes + length; ptr++)
+        os << std::setw(2) << (unsigned int)*ptr;
     return os.str();
 }

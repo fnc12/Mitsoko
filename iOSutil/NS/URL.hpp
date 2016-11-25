@@ -24,6 +24,8 @@ namespace NS {
         
         static NS::URL create(const std::string &str);
         
+        std::string absoluteString();
+        
     protected:
         
         void initWithString(const CF::String &str);

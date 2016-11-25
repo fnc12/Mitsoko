@@ -46,18 +46,18 @@ static std::vector<std::string> SplitEnumArgs(const char* szArgs, int nMax)
     int nIdx = 0;
     while (ss.good() && (nIdx < nMax)) {
         getline(ss, strSub, ',');
-        res.emplace_back(std::move(TrimEnumString(strSub)));
+        res.emplace_back(TrimEnumString(strSub));
 //        Array[nIdx] = TrimEnumString(strSub);
         nIdx++;
     }
-    return std::move(res);
+    return res;
 };
 #define ENUM_DECL(ename, ...) \
 enum class ename { __VA_ARGS__ }; \
 struct Incorrect##ename##StringException{};\
 static constexpr const int MAX_NUMBER_OF_##ename=PP_NARG(__VA_ARGS__);\
 static std::vector<std::string>& ename##Strings(){\
-    static std::vector<std::string> res=std::move(SplitEnumArgs(#__VA_ARGS__,MAX_NUMBER_OF_##ename));\
+    static std::vector<std::string> res=SplitEnumArgs(#__VA_ARGS__,MAX_NUMBER_OF_##ename);\
     return res;\
 }\
 static const std::string& enumToString(ename e) { \
