@@ -23,11 +23,11 @@ namespace java{
             
             template<class T>
             T getStaticField(const char *name){
-                if(auto env=java::lang::JNI::Env()){
-                    if(auto fieldId=env->GetStaticFieldID(jclass(this->handle),
-                                                          name,
-                                                          TypeSignatureGenerator<T>()().c_str())){
-                        return this->_getStaticField<T>(fieldId,env);
+                if(auto env = java::lang::JNI::Env()){
+                    if(auto fieldId = env->GetStaticFieldID(jclass(this->handle),
+                                                            name,
+                                                            TypeSignatureGenerator<T>()().c_str())) {
+                        return this->_getStaticField<T>(fieldId, env);
                     }else{
                         return MessageSender<T>().failure();
                     }
@@ -44,7 +44,7 @@ namespace java{
         protected:
             
             template<class T>
-            T _getStaticField(jfieldID fieldID,JNIEnv *env){
+            T _getStaticField(jfieldID fieldID, JNIEnv *env){
                 return env->GetStaticObjectField(jclass(this->handle),fieldID);
             }
 #endif  //__ANDROID__
@@ -52,7 +52,7 @@ namespace java{
         
 #ifdef __ANDROID__
         template<>
-        int Class::_getStaticField<int>(jfieldID fieldID,JNIEnv *env);
+        int Class::_getStaticField<int>(jfieldID fieldID, JNIEnv *env);
 #endif  //__ANDROID__
     }
 }

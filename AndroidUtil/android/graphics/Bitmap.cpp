@@ -32,16 +32,21 @@ int android::graphics::Bitmap::getHeight(){
     return this->sendMessage<int>("getHeight");
 }
 
-int android::graphics::Bitmap::CompressFormat::JPEG(){
-    if(java::lang::Class cls=java::lang::Class::find<CompressFormat>()){
-        return cls.getStaticField<int>("JPEG");
+auto android::graphics::Bitmap::CompressFormat::JPEG() -> CompressFormat {
+    if(java::lang::Class cls = java::lang::Class::find<CompressFormat>()){
+        return cls.getStaticField<CompressFormat>("JPEG");
+        /*auto env = java::lang::JNI::Env();
+        auto fieldId = GetStaticFieldID(jclass(cls),
+                                        "JPEG",
+                                        TypeSignatureGenerator<CompressFormat>()().c_str()));*/
     }else{
-        return -1;
+        LOGI("class CompressFormat not found");
+        return {};
     }
 }
 
 int android::graphics::Bitmap::CompressFormat::PNG(){
-    if(java::lang::Class cls=java::lang::Class::find<CompressFormat>()){
+    if(java::lang::Class cls = java::lang::Class::find<CompressFormat>()){
         return cls.getStaticField<int>("PNG");
     }else{
         return -1;
@@ -88,8 +93,8 @@ int android::graphics::Bitmap::Config::ARGB_8888(){
     }
 }
 
-bool android::graphics::Bitmap::compress(int format,int quality,const java::io::OutputStream &stream){
-    return this->sendMessage<bool>("compress",format,quality,stream);
+bool android::graphics::Bitmap::compress(CompressFormat format, int quality, const java::io::OutputStream &stream) {
+    return this->sendMessage<bool>("compress", format, quality, stream);
 }
 
 auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter)->Bitmap{

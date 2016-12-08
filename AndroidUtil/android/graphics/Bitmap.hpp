@@ -24,14 +24,14 @@ namespace android {
             
             void recycle();
             
-            struct CompressFormat:public java::lang::Object{
+            struct CompressFormat : public java::lang::Object {
                 
                 using Object::Object;
                 
 //            const std::string signature;
                 STATIC_VAR(const std::string, signature, "android/graphics/Bitmap$CompressFormat");
                 
-                static int JPEG();
+                static CompressFormat JPEG();
                 
                 static int PNG();
                 
@@ -54,7 +54,7 @@ namespace android {
                 static int ARGB_8888();
             };
             
-            bool compress(int format,int quality,const java::io::OutputStream &stream);
+            bool compress(CompressFormat format, int quality, const java::io::OutputStream &stream);
             
             static Bitmap createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter);
             

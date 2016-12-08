@@ -47,14 +47,18 @@ void Viper::ImageCache::get(const std::string &url, Callback cb){
                 Url::Request request;
                 request.url(url);
                 request.performAsync<Image>([=](Url::Response response, Viper::Image image, Url::Error error) {
-                    LOGI("image callback fired (%d)",bool(image));
+//                    LOGI("image callback fired (%d)",bool(image));
                     if(image) {
+//                        LOGI("image.writeToFile(filepath);");
                         image.writeToFile(filepath);
+//                        LOGI("putIntoRAM(key, image);");
                         putIntoRAM(key, image);
+//                        LOGI("auto it = this->callbacks.find(url);");
                         auto it = this->callbacks.find(url);
+//                        LOGI("if(it != this->callbacks.end()) {");
                         if(it != this->callbacks.end()) {
                             for(auto &cb : it->second) {
-                                cb(res);
+                                cb(image);
                             }
                             this->callbacks.erase(it);
                         }else{

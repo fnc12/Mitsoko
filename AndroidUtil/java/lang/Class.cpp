@@ -13,7 +13,7 @@
 //const std::string java::lang::Class::signature="java/lang/Class";
 
 jclass java::lang::Class::find(const std::string &signature){
-    if(auto env=JNI::Env()){
+    if(auto env = JNI::Env()){
         return env->FindClass(signature.c_str());
     }else{
         std::cout<<"env is null"<<std::endl;
@@ -22,8 +22,8 @@ jclass java::lang::Class::find(const std::string &signature){
 }
 
 template<>
-int java::lang::Class::_getStaticField<int>(jfieldID fieldID,JNIEnv *env){
-    return env->GetStaticIntField(jclass(this->handle),fieldID);
+int java::lang::Class::_getStaticField<int>(jfieldID fieldID, JNIEnv *env){
+    return env->GetStaticIntField(jclass(this->handle), fieldID);
 }
 
 #endif
