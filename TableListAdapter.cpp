@@ -195,7 +195,7 @@ std::string Viper::TableListAdapter::headerViewClassName(const void *tableOrList
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
-        return std::move(it->second->getHeaderClass(section));
+        return it->second->getHeaderClass(section);
     }else{
         return "";
     }
@@ -210,7 +210,7 @@ std::string Viper::TableListAdapter::cellClassName(const void *tableOrListView,i
     it = adaptersMap.find((const void*)(intptr_t)adapterId);
 #endif
     if(it != adaptersMap.end()){
-        return std::move(it->second->getViewClass(section, row));
+        return it->second->getViewClass(section, row);
     }else{
         return 0;
     }
@@ -225,7 +225,7 @@ std::string Viper::TableListAdapter::rowId(const void *tableOrListView,int secti
     it = adaptersMap.find((const void*)(intptr_t)adapterId);
 #endif
     if(it != adaptersMap.end()){
-        return std::move(it->second->getDataSource()->getItemId(section, row));
+        return it->second->getDataSource()->getItemId(section, row);
     }else{
         return 0;
     }

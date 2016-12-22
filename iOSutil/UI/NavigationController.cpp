@@ -13,12 +13,12 @@
 const std::string UI::NavigationController::className="UINavigationController";
 
 UI::NavigationController UI::NavigationController::create(const UI::ViewController &rootViewController){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     assert(cls);
-    auto handle=sendMessage<Handle>(cls, "alloc");
+    auto handle = sendMessage<Handle>(cls, "alloc");
     NavigationController res(handle);
     res.initWithRootViewController(rootViewController);
-    return std::move(res);
+    return res;
 }
 
 UI::NavigationBar UI::NavigationController::navigationBar(){

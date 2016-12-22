@@ -39,17 +39,17 @@ void Viper::Image::writeToFile(const std::string &filepath) {
         }
     }
 #else
-    LOGI("filepath = %s",filepath.c_str());
+//    LOGI("filepath = %s",filepath.c_str());
     if(auto i = image) {
-        LOGI("auto file = File::create(filepath);");
+//        LOGI("auto file = File::create(filepath);");
         auto file = File::create(filepath);
-        LOGI("auto os = BufferedOutputStream::create(FileOutputStream::create(file));");
+//        LOGI("auto os = BufferedOutputStream::create(FileOutputStream::create(file));");
         auto os = BufferedOutputStream::create(FileOutputStream::create(file));
-        LOGI("auto compressFormat = Bitmap::CompressFormat::JPEG();");
+//        LOGI("auto compressFormat = Bitmap::CompressFormat::JPEG();");
         auto compressFormat = Bitmap::CompressFormat::JPEG();
-        LOGI("compressFormat = %d", compressFormat);
+//        LOGI("compressFormat = %d", compressFormat);
         i.compress(compressFormat, 85, os);
-        LOGI("os.close();");
+//        LOGI("os.close();");
         os.close();
     }
 #endif  //__APPLE__

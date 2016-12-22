@@ -107,10 +107,10 @@ UI::AlertView UI::AlertView::create(std::experimental::optional<std::string> tit
                                     std::experimental::optional<std::string> cancelButtonTitle,
                                     std::initializer_list<std::string> otherButtonTitles)
 {
-    return std::move(create(CF::String::create(title),
-                            CF::String::create(message),
-                            CF::String::create(cancelButtonTitle),
-                            std::move(otherButtonTitles)));
+    return create(CF::String::create(title),
+                  CF::String::create(message),
+                  CF::String::create(cancelButtonTitle),
+                  std::move(otherButtonTitles));
 }
 
 UI::AlertView UI::AlertView::create(const CF::String &title,
@@ -120,7 +120,7 @@ UI::AlertView UI::AlertView::create(const CF::String &title,
 {
     auto cls=NS::getClass(className);
     if(cls){
-        auto res=NS::Object::create<AlertView>();
+        auto res = NS::Object::create<AlertView>();
         res.setTitle(title);
         res.setMessage(message);
         if(cancelButtonTitle){
@@ -130,7 +130,7 @@ UI::AlertView UI::AlertView::create(const CF::String &title,
             auto s=CF::String::create(t);
             res.addButtonWithTitle(s);
         }
-        return std::move(res);
+        return res;
     }else{
         return {};
     }

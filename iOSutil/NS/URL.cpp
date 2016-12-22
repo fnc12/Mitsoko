@@ -18,7 +18,7 @@ NS::URL NS::URL::create(const std::string &str){
     auto cfString = CF::String::create(str);
     NS::URL res = sendMessage<Handle>(cls, "alloc");
     res.initWithString(cfString);
-    return std::move(res);
+    return res;
 }
 
 void NS::URL::initWithString(const CF::String &str){

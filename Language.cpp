@@ -50,7 +50,7 @@ std::string Viper::localizedString(const std::string &key,const std::string &lan
 }
 
 std::string Viper::localizedString(const std::string &key){
-    return std::move(localizedString(key,Language::current()));
+    return localizedString(key,Language::current());
 }
 
 std::string Viper::operator"" _ls (const char *s,size_t len){
@@ -58,5 +58,5 @@ std::string Viper::operator"" _ls (const char *s,size_t len){
 }
 
 std::string Viper::Localizator::operator()(const std::string &s) const{
-    return std::move(localizedString(s));
+    return localizedString(s);
 }

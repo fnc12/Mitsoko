@@ -15,25 +15,25 @@ const std::string UI::ImagePickerController::className="UIImagePickerController"
 UI::ImagePickerController::DelegateEventHandler::DelegateEventHandlersMap UI::ImagePickerController::DelegateEventHandler::delegateEventHandlers;
 
 UI::ImagePickerController UI::ImagePickerController::create(){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     assert(cls);
-    auto handle=sendMessage<Handle>(cls, "new");
+    auto handle = sendMessage<Handle>(cls, "new");
     ImagePickerController res(handle);
-    return std::move(res);
+    return res;
 }
 
 bool UI::ImagePickerController::isSourceTypeAvailable(UI::ImagePickerController::SourceType sourceType){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     return sendMessage<BOOL>(cls,"isSourceTypeAvailable:", UIImagePickerControllerSourceType(sourceType));
 }
 
 NS::Array UI::ImagePickerController::availableMediaTypesForSourceType(UI::ImagePickerController::SourceType sourceType){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     return sendMessage<Handle>(cls,"availableMediaTypesForSourceType:", UIImagePickerControllerSourceType(sourceType));
 }
 
 NS::String UI::ImagePickerController::OriginalImage(){
-    auto res=CFBridgingRetain(UIImagePickerControllerOriginalImage);
+    auto res = CFBridgingRetain(UIImagePickerControllerOriginalImage);
     CFRelease(res);
     return res;
 }

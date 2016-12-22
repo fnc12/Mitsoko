@@ -14,7 +14,7 @@ const std::string NS::Data::className="NSData";
 
 NS::Data NS::Data::createWithContentsOfFile(const std::string &path){
     auto s = CF::String::create(path);
-    return std::move(createWithContentsOfFile(s));
+    return createWithContentsOfFile(s);
 }
 
 NS::Data NS::Data::createWithContentsOfFile(const CF::String &path){

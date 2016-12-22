@@ -38,7 +38,7 @@ UI::BarButtonItem UI::BarButtonItem::create(const UI::Image &image,Style style,T
         Viper::Disposable::subscribe(&observer);
     }
     res.initWithImage(image, style, target, action);
-    return std::move(res);
+    return res;
 }
 
 UI::BarButtonItem UI::BarButtonItem::create(const std::string &title,Style style,Touched f,const Viper::Disposable *disposable){
@@ -62,7 +62,7 @@ UI::BarButtonItem UI::BarButtonItem::create(const std::string &title,Style style
         Viper::Disposable::subscribe(&observer);
     }
     res.initWithTitle(t, style, target, action);
-    return std::move(res);
+    return res;
 }
 
 void UI::BarButtonItem::touched(Handle handle){

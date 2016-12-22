@@ -55,7 +55,7 @@ namespace Viper {
                     std::string operator()() const {
                         std::stringstream ss;
                         ss << this->name << "=" << this->value;
-                        return std::move(ss.str());
+                        return ss.str();
                     }
                 };
                 
@@ -77,7 +77,7 @@ namespace Viper {
                                 ss << "&";
                             }
                         }
-                        return std::move(ss.str());
+                        return ss.str();
                     }
                 };
             };

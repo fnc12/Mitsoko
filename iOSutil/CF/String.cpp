@@ -12,20 +12,20 @@
 
 CF::String CF::String::create(std::experimental::optional<std::string> str){
     if(str){
-        return std::move(create(*str));
+        return create(*str);
     }else{
         return {};
     }
 }
 
 CF::String CF::String::create(const std::string &str){
-    return std::move(create(str.c_str()));
+    return create(str.c_str());
 }
 
 CF::String CF::String::create(const char *cString){
-    auto cfStr=CFStringCreateWithCString(nullptr, cString, kCFStringEncodingUTF8);
+    auto cfStr = CFStringCreateWithCString(nullptr, cString, kCFStringEncodingUTF8);
     String res(cfStr);
-    return std::move(res);
+    return res;
 }
 
 #endif  //__APPLE__

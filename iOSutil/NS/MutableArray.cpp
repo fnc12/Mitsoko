@@ -17,7 +17,7 @@ NS::MutableArray NS::MutableArray::create(){
     assert(cls);
     auto handle=sendMessage<Handle>(cls, "new");
     NS::MutableArray res(handle);
-    return std::move(res);
+    return res;
 }
 
 void NS::MutableArray::addObject(const NS::Object &anObject){

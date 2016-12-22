@@ -30,7 +30,7 @@ UI::Image UI::Image::create(const NS::Data &data) {
 
 UI::Image UI::Image::createWithContentsOfFile(const std::string &filename){
     auto s = CF::String::create(filename);
-    return std::move(createWithContentsOfFile(s));
+    return createWithContentsOfFile(s);
 }
 
 UI::Image UI::Image::createWithContentsOfFile(const CF::String &filename){
