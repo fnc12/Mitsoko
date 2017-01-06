@@ -149,6 +149,8 @@ namespace Viper {
             
             void performAsync(std::function<void(Response, std::vector<char>, Error)> callback);
             
+            static std::string url_encode(const std::string &value);
+            
 #ifdef __ANDROID__
             
             static void urlResponseReceived(int requestId,
@@ -178,6 +180,7 @@ namespace Viper {
             };
             
 #endif  //__ANDROID__
+            
             
         };
         

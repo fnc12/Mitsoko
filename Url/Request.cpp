@@ -12,6 +12,10 @@
 
 #include <iostream>
 #include <sys/time.h>
+#include <cctype>
+#include <iomanip>
+#include <sstream>
+#include <string>
 
 using std::cout;
 using std::endl;
@@ -131,16 +135,6 @@ void Viper::Url::Request::performAsync<Viper::Image>(std::function<void(Response
                                                    //   create image from data..
                                                    auto image = UI::Image::create(data);
                                                    Viper::Image i(image);
-                                                   /*std::vector<char> d;
-                                                   auto dataLength = data.length();
-                                                   if(dataLength){
-                                                       d.reserve(dataLength);
-                                                       auto dataBegin = (const char*)data.bytes();
-                                                       auto dataEnd = dataBegin + dataLength;
-                                                       std::copy(dataBegin,
-                                                                 dataEnd,
-                                                                 std::back_inserter(d));
-                                                   }*/
                                                    
                                                    //   create error wrapper..
                                                    Error e(error);
@@ -158,10 +152,28 @@ void Viper::Url::Request::performAsync<Viper::Image>(std::function<void(Response
 #endif  //__APPLE__
 }
 
-/*template<>
-void Viper::Url::Request::performAsync<std::string>(std::function<void(Response, std::string, Error)> callback) {
+std::string Viper::Url::Request::url_encode(const std::string &value) {
+    std::ostringstream escaped;
+    escaped.fill('0');
+    escaped << std::hex;
     
-}*/
+    for (std::string::const_iterator i = value.begin(), n = value.end(); i != n; ++i) {
+        std::string::value_type c = (*i);
+        
+        // Keep alphanumeric and other accepted characters intact
+        if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+            continue;
+        }
+        
+        // Any other characters are percent-encoded
+        escaped << std::uppercase;
+        escaped << '%' << std::setw(2) << int((unsigned char) c);
+        escaped << std::nouppercase;
+    }
+    
+    return escaped.str();
+}
 
 std::string Viper::Url::Request::MultipartAdapter::generateBoundary() {
     struct timeval tv;
@@ -203,9 +215,7 @@ auto Viper::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Requ
     f(multipartAdapter);
     multipartAdapter.finish();
     this->body(multipartAdapter.body());
-//    _body=std::move(multipartAdapter.body());
     this->setValueForHTTPHeaderField("multipart/form-data; boundary=" + multipartAdapter.boundary(), "Content-Type");
-//    _headers.push_back("Content-Type: multipart/form-data; boundary="+multipartAdapter.boundary());
     return *this;
 }
 
@@ -214,12 +224,6 @@ auto Viper::Url::Request::setValueForHTTPHeaderField(std::string value, std::str
 #ifdef __APPLE__
     request.setValueForHTTPHeaderField(value, field);
 #else
-    /*if(auto java_env = java::lang::JNI::Env()) {
-        auto cls = request.getClass();
-        auto mid = java_env->
-    }else{
-        cout<<"java env is null"<<endl;
-    }*/
     auto v = java::lang::String::create(value);
     auto f = java::lang::String::create(field);
     request.sendMessage<void>("setValueForHTTPHeaderField", v, f);
@@ -229,9 +233,6 @@ auto Viper::Url::Request::setValueForHTTPHeaderField(std::string value, std::str
 }
 
 auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter> getParameters) -> Request& {
-    
-//    auto url = value;
-    
     std::stringstream ss;
     ss << value;
     const auto getParametersCount = getParameters.size();
@@ -239,7 +240,6 @@ auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter
         ss << "?";
         for(auto i=0; i<getParametersCount; ++i) {
             auto &getParameter = getParameters[i];
-            //                ss<<getParameter.first<<"="<<getParameter.second.value;
             ss << getParameter.value;
             if(i < getParametersCount-1) {
                 ss << "&";
@@ -247,6 +247,7 @@ auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter
         }
     }
     auto url = ss.str();
+//    url = url_encode(url);
     ss.flush();
     
 #ifdef __APPLE__

@@ -101,7 +101,7 @@ namespace Viper{
                 viewPointer->setEventHandler(presenterPointer);
                 presenterPointer->setUserInterface(viewPointer);
                 
-                presenterPointer->wireframe.handle=handle;
+                presenterPointer->wireframe.handle = handle;
                 
                 //  create interactor..
                 auto interactorPointer=std::make_shared<typename PageType::interactor_type>();
