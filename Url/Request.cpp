@@ -313,8 +313,6 @@ auto Viper::Url::Request::body(const std::string &s) -> Request& {
     return *this;
 }
 
-//void Viper::Url::Request::performAsync(std::function<void(Response, std::vector<char>, Error)> callback) 
-
 #ifdef __ANDROID__
 
 void Viper::Url::Request::urlResponseReceived(int requestId,
@@ -326,28 +324,32 @@ void Viper::Url::Request::urlResponseReceived(int requestId,
     if(it != CallbackHolder<std::vector<char>>::callbacks.end()){
         if(auto callback = it->second){
             
+//            LOGI("data = %p",data);
+            
             //   create response wrapper..
             Response r(response);
+//            LOGI("Response r(response);");
             
             //   copy data into vector..
             std::vector<char> d;
             if(auto env = java::lang::JNI::Env()){
-                auto buffer = env->GetByteArrayElements(data, NULL);
-                auto size = env->GetArrayLength(data);
-                
-                /*for(int i = 0; i < size; i++) {
-                    printf("%c", buffer[i]);
-                }*/
-                
-                auto dataBegin = buffer;
-                auto dataEnd = dataBegin + size;
-                
-                d.reserve(size);
-                std::copy(dataBegin,
-                          dataEnd,
-                          std::back_inserter(d));
-                
-                env->ReleaseByteArrayElements(data, buffer, JNI_ABORT);
+                if(data){
+                    LOGI("env = %p", env);
+                    auto buffer = env->GetByteArrayElements(data, NULL);
+                    LOGI("buffer = %p",buffer);
+                    auto size = env->GetArrayLength(data);
+                    LOGI("size = %ld",long(size));
+                    
+                    auto dataBegin = buffer;
+                    auto dataEnd = dataBegin + size;
+                    
+                    d.reserve(size);
+                    std::copy(dataBegin,
+                              dataEnd,
+                              std::back_inserter(d));
+                    
+                    env->ReleaseByteArrayElements(data, buffer, JNI_ABORT);
+                }
             }
             
             //   create error wrapper..
