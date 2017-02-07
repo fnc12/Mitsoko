@@ -7,7 +7,12 @@
 //
 
 #include "View.hpp"
-#include "rapidjson/Document.h"
+//#include "rapidjson/Document.h"
+
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 Viper::ViewBase::ViewBase(decltype(handle)handle_):handle(handle_){};
 
@@ -20,8 +25,10 @@ Viper::ViewBase::~ViewBase(){
     this->adapterIds.clear();
 }
 
-void Viper::ViewBase::messageReceived(int messageCode,std::string jsonArguments){
+/*void Viper::ViewBase::messageReceived(int messageCode,std::string jsonArguments){
     Arguments arguments;
+    LOGI("jsonArguments = *%s*",jsonArguments.c_str());
+    LOGI("jsonArguments.length() = %ld",jsonArguments.length());
     if(jsonArguments.length()){
         rapidjson::Document d;
         d.Parse(jsonArguments.c_str());
@@ -29,12 +36,15 @@ void Viper::ViewBase::messageReceived(int messageCode,std::string jsonArguments)
             for(auto it=d.MemberBegin();it!=d.MemberEnd();++it){
                 if(it->name.IsString() && it->value.IsString()){
                     arguments.insert({it->name.GetString(),it->value.GetString()});
+                    cout << "name = " << it->name.GetString() << ", value = " << it->value.GetString() << endl;
                 }
             }
+        }else{
+            LOGI("d is not an object (%s)", jsonArguments.c_str());
         }
     }
     this->messageReceived(messageCode,std::move(arguments));
-}
+}*/
 
 void Viper::ViewBase::onActivityResult(int requestCode,int resultCode, android::content::Intent data){
     //..

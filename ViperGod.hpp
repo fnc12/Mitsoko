@@ -23,7 +23,6 @@
 #include "Dispatch.hpp"
 
 namespace Viper{
-//    using namespace Modules;
     
     template<class Arg,class W,class P>
     struct PresenterIniter{
@@ -42,14 +41,10 @@ namespace Viper{
         }
     };
     
-    struct God/*:public Viper::ViperGodBase*/{
+    struct God {
         typedef long ViewId;
         
         static God shared;
-        /*static God& shared(){
-            static God res;
-            return res;
-        }*/
         
         void viewWillAppear(ViewId viewId);
         
@@ -116,7 +111,6 @@ namespace Viper{
                 
                 interactorPointer->initWithArguments(arguments);
                 typedef typename Wireframe_t::argument_type Argument_t;
-//                cout<<"calling presenter init for "<<viewName<<endl;
                 PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
                 viewPointer->init();
                 

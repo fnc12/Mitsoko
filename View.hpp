@@ -46,11 +46,11 @@ namespace Viper{
         
         typedef std::map<std::string,std::string> Arguments;
         
-        void messageReceived(int messageCode,std::string jsonArguments);
+        virtual void messageReceived(int messageCode, std::string args) {};
         
         virtual void onActivityResult(int requestCode,int resultCode, android::content::Intent data);
         
-        virtual void messageReceived(int messageCode,Arguments arguments){}
+//        virtual void messageReceived(int messageCode,Arguments arguments){}
         
         std::string arguments();
         
