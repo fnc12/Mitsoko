@@ -52,7 +52,7 @@ namespace Viper{
         
 //        virtual void messageReceived(int messageCode,Arguments arguments){}
         
-        std::string arguments();
+//        std::string arguments();
         
     protected:
         

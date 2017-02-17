@@ -26,12 +26,8 @@ namespace android{
             typedef std::map<int,OnClick> OnClickMap;
             static OnClickMap onClickMap;
             
-//            STATIC_VAR(OnClickMap, onClickMap, {});
-            
             typedef std::map<Viper::Disposable::Id,int> DisposablesMap;
             static DisposablesMap disposablesMap;
-            
-//            STATIC_VAR(DisposablesMap, disposablesMap, {});
             
             struct OnClickListener:public java::lang::Object{
                 

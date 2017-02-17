@@ -50,7 +50,7 @@ void Viper::ViewBase::onActivityResult(int requestCode,int resultCode, android::
     //..
 }
 
-std::string Viper::ViewBase::arguments(){
+/*std::string Viper::ViewBase::arguments(){
 #ifdef __APPLE__
     NS::String argumentsString=NS::Object(this->handle).sendMessage<decltype(handle)>("arguments");
     return argumentsString.UTF8String();
@@ -73,4 +73,4 @@ std::string Viper::ViewBase::arguments(){
         return {};
     }
 #endif
-}
+}*/
