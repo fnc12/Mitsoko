@@ -18,11 +18,6 @@ namespace Viper {
         
         static ImageCache shared;
         
-/*#ifdef __APPLE__
-        typedef UI::Image Image;
-#else
-        typedef android::graphics::Bitmap Image;
-#endif*/
         struct Callback : Disposable::Observer {
             typedef std::function<void(Image)> type;
             
@@ -38,16 +33,6 @@ namespace Viper {
             
             virtual void disposableDidDispose(Disposable::Id id) override;
         };
-        
-        /**
-         *  This is a point where ImageCache interacts with external lib for
-         *  url request or anything else to request an image from server.
-         *  The only argument is an image url. Return value is an image got 
-         *  from std::stringstream.
-         *  This routine called from background thread and must not dispatch functions
-         *  to other threads.
-         */
-//        std::function<std::string(const std::string&)> requestRoutine;
         
         /**
          *  Should be called from main thread only. Otherwise data races may occur.
