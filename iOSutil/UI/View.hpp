@@ -8,12 +8,16 @@
 #include "Color.hpp"
 
 namespace UI {
-    struct View:public UI::Responder{
+    
+    struct View : public UI::Responder {
+        
         using Responder::Responder;
         
 #ifdef __APPLE__
         
         static const std::string className;
+        
+        static UI::View create();
         
         enum class ContentMode{
             ScaleToFill = UIViewContentModeScaleToFill,

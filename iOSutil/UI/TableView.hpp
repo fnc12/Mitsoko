@@ -9,13 +9,13 @@
 #include "Viper/iOSutil/NS/IndexSet.hpp"
 
 namespace UI {
+    
     struct TableView:public UI::ScrollView{
         using ScrollView::ScrollView;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UITableView");
         
         enum class RowAnimation{
             Fade = UITableViewRowAnimationFade,
@@ -28,7 +28,7 @@ namespace UI {
             Automatic = UITableViewRowAnimationAutomatic,
         };
         
-        void reloadSections(const NS::IndexSet &indexSet,RowAnimation animation);
+        void reloadSections(const NS::IndexSet &indexSet, RowAnimation animation);
         
         void reloadData();
         
@@ -57,9 +57,16 @@ namespace UI {
             return adapterId;
         }
         
-        struct Cell:public UI::View{
+        UI::View tableFooterView();
+        
+        void setTableFooterView(const UI::View &value);
+        
+        struct Cell : public UI::View {
+            
             using View::View;
-            STATIC_VAR(std::string, className, "UITableViewCell");
+            
+            static const std::string className;
+//            STATIC_VAR(std::string, className, "UITableViewCell");
             
             enum class AccessoryType{
                 None=UITableViewCellAccessoryNone,

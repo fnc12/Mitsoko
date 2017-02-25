@@ -10,7 +10,12 @@
 
 #ifdef __APPLE__
 
-const std::string UI::View::className="UIView";
+const std::string UI::View::className = "UIView";
+
+UI::View UI::View::create() {
+    return (__bridge Handle)[UIView new];
+}
+
 
 void UI::View::addSubview(const UI::View &view){
     this->sendMessage<void>("addSubview:", view.handle);
@@ -29,8 +34,7 @@ void UI::View::setFrame(const CG::Rect &newValue){
 }
 
 CG::Rect UI::View::frame(){
-//    auto res=this->sendMessage<CGRect>("frame");
-    auto res=((__bridge UIView*)this->handle).frame;
+    auto res = ((__bridge UIView*)this->handle).frame;
     return res;
 }
 

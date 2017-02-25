@@ -11,7 +11,7 @@
 
 namespace UI {
     
-    struct BarButtonItem:public UI::BarItem{
+    struct BarButtonItem : public UI::BarItem {
         
         using BarItem::BarItem;
         
@@ -19,19 +19,25 @@ namespace UI {
         
         static const std::string className;
         
-//        STATIC_VAR(const std::string, className, "UIBarButtonItem");
-        
         typedef std::function<void(UI::BarButtonItem)> Touched;
         
         enum class Style{
-            Plain=UIBarButtonItemStylePlain,
-            Bordered=UIBarButtonItemStyleBordered,
-            Done=UIBarButtonItemStyleDone,
+            Plain = UIBarButtonItemStylePlain,
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0
+            Bordered = UIBarButtonItemStyleBordered,
+#endif
+            Done = UIBarButtonItemStyleDone,
         };
         
-        static UI::BarButtonItem create(const UI::Image &image,Style style,Touched f,const Viper::Disposable *disposable);
+        static UI::BarButtonItem create(const UI::Image &image,
+                                        Style style,
+                                        Touched f,
+                                        const Viper::Disposable *disposable);
         
-        static UI::BarButtonItem create(const std::string &title,Style style,Touched f,const Viper::Disposable *disposable);
+        static UI::BarButtonItem create(const std::string &title,
+                                        Style style,
+                                        Touched f,
+                                        const Viper::Disposable *disposable);
         
         static void touched(Handle handle);
         
@@ -39,19 +45,16 @@ namespace UI {
         
         typedef std::map<Handle, Touched> TouchedMap;
         static TouchedMap touchedMap;
-//        STATIC_VAR(TouchedMap, touchedMap, {});
         
         typedef std::map<Viper::Disposable::Id, Handle> DisposablesMap;
         static DisposablesMap disposablesMap;
-//        STATIC_VAR(DisposablesMap, disposablesMap, {});
         
-        struct Observer:public Viper::Disposable::Observer{
+        struct Observer : public Viper::Disposable::Observer {
             
             virtual void disposableDidDispose(Viper::Disposable::Id id) override;
         };
         
         static Observer observer;
-//        STATIC_VAR(Observer, observer, {});
         
         Handle initWithImage(const UI::Image &image,Style style,const NS::Object &target,SEL action);
         
