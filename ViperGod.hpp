@@ -82,15 +82,14 @@ namespace Viper{
         {
             typedef typename TupleCutter<T>::Head_t PageType;
             typedef typename PageType::wireframe_type Wireframe_t;
-            if(Wireframe_t::viewName==viewName){
+            typedef typename PageType::presenter_type Presenter_t;
+            if(Presenter_t::viewName == viewName){
             
                 //  create view..
-                auto viewPointer=std::make_shared<typename PageType::view_type>(handle);
-//                const auto arguments=viewPointer->arguments();
+                auto viewPointer = std::make_shared<typename PageType::view_type>(handle);
                 
                 //  create presenter..
-                typedef typename PageType::presenter_type Presenter_t;
-                auto presenterPointer=std::make_shared<Presenter_t>();
+                auto presenterPointer = std::make_shared<Presenter_t>();
                 
                 //  chain view and presenter..
                 viewPointer->setEventHandler(presenterPointer);
@@ -99,7 +98,7 @@ namespace Viper{
                 presenterPointer->wireframe.handle = handle;
                 
                 //  create interactor..
-                auto interactorPointer=std::make_shared<typename PageType::interactor_type>();
+                auto interactorPointer = std::make_shared<typename PageType::interactor_type>();
                 
                 //  chain interactor and presenter..
                 presenterPointer->setInput(interactorPointer);

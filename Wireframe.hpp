@@ -8,6 +8,7 @@
 #include <memory>
 #include <experimental/optional>
 #include <functional>
+
 #include "Util.hpp"
 #include "Selfish.hpp"
 
@@ -39,7 +40,7 @@ namespace Viper{
      */
     
     template<class C,class W>
-    struct Callbackable{
+    struct Callbackable {
         typedef C return_type;
         std::function<void(C)> callback;
         STATIC_VAR(std::function<void(C)>, staticCallback, {});
@@ -48,7 +49,7 @@ namespace Viper{
     };
     
     template<class W>
-    struct Callbackable<void,W>{
+    struct Callbackable<void,W> {
         typedef void return_type;
         std::function<void()> callback;
         STATIC_VAR(std::function<void()>, staticCallback, {});
@@ -71,11 +72,76 @@ namespace Viper{
     };
     
     template<class W>
-    struct Argumentable<void,W>{
+    struct Argumentable<void, W> {
         typedef void argument_type;
     };
     
-    struct WireframeBase{
-        const void *handle=nullptr;
+    struct WireframeBase {
+        const void *handle = nullptr;
+        
+        template<class I, class A>
+        void open(const std::string &viewName, I i, A a) {
+#ifdef __APPLE__
+            i(this->handle, viewName);
+#else
+            a(this->handle, viewName);
+#endif
+        }
+        
+        template<class P, class I, class A>
+        void open(I i, A a) {
+            this->open(P::viewName, i, a);
+        }
+        
+        template<class I, class A>
+        void close(I i, A a) {
+#ifdef __APPLE__
+            i(this->handle);
+#else
+            a(this->handle);
+#endif
+        }
+    };
+    
+    struct NavigationPusher {
+        bool animated = true;
+        
+        void operator()(const void *handle, const std::string &viewName);
+    };
+    
+    struct NavigationClassPoper {
+        std::string targetClassName;
+        bool animated = true;
+        
+        NavigationClassPoper() = delete;
+        
+        NavigationClassPoper(const std::string &target, bool animated = true);
+        
+        void operator()(const void *handle);
+    };
+    
+    struct FragmentStarter {
+        void operator()(const void *handle, const std::string &viewName);
+    };
+    
+    struct ActivityStarter {
+        bool finishSelf = false;
+        std::shared_ptr<int> result;
+        
+        ActivityStarter(bool finishSelf_ = false):finishSelf(finishSelf_){}
+        
+        ActivityStarter(bool finishSelf_, int result_):finishSelf(finishSelf_),result(std::make_shared<int>(result_)){}
+        
+        void operator()(const void *handle, const std::string &viewName);
+    };
+    
+    struct ActivityCloser {
+        std::shared_ptr<int> result;
+        
+        ActivityCloser();
+        
+        ActivityCloser(int result);
+        
+        void operator()(const void *handle);
     };
 }
