@@ -61,6 +61,10 @@ namespace UI {
         
         void setTableFooterView(const UI::View &value);
         
+        UI::Color separatorColor();
+        
+        void setSeparatorColor(const UI::Color &value);
+        
         struct Cell : public UI::View {
             
             using View::View;

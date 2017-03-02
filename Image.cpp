@@ -12,6 +12,8 @@
 #include "Viper/AndroidUtil/java/io/File.hpp"
 #include "Viper/AndroidUtil/java/io/BufferedOutputStream.hpp"
 
+#include <iostream>
+
 using java::io::File;
 using java::io::BufferedOutputStream;
 using java::io::FileOutputStream;
@@ -35,21 +37,18 @@ void Viper::Image::writeToFile(const std::string &filepath) {
 #ifdef __APPLE__
     if(auto i = image) {
         if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {
-            data.writeToFile(filepath, true);
+            auto done = data.writeToFile(filepath, true);
+            if(!done) {
+                std::cerr << "Viper::Image: write to file failed" << std::endl;
+            }
         }
     }
 #else
-//    LOGI("filepath = %s",filepath.c_str());
     if(auto i = image) {
-//        LOGI("auto file = File::create(filepath);");
         auto file = File::create(filepath);
-//        LOGI("auto os = BufferedOutputStream::create(FileOutputStream::create(file));");
         auto os = BufferedOutputStream::create(FileOutputStream::create(file));
-//        LOGI("auto compressFormat = Bitmap::CompressFormat::JPEG();");
         auto compressFormat = Bitmap::CompressFormat::JPEG();
-//        LOGI("compressFormat = %d", compressFormat);
         i.compress(compressFormat, 85, os);
-//        LOGI("os.close();");
         os.close();
     }
 #endif  //__APPLE__

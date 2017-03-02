@@ -5,6 +5,7 @@
 #include "View.hpp"
 #include "Viper/iOSutil/NS/Data.hpp"
 #include "Viper/iOSutil/CG/Size.hpp"
+#include "Viper/iOSutil/CG/Image.hpp"
 
 namespace UI {
     
@@ -26,9 +27,13 @@ namespace UI {
         
         static UI::Image createWithContentsOfFile(const CF::String &filename);
         
-        static NS::Data JPEGRepresentation(UI::Image image,CG::Float compressionQuality);
+        static UI::Image createWithCGImage(const CG::Image &img);
+        
+        static NS::Data JPEGRepresentation(UI::Image image, CG::Float compressionQuality);
         
         CG::Size size();
+        
+        CG::Image CGImage();
         
 #endif
     };

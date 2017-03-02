@@ -40,72 +40,47 @@ void Viper::ImageCache::get(const std::string &url, Callback cb){
     if(auto res = getCached(url, &key, &filepath)){
         cb(res);
     }else{
-//        if(requestRoutine){
-            auto it = this->callbacks.find(url);
-            if(it == this->callbacks.end()){
-                callbacks[url].push_back(cb);
-                Url::Request request;
-                request.url(url);
-                request.performAsync<Image>([=](Url::Response response, Viper::Image image, Url::Error error) {
-//                    LOGI("image callback fired (%d)",bool(image));
-                    if(image) {
-//                        LOGI("image.writeToFile(filepath);");
-                        image.writeToFile(filepath);
-//                        LOGI("putIntoRAM(key, image);");
-                        putIntoRAM(key, image);
-//                        LOGI("auto it = this->callbacks.find(url);");
-                        auto it = this->callbacks.find(url);
-//                        LOGI("if(it != this->callbacks.end()) {");
-                        if(it != this->callbacks.end()) {
-                            for(auto &cb : it->second) {
-                                cb(image);
-                            }
-                            this->callbacks.erase(it);
-                        }else{
-                            std::cerr<<"callback not found for url *"<<url<<"*"<<std::endl;
+        auto it = this->callbacks.find(url);
+        if(it == this->callbacks.end()){
+            callbacks[url].push_back(cb);
+            Url::Request request;
+            request.url(url);
+            request.performAsync<Image>([=](Url::Response response, Viper::Image image, Url::Error error) {
+                if(image) {
+                    image.writeToFile(filepath);
+                    putIntoRAM(key, image);
+                    auto it = this->callbacks.find(url);
+                    if(it != this->callbacks.end()) {
+                        for(auto &cb : it->second) {
+                            cb(image);
                         }
+                        this->callbacks.erase(it);
+                    }else{
+                        std::cerr << "callback not found for url *" << url << "*" << std::endl;
                     }
-                });
-//                ++[=]{
-//                    if(auto r=requestRoutine){
-//                        auto imageAsString = std::move(r(url));
-//                        --[imageAsString=std::move(imageAsString),filepath,key,this,url]{
-                            /*std::ofstream out(filepath,std::ios::binary);
-                            if(out){
-                                out.write(imageAsString.c_str(), imageAsString.length());
-                                out.close();
-                                auto res = getImageFromFS(filepath);
-                                if(res){
-                                    putIntoRAM(key,res);
-                                    auto it=this->callbacks.find(url);
-                                    if(it != this->callbacks.end()){
-                                        for(auto &cb:it->second){
-                                            cb(res);
-                                        }
-                                        this->callbacks.erase(it);
-                                    }else{
-                                        std::cerr<<"callback not found for url *"<<url<<"*"<<std::endl;
-                                    }
-                                }else{
-                                    std::cerr<<"getImageFromFS failed"<<std::endl;
-                                }
-                            }else{
-                                std::cerr<<"unable to save image to file *"<<filepath<<"*"<<std::endl;
-                            }*/
-//                        };
-//                    }
-//                };
-            }else{
-                callbacks[url].push_back(cb);
-            }
-//        }
+                }else{
+                    std::cerr << "image is null for url *" << url << "*" << std::endl;
+                }
+            });
+        }else{
+            callbacks[url].push_back(cb);
+        }
     }
 }
 
+void Viper::ImageCache::put(const std::string &url, Image image) {
+    auto key = this->keyByUrl(url);
+    auto filename = this->imageFileName(key);
+    auto filepath = this->documentsPath() + '/' + filename;
+    image.writeToFile(filepath);
+    putIntoRAM(key, image);
+}
+
 Viper::Image Viper::ImageCache::getCached(const std::string &url, std::string *keyPointer, std::string *filepathPointer) {
-    sha256_t digest;
+    /*sha256_t digest;
     ::sha256((unsigned char*)url.c_str(), url.length(), digest);
-    auto key = getHexRepresentation(digest, sizeof(digest));
+    auto key = getHexRepresentation(digest, sizeof(digest));*/
+    auto key = this->keyByUrl(url);
     if(keyPointer){
         *keyPointer = key;
     }
@@ -114,7 +89,7 @@ Viper::Image Viper::ImageCache::getCached(const std::string &url, std::string *k
         return res;
     }else{
         auto filename = this->imageFileName(key);
-        auto filepath = this->documentsPath()+'/'+filename;
+        auto filepath = this->documentsPath() + '/' + filename;
         if(filepathPointer) {
             *filepathPointer = filepath;
         }
@@ -128,6 +103,12 @@ Viper::Image Viper::ImageCache::getCached(const std::string &url, std::string *k
     }
 }
 
+std::string Viper::ImageCache::keyByUrl(const std::string &url) const {
+    sha256_t digest;
+    ::sha256((unsigned char*)url.c_str(), url.length(), digest);
+    return getHexRepresentation(digest, sizeof(digest));
+}
+
 void Viper::ImageCache::documentsPath(const std::string &newValue){
     _documentsPath=newValue;
 }
@@ -135,10 +116,10 @@ void Viper::ImageCache::documentsPath(const std::string &newValue){
 const std::string& Viper::ImageCache::documentsPath(){
     if(_documentsPath.empty()){
 #ifdef __APPLE__
-        NSString *dp=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+        NSString *dp = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         _documentsPath=dp.UTF8String;
 #else
-        _documentsPath="/data/data/"+java::lang::JNI::appId;
+        _documentsPath = "/data/data/" + java::lang::JNI::appId;
 #endif
     }
     return _documentsPath;
@@ -197,10 +178,10 @@ std::string Viper::ImageCache::imageFileName(const std::string &key){
     return "image_"+key;
 }
 
-std::string Viper::ImageCache::getHexRepresentation(const unsigned char *bytes, size_t length){
+std::string Viper::ImageCache::getHexRepresentation(const unsigned char *bytes, size_t length) const {
     std::ostringstream os;
     os.fill('0');
-    os<<std::hex;
+    os << std::hex;
     for(const unsigned char * ptr = bytes; ptr < bytes + length; ptr++)
         os << std::setw(2) << (unsigned int)*ptr;
     return os.str();

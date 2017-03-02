@@ -35,10 +35,6 @@ int android::graphics::Bitmap::getHeight(){
 auto android::graphics::Bitmap::CompressFormat::JPEG() -> CompressFormat {
     if(java::lang::Class cls = java::lang::Class::find<CompressFormat>()){
         return cls.getStaticField<CompressFormat>("JPEG");
-        /*auto env = java::lang::JNI::Env();
-        auto fieldId = GetStaticFieldID(jclass(cls),
-                                        "JPEG",
-                                        TypeSignatureGenerator<CompressFormat>()().c_str()));*/
     }else{
         LOGI("class CompressFormat not found");
         return {};
@@ -98,14 +94,42 @@ bool android::graphics::Bitmap::compress(CompressFormat format, int quality, con
 }
 
 auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter)->Bitmap{
-    if(auto java_env=java::lang::JNI::Env()){
+    if(auto java_env = java::lang::JNI::Env()){
         auto clazz = java_env->FindClass(signature().c_str());
-//        cout<<"clazz = "<<clazz<<endl;
-        auto methodSignature=generateMethodSignature<Bitmap,Bitmap,int,int,bool>();
-//        cout<<"methodSignature = "<<methodSignature<<endl;
-        auto mid=java_env->GetStaticMethodID(clazz,"createScaledBitmap",methodSignature.c_str());
-//        cout<<"mid = "<<mid<<endl;
-        return java_env->CallStaticObjectMethod(clazz, mid, src.handle, jint(dstWidth), jint(dstHeight), jboolean(filter));
+        auto methodSignature = generateMethodSignature<Bitmap,Bitmap,int,int,bool>();
+        auto mid = java_env->GetStaticMethodID(clazz,
+                                               "createScaledBitmap",
+                                               methodSignature.c_str());
+        return java_env->CallStaticObjectMethod(clazz,
+                                                mid,
+                                                src.handle,
+                                                jint(dstWidth),
+                                                jint(dstHeight),
+                                                jboolean(filter));
+    }else{
+        return {};
+    }
+}
+
+auto android::graphics::Bitmap::createBitmap(const Bitmap &source,
+                                             int x,
+                                             int y,
+                                             int width,
+                                             int height) -> Bitmap
+{
+    if(auto java_env = java::lang::JNI::Env()){
+        auto clazz = java_env->FindClass(signature().c_str());
+        auto methodSignature = generateMethodSignature<Bitmap,Bitmap,int,int,int,int>();
+        auto mid = java_env->GetStaticMethodID(clazz,
+                                               "createBitmap",
+                                               methodSignature.c_str());
+        return java_env->CallStaticObjectMethod(clazz,
+                                                mid,
+                                                source.handle,
+                                                jint(x),
+                                                jint(y),
+                                                jint(width),
+                                                jint(height));
     }else{
         return {};
     }

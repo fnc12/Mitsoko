@@ -13,7 +13,6 @@
 const std::string UI::Image::className = "UIImage";
 
 UI::Image UI::Image::create(const char *named) {
-//    std::string str(named);
     return create(std::string(named));
 }
 
@@ -38,6 +37,11 @@ UI::Image UI::Image::createWithContentsOfFile(const CF::String &filename){
     return NS::Object::sendMessage<Handle>(cls,"imageWithContentsOfFile:", filename.handle);
 }
 
+UI::Image UI::Image::createWithCGImage(const CG::Image &img) {
+    auto cls = NS::getClass(className);
+    return NS::Object::sendMessage<Handle>(cls, "imageWithCGImage:", img.handle);
+}
+
 NS::Data UI::Image::JPEGRepresentation(UI::Image image, CG::Float compressionQuality){
     image.retain();
     auto res = CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
@@ -47,6 +51,10 @@ NS::Data UI::Image::JPEGRepresentation(UI::Image image, CG::Float compressionQua
 
 CG::Size UI::Image::size(){
     return this->sendMessage<CGSize>("size");
+}
+
+CG::Image UI::Image::CGImage() {
+    return this->sendMessage<CG::Image::Ref>("CGImage");
 }
 
 #endif  //__APPLE__

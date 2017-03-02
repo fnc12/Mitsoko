@@ -251,7 +251,8 @@ auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter
     ss.flush();
     
 #ifdef __APPLE__
-    request.setURL(NS::URL::create(url));
+    auto nsUrl = NS::URL::create(url);
+    request.setURL(nsUrl);
 #else
     auto v = java::lang::String::create(url);
     request.sendMessage<void>("setUrl", v);

@@ -40,11 +40,18 @@ namespace Viper {
         void get(const std::string &url, Callback cb);
         
         /**
+         *  Explicitly puts image with a given URL to RAM and FS
+         */
+        void put(const std::string &url, Image image);
+        
+        /**
          *  Returns cached image from RAM or FS or null if one isn't cached.
          *  Doesn't perform request.
          */
         Viper::Image getCached(const std::string &url, std::string *keyPointer = nullptr, std::string *filepathPointer = nullptr);
-            
+        
+        std::string keyByUrl(const std::string &url) const;
+        
         
         /**
          *  Documents path is an absolute path of a diretory where client
@@ -74,7 +81,7 @@ namespace Viper {
 #endif
         std::string imageFileName(const std::string &key);
         
-        std::string getHexRepresentation(const unsigned char *bytes, size_t length);
+        std::string getHexRepresentation(const unsigned char *bytes, size_t length) const;
         
         std::string _documentsPath;
     };

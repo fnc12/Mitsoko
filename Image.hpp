@@ -9,11 +9,8 @@
 #ifndef VIPER__IMAGE
 #define VIPER__IMAGE
 
-//#ifdef __APPLE__
 #include "Viper/iOSutil/UI/Image.hpp"
-//#else
 #include "Viper/AndroidUtil/android/graphics/Bitmap.hpp"
-//#endif  //__APPLE__
 
 namespace Viper {
     

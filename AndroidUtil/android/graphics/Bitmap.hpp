@@ -58,6 +58,12 @@ namespace android {
             
             static Bitmap createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter);
             
+            static Bitmap createBitmap(const Bitmap &source,
+                                       int x,
+                                       int y,
+                                       int width,
+                                       int height);
+            
 #endif  //__ANDROID__
             
         };

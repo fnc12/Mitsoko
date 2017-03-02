@@ -53,9 +53,9 @@ void Viper::NavigationClassPoper::operator()(const void *handle) {
 void Viper::FragmentStarter::operator()(const void *handle, const std::string &viewName) {
 #ifdef __ANDROID__
     android::app::Fragment fragment(handle);
-    auto activity=fragment.getActivity();
-    Class cls=Class::find(CompanyPolling::Presenter::viewName);
-    Intent intent=Intent::create(activity,cls);
+    auto activity = fragment.getActivity();
+    java::lang::Class cls = java::lang::Class::find(viewName);
+    auto intent = android::content::Intent::create(activity,cls);
     activity.startActivity(intent);
 #endif
 }
@@ -64,7 +64,7 @@ void Viper::ActivityStarter::operator()(const void *handle, const std::string &v
 #ifdef __ANDROID__
     android::app::Activity activity(handle);
     java::lang::Class cls = java::lang::Class::find(viewName);
-    android::content::Intent intent = android::content::Intent::create(activity, cls);
+    auto intent = android::content::Intent::create(activity, cls);
     if(this->result){
         activity.startActivityForResult(intent, *this->result);
     }else{

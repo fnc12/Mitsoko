@@ -26,6 +26,14 @@ void UI::TableView::beginUpdates() {
     this->sendMessage<void>(this->handle, "beginUpdates");
 }
 
+UI::Color UI::TableView::separatorColor() {
+    return this->sendMessage<Handle>("separatorColor");
+}
+
+void UI::TableView::setSeparatorColor(const UI::Color &value) {
+    this->sendMessage<void>("setSeparatorColor:", value.handle);
+}
+
 UI::View UI::TableView::tableFooterView() {
     return this->sendMessage<Handle>("tableFooterView");
 }
