@@ -13,6 +13,7 @@
 #include <tuple>
 #include <functional>
 #include <memory>
+
 #include "TableListAdapter.hpp"
 
 namespace Viper{
