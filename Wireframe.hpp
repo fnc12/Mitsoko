@@ -76,8 +76,29 @@ namespace Viper{
         typedef void argument_type;
     };
     
+    template<class T>
+    struct Argument_t {
+        T t;
+    };
+    
     struct WireframeBase {
         const void *handle = nullptr;
+        
+        template<class P, class T>
+        void processOpenArgument(Argument_t<T> a) {
+            P::staticArgument() = std::move(a.t);
+        }
+        
+        template<class P, class ...Args>
+        void processOpenArguments(Args ...args) {
+            //..
+        }
+        
+        template<class P, class H, class ...Args>
+        void processOpenArguments(H h, Args ...args) {
+            this->processOpenArgument<P>(std::move(h));
+            this->processOpenArguments<P>(std::forward<Args>(args)...);
+        }
         
         template<class I, class A>
         void open(const std::string &viewName, I i, A a) {
@@ -88,8 +109,9 @@ namespace Viper{
 #endif
         }
         
-        template<class P, class I, class A>
-        void open(I i, A a) {
+        template<class P, class I, class A, class ...Args>
+        void open(I i, A a, Args ...args) {
+            this->processOpenArguments<P>(std::forward<Args>(args)...);
             this->open(P::viewName, i, a);
         }
         
@@ -144,4 +166,9 @@ namespace Viper{
         
         void operator()(const void *handle);
     };
+    
+    template<class T>
+    Argument_t<T> argument(T t) {
+        return {t};
+    }
 }
