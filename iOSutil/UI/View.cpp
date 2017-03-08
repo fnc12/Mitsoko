@@ -16,6 +16,13 @@ UI::View UI::View::create() {
     return (__bridge Handle)[UIView new];
 }
 
+void UI::View::setTag(int value) {
+    this->sendMessage<void>("setTag:", static_cast<NSInteger>(value));
+}
+
+int UI::View::tag() {
+    return static_cast<int>(this->sendMessage<NSInteger>("tag"));
+}
 
 void UI::View::addSubview(const UI::View &view){
     this->sendMessage<void>("addSubview:", view.handle);

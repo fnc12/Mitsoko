@@ -20,7 +20,7 @@ Viper::God::ViewId Viper::God::createView(const std::string &viewName,const void
     auto presenterPointer = this->_createView<R::ModulesTuple>(viewName,handle,disposablesVector);
     if(presenterPointer){
         const auto viewId = this->nextViewId++;
-        cout << "presenterPointer[" << viewId << "] = " << presenterPointer << ", handle = " << handle << endl;
+//        cout << "presenterPointer[" << viewId << "] = " << presenterPointer << ", handle = " << handle << endl;
 //        this->viewPool.insert({viewId,viewPointer});
         this->presenters.insert({viewId, presenterPointer});
         this->disposables.insert({viewId,std::move(disposablesVector)});
@@ -97,10 +97,10 @@ const void* Viper::God::destroyView(ViewId viewId){
 
 void Viper::God::sendMessageToView(ViewId viewId,int messageCode,std::string argumentsString){
 //    cout << "argumentsString = " << argumentsString << endl;
-#ifdef __ANDROID__
+/*#ifdef __ANDROID__
     LOGI("%s", argumentsString.c_str());
-#endif  //  __ANDROID__
-    const auto it=this->presenters.find(viewId);
+#endif  //  __ANDROID__*/
+    const auto it = this->presenters.find(viewId);
     if(it != this->presenters.end()){
         it->second->getViewBase()->messageReceived(messageCode, std::move(argumentsString));
 //        it->second->messageReceived(messageCode,std::move(argumentsString));

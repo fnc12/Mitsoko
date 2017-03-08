@@ -54,6 +54,10 @@ namespace UI {
         void setTransform(const CG::AffineTransform &newValue);
         
         CG::AffineTransform transform();
+        
+        void setTag(int value);
+        
+        int tag();
 #endif
     };
 }

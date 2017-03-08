@@ -24,7 +24,7 @@
 
 namespace Viper{
     
-    template<class Arg,class W,class P>
+    /*template<class Arg,class W,class P>
     struct PresenterIniter{
         void init(std::shared_ptr<P> presenterPointer) const{
             if(W::staticArgument()){
@@ -38,6 +38,49 @@ namespace Viper{
     struct PresenterIniter<void,W,P>{
         void init(std::shared_ptr<P> presenterPointer) const{
             presenterPointer->init();
+        }
+    };*/
+    
+    /*template<class A, class P>
+    std::true_type is_base_of_argumentable_impl(Viper::Argumentable<A, P> *);
+    
+    std::false_type is_base_of_argumentable_impl(...);
+    
+    template<class T>
+    constexpr bool is_base_of_argumentable(T &t) {
+        return decltype(is_base_of_argumentable_impl(&t))::value;
+    }*/
+    
+    template <template <typename...> class C, typename...Ts>
+    std::true_type is_base_of_template_impl(const C<Ts...>*);
+    
+    template <template <typename...> class C>
+    std::false_type is_base_of_template_impl(...);
+    
+    template <typename T, template <typename...> class C>
+    using is_base_of_template = decltype(is_base_of_template_impl<C>(std::declval<T*>()));
+    
+    template<class T, class Enable = void>
+    struct PresenterIniter/* {
+        void operator()(T &t) const {
+            t.init();
+        }
+    }*/;
+    
+    template<class T>
+    struct PresenterIniter<T, typename std::enable_if<is_base_of_template<T, Viper::Argumentable>::value>::type> {
+        void operator()(T &t) const {
+            if(T::staticArgument()){
+                t.init(std::move(*T::staticArgument()));
+                T::staticArgument() = {};
+            }
+        }
+    };
+    
+    template<class T>
+    struct PresenterIniter<T, typename std::enable_if<!is_base_of_template<T, Viper::Argumentable>::value>::type> {
+        void operator()(T &t) const {
+            t.init();
         }
     };
     
@@ -113,7 +156,8 @@ namespace Viper{
 //                interactorPointer->initWithArguments(arguments);
 //                typedef typename Wireframe_t::argument_type Argument_t;
 //                PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
-                presenterPointer->init();
+//                presenterPointer->init();
+                PresenterIniter<Presenter_t>()(*presenterPointer);
                 presenterPointer->view.init();
 //                viewPointer->init();
                 
