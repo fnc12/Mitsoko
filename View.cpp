@@ -14,7 +14,7 @@
 using std::cout;
 using std::endl;
 
-Viper::ViewBase::ViewBase(decltype(handle)handle_):handle(handle_){};
+//Viper::ViewBase::ViewBase(decltype(handle)handle_):handle(handle_){};
 
 Viper::ViewBase::~ViewBase(){
     

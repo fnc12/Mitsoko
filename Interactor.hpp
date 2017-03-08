@@ -18,14 +18,10 @@
 
 namespace Viper{
     
-    template<class O,class I>
+    /*template<class O,class I>
     struct Interactor:public I,public Disposable{
         std::shared_ptr<O> output;
-        
-        /**
-         *  This is costructor analog. You should use this function instead of constructor
-         *  because inside constructor <i>output</i> pointer is nullptr.
-         */
+     
         virtual void initWithArguments(const std::string &arguments){}
         
         template<class T>
@@ -37,7 +33,7 @@ namespace Viper{
             this->Disposable::dispose();
             this->output=nullptr;
         }
-    };
+    };*/
 }
 
 #endif /* Interactor_h */

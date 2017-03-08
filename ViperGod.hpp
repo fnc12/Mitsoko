@@ -62,7 +62,8 @@ namespace Viper{
         
         ViewId createView(const std::string &viewName,const void *handle);
     protected:
-        std::map<ViewId, std::shared_ptr<ViewBase>> viewPool;
+//        std::map<ViewId, ViewBase*> viewPool;
+        std::map<ViewId, std::shared_ptr<PresenterBase>> presenters;
         std::map<ViewId, std::vector<std::shared_ptr<Disposable>>> disposables;
         ViewId nextViewId=0;
         
@@ -76,44 +77,49 @@ namespace Viper{
         };
         
         template<class T>
-        std::shared_ptr<ViewBase> _createView(const std::string &viewName,
+        std::shared_ptr<PresenterBase> _createView(const std::string &viewName,
                                               const void *handle,
                                               std::vector<std::shared_ptr<Disposable>> &disposablesVector)
         {
             typedef typename TupleCutter<T>::Head_t PageType;
-            typedef typename PageType::wireframe_type Wireframe_t;
+//            typedef typename PageType::wireframe_type Wireframe_t;
             typedef typename PageType::presenter_type Presenter_t;
             if(Presenter_t::viewName == viewName){
             
                 //  create view..
-                auto viewPointer = std::make_shared<typename PageType::view_type>(handle);
+//                auto viewPointer = std::make_shared<typename PageType::view_type>(handle);
                 
                 //  create presenter..
                 auto presenterPointer = std::make_shared<Presenter_t>();
                 
                 //  chain view and presenter..
-                viewPointer->setEventHandler(presenterPointer);
-                presenterPointer->setUserInterface(viewPointer);
+//                viewPointer->setEventHandler(presenterPointer);
+//                presenterPointer->setUserInterface(viewPointer);
                 
                 presenterPointer->wireframe.handle = handle;
+                presenterPointer->view.handle = handle;
                 
                 //  create interactor..
-                auto interactorPointer = std::make_shared<typename PageType::interactor_type>();
+//                auto interactorPointer = std::make_shared<typename PageType::interactor_type>();
                 
                 //  chain interactor and presenter..
-                presenterPointer->setInput(interactorPointer);
-                interactorPointer->setOutput(presenterPointer);
+//                presenterPointer->setInput(interactorPointer);
+//                interactorPointer->setOutput(presenterPointer);
                 
-                disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(viewPointer));
+//                disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(viewPointer));
                 disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(presenterPointer));
-                disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
+//                disposablesVector.emplace_back(std::dynamic_pointer_cast<Disposable>(interactorPointer));
                 
 //                interactorPointer->initWithArguments(arguments);
-                typedef typename Wireframe_t::argument_type Argument_t;
-                PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
-                viewPointer->init();
+//                typedef typename Wireframe_t::argument_type Argument_t;
+//                PresenterIniter<Argument_t, Wireframe_t, Presenter_t>().init(presenterPointer);
+                presenterPointer->init();
+                presenterPointer->view.init();
+//                viewPointer->init();
                 
-                return std::dynamic_pointer_cast<ViewBase>(viewPointer);
+//                return std::dynamic_pointer_cast<ViewBase>(viewPointer);
+//                return &presenterPointer->view;
+                return std::dynamic_pointer_cast<PresenterBase>(presenterPointer);
             }else{
                 return this->_createView<typename TupleCutter<T>::Tail_t>(viewName,handle,disposablesVector);
             }
@@ -121,7 +127,7 @@ namespace Viper{
     };
     
     template<>
-    std::shared_ptr<ViewBase> God::_createView<std::tuple<>>(const std::string &viewName,
+    std::shared_ptr<PresenterBase> God::_createView<std::tuple<>>(const std::string &viewName,
                                                              const void *handle,
                                                              std::vector<std::shared_ptr<Disposable>> &disposables);
 }

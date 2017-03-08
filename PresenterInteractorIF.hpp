@@ -16,13 +16,13 @@ namespace Viper{
     
     //  base class for 'presenter for interactor' interface..
     struct Output{
-        virtual void errorHappened(const std::string &errorText){};
+//        virtual void errorHappened(const std::string &errorText){};
     };
     
     //  base class for 'interactor for presenter' interface..
     struct Input{
-        virtual void viewWillAppear(){}
-        virtual void viewDidAppear(){}
+//        virtual void viewWillAppear(){}
+//        virtual void viewDidAppear(){}
     };
 }
 
