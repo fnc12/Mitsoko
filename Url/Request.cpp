@@ -191,7 +191,7 @@ void Viper::Url::Request::MultipartAdapter::finish() {
 size_t Viper::Url::Request::MultipartAdapter::fileSize(const std::string &filepath) {
     std::ifstream file(filepath, std::ios::binary | std::ios::ate);
     if(file) {
-        return file.tellg();
+        return static_cast<size_t>(file.tellg());
     }else{
         return 0;
     }

@@ -9,7 +9,7 @@ namespace android{
     
     namespace widget{
         
-        struct ImageView:public view::View{
+        struct ImageView : public view::View {
             
             using View::View;
             

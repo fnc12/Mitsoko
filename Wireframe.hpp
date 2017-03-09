@@ -8,6 +8,7 @@
 #include <memory>
 #include <experimental/optional>
 #include <functional>
+#include <iostream>
 
 #include "Util.hpp"
 #include "Selfish.hpp"
@@ -15,6 +16,36 @@
 #define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Viper::WireframeBase,Selfish<Wireframe>
 
 namespace Viper{
+    
+    namespace tuple_helper {
+        
+        template<size_t N, class ...Args>
+        struct iterator {
+            
+            template<class L>
+            void operator()(std::tuple<Args...> &t, L l) {
+                l(std::get<N>(t));
+                iterator<N - 1, Args...>()(t, l);
+            }
+        };
+        
+        template<class ...Args>
+        struct iterator<0, Args...>{
+            template<class L>
+            void operator()(std::tuple<Args...> &t, L l) {
+                l(std::get<0>(t));
+            }
+        };
+        
+        template<size_t N>
+        struct iterator<N> {
+            
+            template<class L>
+            void operator()(std::tuple<> &t, L l) {
+                //..
+            }
+        };
+    }
     
     /**
      *  This is how wireframe works:
@@ -81,24 +112,74 @@ namespace Viper{
         T t;
     };
     
+    template<class T>
+    struct Callback_t {
+        T t;
+    };
+    
     struct WireframeBase {
         const void *handle = nullptr;
         
         template<class P, class T>
         void processOpenArgument(Argument_t<T> a) {
             P::staticArgument() = std::move(a.t);
+            std::cout << "void processOpenArgument(Argument_t<T> a)" << std::endl;
+            //            LOGI("staticArgument assigned");
         }
         
-        template<class P, class ...Args>
-        void processOpenArguments(Args ...args) {
+        template<class P, class T>
+        void processOpenArgument(Callback_t<T> c) {
+            P::staticCallback() = std::move(c.t);
+            std::cout << "void processOpenArgument(Callback_t<T> c)" << std::endl;
+        }
+        
+//        template<class P, class ...Args>
+//        void processOpenArguments(Args ...args);
+        
+        /*template<class P, class ...Args>
+        void processOpenArguments(Args ... args) {
+            auto t = std::make_tuple(std::forward<Args>(args)...);
+            tuple_helper::iterator<std::tuple_size<decltype(t)>::value, Args...>()(t, [=](auto &a){
+                this->processOpenArgument<P>(a);
+            });
+//            this->processOpenArgument<P>(std::move(h));
+//            this->processOpenArguments<P>(std::forward<Args>(args)...);
+            
+        }*/
+        
+        /*template<class P, class T, class ...Args>
+        void processOpenArguments<P, Argument_t<T>, Args...>(Argument_t<T> a, Args ...args) {
+            P::staticArgument() = std::move(a.t);
+            this->processOpenArguments<P, Args...>(args...);
+        }
+        
+        template<class P, class T, class ...Args>
+        void processOpenArguments<P, Callback_t<T>, Args...>(Callback_t<T> c, Args ...args) {
+            P::staticCallback() = std::move(c.t);
+            this->processOpenArguments<P, Args...>(args...);
+        }*/
+        
+        /*template<class P>
+        void processOpenArguments<P>(){
             //..
-        }
+        }*/
         
-        template<class P, class H, class ...Args>
+        /*template<class P, class T>
+        void processOpenArgument(T t) {
+            static_assert(false, "unknown argument type in processOpenArgument");
+        }*/
+        
+        /* {
+            //..
+            std::cout << "void processOpenArguments(Args ...args)" << std::endl;
+        }*/
+        
+        /*template<class P, class H, class ...Args>
         void processOpenArguments(H h, Args ...args) {
+            std::cout << __func__ << std::tuple_size<std::tuple<Args...>>::value << ", H = " << typeid(H).name() << std::endl;
             this->processOpenArgument<P>(std::move(h));
             this->processOpenArguments<P>(std::forward<Args>(args)...);
-        }
+        }*/
         
         template<class I, class A>
         void open(const std::string &viewName, I i, A a) {
@@ -111,7 +192,15 @@ namespace Viper{
         
         template<class P, class I, class A, class ...Args>
         void open(I i, A a, Args ...args) {
-            this->processOpenArguments<P>(std::forward<Args>(args)...);
+//            std::cout << "open arguments count = " << std::tuple_size<std::tuple<Args...>>::value << std::endl;
+            typedef std::tuple<Args...> tuple_t;
+            auto t = std::make_tuple(std::forward<Args>(args)...);
+//            this->processOpenArguments<P>(std::forward<Args>(args)...);
+            tuple_helper::iterator<std::tuple_size<tuple_t>::value - 1, Args...> it;
+            it(t, [=](auto &v){
+//                std::cout << "ototo" << std::endl;
+                this->processOpenArgument<P>(std::move(v));
+            });
             this->open(P::viewName, i, a);
         }
         
@@ -129,6 +218,12 @@ namespace Viper{
         bool animated = true;
         
         void operator()(const void *handle, const std::string &viewName);
+    };
+    
+    struct NavigationPoper {
+        bool animated = true;
+        
+        void operator()(const void *handle);
     };
     
     struct NavigationClassPoper {
@@ -169,6 +264,11 @@ namespace Viper{
     
     template<class T>
     Argument_t<T> argument(T t) {
+        return {t};
+    }
+    
+    template<class T>
+    Callback_t<T> callback(T t) {
         return {t};
     }
 }

@@ -81,6 +81,7 @@
 #include "android/widget/EditText.hpp"
 #include "android/widget/FrameLayout.hpp"
 #include "android/widget/HorizontalScrollView.hpp"
+#include "android/widget/ImageButton.hpp"
 #include "android/widget/ImageView.hpp"
 #include "android/widget/LinearLayout.hpp"
 #include "android/widget/ListAdapter.hpp"

@@ -70,6 +70,7 @@ namespace Viper{
     template<class T>
     struct PresenterIniter<T, typename std::enable_if<is_base_of_template<T, Viper::Argumentable>::value>::type> {
         void operator()(T &t) const {
+            cout << "PresenterIniter " << typeid(T).name() << ", staticArgument = " << bool(T::staticArgument()) << endl;
             if(T::staticArgument()){
                 t.init(std::move(*T::staticArgument()));
                 T::staticArgument() = {};
@@ -80,6 +81,7 @@ namespace Viper{
     template<class T>
     struct PresenterIniter<T, typename std::enable_if<!is_base_of_template<T, Viper::Argumentable>::value>::type> {
         void operator()(T &t) const {
+            cout << "PresenterIniter " << typeid(T).name() << endl;
             t.init();
         }
     };

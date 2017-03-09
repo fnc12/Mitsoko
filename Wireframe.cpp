@@ -89,3 +89,10 @@ void Viper::ActivityCloser::operator()(const void *handle) {
     activity.finish();
 #endif
 }
+
+void Viper::NavigationPoper::operator()(const void *handle) {
+#ifdef __APPLE__
+    UI::ViewController vc(handle);
+    vc.navigationController().popViewControllerAnimated(this->animated);
+#endif
+}
