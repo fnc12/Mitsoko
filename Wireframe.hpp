@@ -123,14 +123,14 @@ namespace Viper{
         template<class P, class T>
         void processOpenArgument(Argument_t<T> a) {
             P::staticArgument() = std::move(a.t);
-            std::cout << "void processOpenArgument(Argument_t<T> a)" << std::endl;
+//            std::cout << "void processOpenArgument(Argument_t<T> a)" << std::endl;
             //            LOGI("staticArgument assigned");
         }
         
         template<class P, class T>
         void processOpenArgument(Callback_t<T> c) {
             P::staticCallback() = std::move(c.t);
-            std::cout << "void processOpenArgument(Callback_t<T> c)" << std::endl;
+//            std::cout << "void processOpenArgument(Callback_t<T> c)" << std::endl;
         }
         
 //        template<class P, class ...Args>

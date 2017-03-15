@@ -71,6 +71,8 @@
 #include "android/view/Window.hpp"
 #include "android/view/WindowManager.hpp"
 
+#include "android/view/inputmethod/InputMethodManager.hpp"
+
 #include "android/widget/AbsListView.hpp"
 #include "android/widget/Adapter.hpp"
 #include "android/widget/AdapterView.hpp"

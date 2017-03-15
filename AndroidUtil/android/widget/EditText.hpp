@@ -10,7 +10,7 @@ namespace android{
     
     namespace widget{
         
-        struct EditText:public TextView{
+        struct EditText : public TextView {
             
             using TextView::TextView;
             

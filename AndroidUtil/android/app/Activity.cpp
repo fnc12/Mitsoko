@@ -7,10 +7,16 @@
 //
 
 #include "Activity.hpp"
+#include "Viper/AndroidUtil/java/lang/String.hpp"
 
 #ifdef __ANDROID__
 
 //const std::string java::app::Activity::signature="android/app/Activity";
+
+java::lang::Object android::app::Activity::getSystemService(const std::string &name) {
+    auto str = java::lang::String::create(name);
+    return this->sendMessage<java::lang::Object>("getSystemService", str);
+}
 
 int android::app::Activity::RESULT_CANCELED(){
     if(java::lang::Class cls=java::lang::Class::find<Activity>()){
@@ -58,6 +64,10 @@ void android::app::Activity::setResult(int resultCode,const content::Intent &int
 
 void android::app::Activity::runOnUiThread(const java::lang::Runnable &runnable){
     this->sendMessage<void>("runOnUiThread",runnable);
+}
+
+android::view::View android::app::Activity::getCurrentFocus() {
+    return this->sendMessage<android::view::View>("getCurrentFocus");
 }
 
 #endif  //__ANDROID__

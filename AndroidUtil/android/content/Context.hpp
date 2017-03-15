@@ -22,6 +22,8 @@ namespace android{
             
             java::lang::String getPackageName();
             
+            static std::string INPUT_METHOD_SERVICE();
+            
 #endif  //__ANDROID__
             
         };

@@ -9,23 +9,24 @@
 #include <map>
 
 namespace UI {
-    struct Control:public UI::View{
+    
+    struct Control : public UI::View {
+        
         using View::View;
 
 #ifdef __APPLE__
         
         enum class State:UIControlState{
-            Normal=UIControlStateNormal,
-            Highlighted=UIControlStateHighlighted,
-            Disabled=UIControlStateDisabled,
-            Selected=UIControlStateSelected,
-            Focused=UIControlStateFocused,
-            Application=UIControlStateApplication,
-            Reserved=UIControlStateReserved,
+            Normal = UIControlStateNormal,
+            Highlighted = UIControlStateHighlighted,
+            Disabled = UIControlStateDisabled,
+            Selected = UIControlStateSelected,
+            Focused = UIControlStateFocused,
+            Application = UIControlStateApplication,
+            Reserved = UIControlStateReserved,
         };
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UIControl");
         
         typedef std::function<void(Handle)> Callback;
         
@@ -33,9 +34,13 @@ namespace UI {
         
         bool enabled();
         
-        void setOnValueChanged(Callback cb);
+        void setSelected(bool value);
         
-        void setOnTouchUpInside(Callback cb,Viper::Disposable *target);
+        bool isSelected();
+        
+        void setOnValueChanged(Callback cb, Viper::Disposable &target);
+        
+        void setOnTouchUpInside(Callback cb, Viper::Disposable *target);
         
         struct Events{
             struct TouchDown{};
@@ -66,8 +71,8 @@ namespace UI {
             /**
              *  Assumes *cb* ≠ null.
              */
-            static void add(Handle handle,Callback cb){
-                auto it=Self::callbacks.find(handle);
+            static void add(Handle handle, Callback cb){
+                auto it = Self::callbacks.find(handle);
                 if(it != Self::callbacks.end()){
                     it->second=cb;
                 }else{
@@ -76,7 +81,7 @@ namespace UI {
             }
             
             static Callback get(Handle handle){
-                auto it=Self::callbacks.find(handle);
+                auto it = Self::callbacks.find(handle);
                 if(it != Self::callbacks.end()){
                     return it->second;
                 }else{
@@ -85,7 +90,7 @@ namespace UI {
             }
             
             static void remove(Handle handle){
-                auto it=Self::callbacks.find(handle);
+                auto it = Self::callbacks.find(handle);
                 if(it != Self::callbacks.end()){
                     Self::callbacks.erase(it);
                 }else{
@@ -94,23 +99,11 @@ namespace UI {
             }
             
             static void actionDidHappen(Handle sender){
-                if(auto cb=Self::get(sender)){
+                if(auto cb = Self::get(sender)){
                     cb(sender);
                 }
             }
         };
-        
-        /*struct ValueChangedEventHandler{
-            typedef std::map<Handle, Callback> Callbacks;
-            static Callbacks callbacks;
-            static void add(Handle handle,Callback cb);
-            
-            static Callback get(Handle handle);
-            
-            static void remove(Handle handle);
-            
-            static void actionDidHappen(Handle sender);
-        };*/
         
 #endif  //__APPLE__
         

@@ -7,6 +7,7 @@
 //
 
 #include "Context.hpp"
+#include "Viper/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 
@@ -18,6 +19,14 @@ auto android::content::Context::getResources()->res::Resources{
 
 auto android::content::Context::getPackageName()->java::lang::String{
     return this->sendMessage<java::lang::String>("getPackageName");
+}
+
+std::string android::content::Context::INPUT_METHOD_SERVICE() {
+    if(java::lang::Class cls = java::lang::Class::find<Context>()){
+        return cls.getStaticField<java::lang::String>("INPUT_METHOD_SERVICE").c_str();
+    }else{
+        return {};
+    }
 }
 
 #endif  //__ANDROID__

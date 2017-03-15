@@ -21,7 +21,7 @@ bool UI::NavigationItem::hidesBackButton(){
 }
 
 void UI::NavigationItem::setTitle(const std::string &newValue){
-    auto str=CF::String::create(newValue);
+    auto str = CF::String::create(newValue);
     this->sendMessage<void>("setTitle:", str.handle);
 }
 

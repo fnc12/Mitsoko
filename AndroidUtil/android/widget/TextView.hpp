@@ -62,7 +62,7 @@ namespace android{
                 typedef std::map<Viper::Disposable::Id,std::vector<int>> DisposablesMap;
                 static DisposablesMap disposablesMap;
                 
-                struct Observer:public Viper::Disposable::Observer{
+                struct Observer : public Viper::Disposable::Observer {
                     
                     Observer();
                     

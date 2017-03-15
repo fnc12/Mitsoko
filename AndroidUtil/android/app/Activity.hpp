@@ -4,13 +4,14 @@
 
 #include "Viper/AndroidUtil/android/content/Context.hpp"
 #include "Viper/AndroidUtil/android/content/Intent.hpp"
+#include "Viper/AndroidUtil/android/view/View.hpp"
 #include "Viper/AndroidUtil/java/lang/Runnable.hpp"
 
 namespace android{
     
     namespace app{
         
-        struct Activity:public content::Context{
+        struct Activity : public content::Context {
             
             using Context::Context;
             
@@ -36,6 +37,10 @@ namespace android{
             void setResult(int resultCode,const content::Intent &intent);
             
             void runOnUiThread(const java::lang::Runnable &runnable);
+            
+            java::lang::Object getSystemService(const std::string &name);
+            
+            android::view::View getCurrentFocus();
 #endif  //__ANDROID__
         };
     }

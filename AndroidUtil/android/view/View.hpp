@@ -4,15 +4,17 @@
 
 #include "Viper/AndroidUtil/java/lang/Class.hpp"
 #include "Viper/AndroidUtil/android/content/Context.hpp"
+#include "Viper/AndroidUtil/android/os/IBinder.hpp"
+#include "Viper/Disposable.hpp"
+
 #include <functional>
 #include <map>
-#include "Viper/Disposable.hpp"
 
 namespace android{
     
     namespace view{
         
-        struct View:public java::lang::Object{
+        struct View : public java::lang::Object{
             
             using Object::Object;
             
@@ -29,7 +31,7 @@ namespace android{
             typedef std::map<Viper::Disposable::Id,int> DisposablesMap;
             static DisposablesMap disposablesMap;
             
-            struct OnClickListener:public java::lang::Object{
+            struct OnClickListener : public java::lang::Object{
                 
                 using Object::Object;
                 
@@ -65,6 +67,8 @@ namespace android{
             
             void setVisibility(int visibility);
             
+            void setBackgroundColor(int color);
+            
             void setEnabled(bool enabled);
             
             bool isEnabled();
@@ -72,6 +76,8 @@ namespace android{
             int getWidth();
             
             int getHeight();
+            
+            android::os::IBinder getWindowToken();
             
             static int VISIBLE();
             

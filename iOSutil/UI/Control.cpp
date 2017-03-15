@@ -10,13 +10,11 @@
 
 #ifdef __APPLE__
 
-static auto actionSelectorName="actionDidHappen:";
+static auto actionSelectorName = "actionDidHappen:";
 
 using Viper::Disposable;
 
-const std::string UI::Control::className="UIControl";
-
-//UI::Control::ValueChangedEventHandler::Callbacks UI::Control::ValueChangedEventHandler::callbacks;
+const std::string UI::Control::className = "UIControl";
 
 void UI::Control::setEnabled(bool newValue){
     this->sendMessage<void>("setEnabled:",newValue);
@@ -26,12 +24,20 @@ bool UI::Control::enabled(){
     return this->sendMessage<bool>("isEnabled");
 }
 
-void UI::Control::setOnValueChanged(Callback cb){
+void UI::Control::setSelected(bool value) {
+    this->sendMessage<void>("setSelected:", BOOL(value));
+}
+
+bool UI::Control::isSelected() {
+    return this->sendMessage<BOOL>("isSelected");
+}
+
+void UI::Control::setOnValueChanged(Callback cb, Viper::Disposable &target){
     if(cb){
         EventHandler<Events::ValueChanged>::add(this->handle, cb);
-        auto cls=NS::getClass("UIControlValueChangedEventHandler");
+        auto cls = NS::getClass("UIControlValueChangedEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(cls,"shared");
-        auto sel=sel_getUid(actionSelectorName);
+        auto sel = sel_getUid(actionSelectorName);
         this->sendMessage<void>("addTarget:action:forControlEvents:", sharedEventHandler, sel, UIControlEventValueChanged);
     }else{
         EventHandler<Events::ValueChanged>::remove(this->handle);
@@ -41,46 +47,13 @@ void UI::Control::setOnValueChanged(Callback cb){
 void UI::Control::setOnTouchUpInside(Callback cb, Disposable *target){
     if(cb && target){
         EventHandler<Events::TouchUpInside>::add(this->handle, cb);
-        auto cls=NS::getClass("UIControlTouchUpInsideEventHandler");
-        auto sharedEventHandler=NS::Object::sendMessage<Handle>(cls,"shared");
-        auto sel=sel_getUid(actionSelectorName);
+        auto cls = NS::getClass("UIControlTouchUpInsideEventHandler");
+        auto sharedEventHandler = NS::Object::sendMessage<Handle>(cls,"shared");
+        auto sel = sel_getUid(actionSelectorName);
         this->sendMessage<void>("addTarget:action:forControlEvents:", sharedEventHandler, sel, UIControlEventTouchUpInside);
     }else{
         EventHandler<Events::TouchUpInside>::remove(this->handle);
     }
 }
-
-/*void UI::Control::ValueChangedEventHandler::add(Handle handle,Callback cb){
-    auto it=ValueChangedEventHandler::callbacks.find(handle);
-    if(it != ValueChangedEventHandler::callbacks.end()){
-        it->second=cb;
-    }else{
-        ValueChangedEventHandler::callbacks.insert({handle,cb});
-    }
-}
-
-auto UI::Control::ValueChangedEventHandler::get(Handle handle)->Callback{
-    auto it=ValueChangedEventHandler::callbacks.find(handle);
-    if(it != ValueChangedEventHandler::callbacks.end()){
-        return it->second;
-    }else{
-        return {};
-    }
-}
-
-void UI::Control::ValueChangedEventHandler::remove(Handle handle){
-    auto it=ValueChangedEventHandler::callbacks.find(handle);
-    if(it != ValueChangedEventHandler::callbacks.end()){
-        ValueChangedEventHandler::callbacks.erase(it);
-    }else{
-        //                    ValueChangedEventHandler::callbacks().insert({handle,cb});
-    }
-}
-
-void UI::Control::ValueChangedEventHandler::actionDidHappen(Handle sender){
-    if(auto cb=get(sender)){
-        cb(sender);
-    }
-}*/
 
 #endif  //__APPLE__

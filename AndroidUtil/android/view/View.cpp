@@ -78,6 +78,10 @@ int android::view::View::getWidth(){
     return this->sendMessage<int>("getWidth");
 }
 
+void android::view::View::setBackgroundColor(int color) {
+    this->sendMessage<void>("setBackgroundColor", color);
+}
+
 int android::view::View::getHeight(){
     return this->sendMessage<int>("getHeight");
 }
@@ -96,6 +100,10 @@ int android::view::View::GONE(){
     }else{
         return -1;
     }
+}
+
+android::os::IBinder android::view::View::getWindowToken() {
+    return this->sendMessage<android::os::IBinder>("getWindowToken");
 }
 
 #endif  //__ANDROID__
