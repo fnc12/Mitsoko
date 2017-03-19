@@ -86,9 +86,17 @@ int android::view::View::getHeight(){
     return this->sendMessage<int>("getHeight");
 }
 
-int android::view::View::VISIBLE(){
-    if(java::lang::Class cls=java::lang::Class::find<View>()){
+int android::view::View::VISIBLE() {
+    if(java::lang::Class cls = java::lang::Class::find<View>()) {
         return cls.getStaticField<int>("VISIBLE");
+    }else{
+        return -1;
+    }
+}
+
+int android::view::View::INVISIBLE() {
+    if(java::lang::Class cls = java::lang::Class::find<View>()) {
+        return cls.getStaticField<int>("INVISIBLE");
     }else{
         return -1;
     }

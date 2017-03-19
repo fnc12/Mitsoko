@@ -8,7 +8,7 @@ namespace android{
     
     namespace widget{
         
-        struct LinearLayout:public android::view::ViewGroup{
+        struct LinearLayout : public android::view::ViewGroup {
             
             using ViewGroup::ViewGroup;
             

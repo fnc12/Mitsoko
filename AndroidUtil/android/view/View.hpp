@@ -10,11 +10,11 @@
 #include <functional>
 #include <map>
 
-namespace android{
+namespace android {
     
-    namespace view{
+    namespace view {
         
-        struct View : public java::lang::Object{
+        struct View : public java::lang::Object {
             
             using Object::Object;
             
@@ -80,6 +80,8 @@ namespace android{
             android::os::IBinder getWindowToken();
             
             static int VISIBLE();
+            
+            static int INVISIBLE();
             
             static int GONE();
             

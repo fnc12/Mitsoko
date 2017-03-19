@@ -18,7 +18,7 @@ namespace android{
 //            const std::string signature;
             STATIC_VAR(const std::string, signature, "android/view/ViewGroup");
             
-            struct LayoutParams:public java::lang::Object{
+            struct LayoutParams : public java::lang::Object {
                 
                 using Object::Object;
                 
@@ -30,7 +30,7 @@ namespace android{
                 static int WRAP_CONTENT();
             };
             
-            struct MarginLayoutParams:public LayoutParams{
+            struct MarginLayoutParams : public LayoutParams {
                 
                 using LayoutParams::LayoutParams;
                 
@@ -46,7 +46,7 @@ namespace android{
 #ifdef __ANDROID__
         template<class T>
         void View::setLayoutParams(const T &params){
-            auto baseParams=(ViewGroup::LayoutParams)params;
+            auto baseParams = (ViewGroup::LayoutParams)params;
             this->sendMessage<void>("setLayoutParams",baseParams);
         }
         
