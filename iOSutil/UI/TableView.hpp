@@ -73,12 +73,23 @@ namespace UI {
 //            STATIC_VAR(std::string, className, "UITableViewCell");
             
             enum class AccessoryType{
-                None=UITableViewCellAccessoryNone,
-                DisclosureIndicator=UITableViewCellAccessoryDisclosureIndicator,
-                DetailDisclosureButton=UITableViewCellAccessoryDetailDisclosureButton,
-                Checkmark=UITableViewCellAccessoryCheckmark,
-                DetailButton=UITableViewCellAccessoryDetailButton,
+                None = UITableViewCellAccessoryNone,
+                DisclosureIndicator = UITableViewCellAccessoryDisclosureIndicator,
+                DetailDisclosureButton = UITableViewCellAccessoryDetailDisclosureButton,
+                Checkmark = UITableViewCellAccessoryCheckmark,
+                DetailButton = UITableViewCellAccessoryDetailButton,
             };
+            
+            enum class SelectionStyle : NSInteger {
+                None = UITableViewCellSelectionStyleNone,
+                Blue = UITableViewCellSelectionStyleBlue,
+                Gray = UITableViewCellSelectionStyleGray,
+                Default = UITableViewCellSelectionStyleDefault,
+            };
+            
+            void setSelectionStyle(SelectionStyle newValue);
+            
+            SelectionStyle selectionStyle();
             
             UI::ImageView imageView();
             

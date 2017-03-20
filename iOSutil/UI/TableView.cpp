@@ -58,7 +58,15 @@ void UI::TableView::Cell::setAccessoryType(AccessoryType newValue) {
     this->sendMessage<void>("setAccessoryType:", UITableViewCellAccessoryType(newValue));
 }
 
-auto UI::TableView::Cell::accessoryType()->AccessoryType {
+void UI::TableView::Cell::setSelectionStyle(SelectionStyle newValue) {
+    this->sendMessage<void>("setSelectionStyle:", UITableViewCellSelectionStyle(newValue));
+}
+
+auto UI::TableView::Cell::selectionStyle() -> SelectionStyle {
+    return SelectionStyle(this->sendMessage<UITableViewCellSelectionStyle>("selectionStyle"));
+}
+
+auto UI::TableView::Cell::accessoryType() -> AccessoryType {
     return AccessoryType(this->sendMessage<UITableViewCellAccessoryType>("accessoryType"));
 }
 
