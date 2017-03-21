@@ -201,7 +201,7 @@ namespace Viper{
 //                std::cout << "ototo" << std::endl;
                 this->processOpenArgument<P>(std::move(v));
             });
-            this->open(P::viewName, i, a);
+            this->open(P::view_type::viewName, i, a);
         }
         
         template<class I, class A>

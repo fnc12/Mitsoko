@@ -15,6 +15,10 @@ bool android::view::inputmethod::InputMethodManager::hideSoftInputFromWindow(con
     return this->sendMessage<bool>("hideSoftInputFromWindow", windowToken, flags);
 }
 
+bool android::view::inputmethod::InputMethodManager::showSoftInput(const android::view::View &v, int flags) {
+    return this->sendMessage<bool>("showSoftInput", v, flags);
+}
+
 int android::view::inputmethod::InputMethodManager::HIDE_IMPLICIT_ONLY() {
     if(java::lang::Class cls = java::lang::Class::find<android::view::inputmethod::InputMethodManager>()){
         return cls.getStaticField<int>("HIDE_IMPLICIT_ONLY");

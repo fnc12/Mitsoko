@@ -13,6 +13,16 @@ namespace UI {
         static const std::string className;
         
         bool resignFirstResponder();
+        
+        bool becomeFirstResponder();
+        
+        bool canBecomeFirstResponder();
+        
+        UI::Responder nextResponder();
+        
+        bool canResignFirstResponder();
+        
+        bool isFirstResponder();
 #endif
     };
 }

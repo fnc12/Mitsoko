@@ -125,7 +125,8 @@ namespace Viper{
             typedef typename TupleCutter<T>::Head_t PageType;
 //            typedef typename PageType::wireframe_type Wireframe_t;
             typedef typename PageType::presenter_type Presenter_t;
-            if(Presenter_t::viewName == viewName){
+            typedef typename Presenter_t::view_type View_t;
+            if(View_t::viewName == viewName){
             
                 //  create view..
 //                auto viewPointer = std::make_shared<typename PageType::view_type>(handle);

@@ -11,6 +11,7 @@
 
 #include "Viper/AndroidUtil/java/lang/Object.hpp"
 #include "Viper/AndroidUtil/android/os/IBinder.hpp"
+#include "Viper/AndroidUtil/android/view/View.hpp"
 
 namespace android {
     
@@ -26,6 +27,8 @@ namespace android {
                 STATIC_VAR(const std::string, signature, "android/view/inputmethod/InputMethodManager");
                 
                 bool hideSoftInputFromWindow(const android::os::IBinder &windowToken, int flags);
+                
+                bool showSoftInput(const android::view::View &v, int flags);
                 
                 static int HIDE_IMPLICIT_ONLY();
                 

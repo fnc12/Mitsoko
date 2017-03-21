@@ -43,11 +43,9 @@ namespace Viper{
         virtual ViewBase* getViewBase()=0;
     };
     
-//    template<class UI,class EH>
     template<class V>
     struct Presenter : public PresenterBase {
-//        typedef Presenter<UI,EH> P;
-//        WireframeBase wireframe;
+        typedef V view_type;
         V view;
         
         virtual void init(){
