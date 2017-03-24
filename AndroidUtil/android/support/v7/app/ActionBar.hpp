@@ -26,7 +26,7 @@ namespace android{
                     
                     void setTitle(const std::string &title);
                     
-                    void setTitle(const java::lang::CharSequence &title);
+//                    void setTitle(const java::lang::CharSequence &title);
                     
                     void hide();
                     

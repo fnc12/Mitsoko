@@ -10,7 +10,7 @@
 
 #ifdef __APPLE__
 
-const std::string UI::ActionSheet::className="UIActionSheet";
+const std::string UI::ActionSheet::className = "UIActionSheet";
 
 UI::ActionSheet::DelegateEventHandler::DelegateEventHandlersMap UI::ActionSheet::DelegateEventHandler::delegateEventHandlers;
 

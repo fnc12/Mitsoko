@@ -13,7 +13,7 @@
 const std::string UI::Button::className="UIButton";
 
 void UI::Button::setTitle(const std::string &title,UI::Control::State state){
-    auto str=CF::String::create(title);
+    auto str = CF::String::create(title);
     this->sendMessage<void>("setTitle:forState:", str.handle,UIControlState(state));
 }
 

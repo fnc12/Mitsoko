@@ -5,7 +5,9 @@
 #include "Array.hpp"
 
 namespace NS{
-    struct MutableArray:public NS::Array{
+    
+    struct MutableArray : public NS::Array {
+        
         using Array::Array;
         
 #ifdef __APPLE__
@@ -14,6 +16,8 @@ namespace NS{
 //        STATIC_VAR(const std::string, className, "NSMutableArray");
         
         static NS::MutableArray create();
+        
+        static NS::MutableArray createWithCapacity(int capacity);
         
         void addObject(const NS::Object &anObject);
 #endif

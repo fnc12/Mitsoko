@@ -9,6 +9,7 @@
 #endif
 
 namespace java{
+    
     namespace lang{
         
         /**
@@ -16,7 +17,7 @@ namespace java{
          *  a java array binding T[].
          */
         template<class T>
-        struct Array{
+        struct Array {
 #ifdef __ANDROID__
             typedef void *Handle;
             Handle handle;
@@ -24,23 +25,23 @@ namespace java{
             Array(Handle h):handle(h){}
             Array():Array(nullptr){}
             
-            static Array<T> create(int size,const T &initialElement){
+            static Array<T> create(int size, const T &initialElement){
                 if(auto env = java::lang::JNI::Env()){
-                    auto handle=env->NewObjectArray(size,
-                                                    env->FindClass(T::signature().c_str()),
-                                                    (jobject)initialElement.handle);
+                    auto handle = env->NewObjectArray(size,
+                                                      env->FindClass(T::signature().c_str()),
+                                                      (jobject)initialElement.handle);
                     return handle;
                 }else{
                     return {};
                 }
             }
             
-            struct ElementProxy{
+            struct ElementProxy {
                 Array<T> &array;
                 const int index;
                 
-                void operator=(const T &value){
-                    if(auto env=java::lang::JNI::Env()){
+                void operator=(const T &value) {
+                    if(auto env = java::lang::JNI::Env()) {
                         env->SetObjectArrayElement(jobjectArray(array.handle),
                                                    this->index,
                                                    (jobject)value.handle);
@@ -51,7 +52,7 @@ namespace java{
             };
             
             ElementProxy operator[](int index){
-                return ElementProxy{*this,index};
+                return ElementProxy{*this, index};
             }
 #endif  //__ANDROID__
         };

@@ -6,8 +6,11 @@
 #include <experimental/optional>
 
 namespace CF {
-    struct String:public NS::Object{
+    
+    struct String : public NS::Object {
+        
         using Object::Object;
+        
 #ifdef __APPLE__
         
         static String create(std::experimental::optional<std::string> str);

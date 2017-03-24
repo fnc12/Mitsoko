@@ -32,16 +32,27 @@ void android::widget::TextView::setTextColor(int color){
 }
 
 void android::widget::TextView::setText(const std::string &value){
-    auto str=java::lang::String::create(value);
-    this->setText(str);
+    auto str = java::lang::String::create(value);
+//    this->setText(str);
+    this->sendMessage<void>("setText", (java::lang::CharSequence)str);
 }
 
-void android::widget::TextView::setText(const java::lang::String &str){
-    this->sendMessage<void>("setText",(java::lang::CharSequence)str);
+void android::widget::TextView::setHint(const std::string &value) {
+    auto str = java::lang::String::create(value);
+    this->sendMessage<void>("setHint", (java::lang::CharSequence)str);
 }
+
+std::string android::widget::TextView::getHint() {
+    auto cs = this->sendMessage<java::lang::CharSequence>("getHint");
+    return cs.toString().c_str();
+}
+
+/*void android::widget::TextView::setText(const java::lang::String &str){
+    this->sendMessage<void>("setText",(java::lang::CharSequence)str);
+}*/
 
 void android::widget::TextView::addTextChangedListener(const android::text::TextWatcher &watcher){
-    this->sendMessage<void>("addTextChangedListener",watcher);
+    this->sendMessage<void>("addTextChangedListener", watcher);
 }
 
 void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChanged,

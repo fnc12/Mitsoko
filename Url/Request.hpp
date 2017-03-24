@@ -38,7 +38,7 @@ namespace Viper {
              *  It takes two parametes in contructor: name and value, and transfers it into url string
              *  like `name=foo` or `names[]=foo&names[]=bar`.
              */
-            struct GetParameter{
+            struct GetParameter {
                 
                 template<class T>
                 GetParameter(const std::string &name,T t):value(std::move(StringValueAdapter<T>{name,t}())){}
@@ -81,6 +81,25 @@ namespace Viper {
                     }
                 };
             };
+            
+            struct Headers {
+                Request &request;
+                
+                struct HeaderAdapter {
+                    Headers &headers;
+                    std::string key;
+                    
+                    inline void operator=(const std::string &value) {
+                        headers.request.setValueForHTTPHeaderField(value, this->key);
+                    }
+                };
+                
+                inline HeaderAdapter operator[](const std::string &key) {
+                    return {*this, key};
+                }
+            };
+            
+            Headers headers;
             
             static const std::string crlf;
             

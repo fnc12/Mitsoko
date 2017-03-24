@@ -7,7 +7,8 @@
 #include "Viper/iOSutil/CF/String.hpp"
 
 namespace UI {
-    struct TextField:public virtual UI::Control, public virtual UI::TextInput{
+    
+    struct TextField : public virtual UI::Control, public virtual UI::TextInput {
         
 #ifdef __APPLE__
         static const std::string className;
@@ -16,13 +17,18 @@ namespace UI {
         
         TextField(Handle handle);
         
-        typedef UI::Control Super;
-        
         void setText(const std::string &newValue);
         
-        void setText(const CF::String &newValue);
+//        void setText(const CF::String &newValue);
         
         std::string text();
+        
+        void setPlaceholder(const std::string &newValue);
+        
+        std::string placeholder();
+        
+    private:
+        typedef UI::Control Super;
 #endif
     };
 }

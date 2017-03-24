@@ -26,11 +26,9 @@ const std::string Viper::Url::Request::crlf = "\r\n";
 
 static auto networkUrlRequestClassSignature = "kz/outlawstudio/viper/Network$UrlRequest";
 
-//std::map<int, Viper::Url::Request::Callback> Viper::Url::Request::callbacks;
-
 #endif  //__ANDROID__
 
-Viper::Url::Request::Request(){
+Viper::Url::Request::Request(): headers({*this}){
 
 #ifdef __APPLE__
     request = NS::MutableURLRequest::create();

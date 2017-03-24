@@ -36,12 +36,12 @@ auto android::app::AlertDialog::Builder::create()->AlertDialog{
     return std::move(this->sendMessage<AlertDialog>("create"));
 }
 
-auto android::app::AlertDialog::Builder::setItems(const std::vector<std::string> &items,OnClickCallback cb)->Builder&{
-    auto jItems=java::lang::Array<java::lang::CharSequence>::create(int(items.size()),{});
+auto android::app::AlertDialog::Builder::setItems(const std::vector<std::string> &items,OnClickCallback cb) -> Builder& {
+    auto jItems = java::lang::Array<java::lang::CharSequence>::create(int(items.size()), {});
     for(auto i=0;i<items.size();++i){
-        const auto &item=items[i];
-        auto str=java::lang::String::create(item);
-        jItems[i]=str;
+        const auto &item = items[i];
+        auto str = java::lang::String::create(item);
+        jItems[i] = str;
     }
     //                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
     auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";

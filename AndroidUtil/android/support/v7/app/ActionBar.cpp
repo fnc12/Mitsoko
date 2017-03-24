@@ -17,13 +17,15 @@ java::lang::CharSequence android::support::v7::app::ActionBar::getTitle(){
 }
 
 void android::support::v7::app::ActionBar::setTitle(const std::string &title){
-    auto t=java::lang::String::create(title);
-    this->setTitle(t);
+    auto t = java::lang::String::create(title);
+//    this->setTitle(t);
+//    java::lang::CharSequence c = t;
+    this->sendMessage<void>("setTitle", (java::lang::CharSequence)t);
 }
 
-void android::support::v7::app::ActionBar::setTitle(const java::lang::CharSequence &title){
-    this->sendMessage<void>("setTitle",title);
-}
+/*void android::support::v7::app::ActionBar::setTitle(const java::lang::CharSequence &title){
+    
+}*/
 
 void android::support::v7::app::ActionBar::hide(){
     this->sendMessage<void>("hide");

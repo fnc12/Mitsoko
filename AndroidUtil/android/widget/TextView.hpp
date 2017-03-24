@@ -35,7 +35,11 @@ namespace android{
             
             void setText(const std::string &value);
             
-            void setText(const java::lang::String &str);
+//            void setText(const java::lang::String &str);
+            
+            void setHint(const std::string &value);
+            
+            std::string getHint();
             
             void addTextChangedListener(const android::text::TextWatcher &watcher);
             

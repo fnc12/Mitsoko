@@ -13,9 +13,17 @@
 const std::string NS::MutableArray::className="NSMutableArray";
 
 NS::MutableArray NS::MutableArray::create(){
-    auto cls=NS::getClass(className);
+    auto cls = NS::getClass(className);
     assert(cls);
-    auto handle=sendMessage<Handle>(cls, "new");
+    auto handle = sendMessage<Handle>(cls, "new");
+    NS::MutableArray res(handle);
+    return res;
+}
+
+NS::MutableArray NS::MutableArray::createWithCapacity(int capacity) {
+    auto cls = NS::getClass(className);
+    assert(cls);
+    auto handle = sendMessage<Handle>(cls, "arrayWithCapacity:", NSInteger(capacity));
     NS::MutableArray res(handle);
     return res;
 }

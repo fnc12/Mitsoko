@@ -16,7 +16,6 @@ namespace UI {
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UIActionSheet");
         
         typedef std::function<void(UI::ActionSheet,int)> ClickedButtonAtIndex;
         typedef std::function<void(UI::ActionSheet,int)> WillDismissWithButtonIndex;
