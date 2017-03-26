@@ -16,7 +16,7 @@ namespace android{
     
     namespace widget{
         
-        struct TextView:public view::View{
+        struct TextView : public view::View {
             
             using View::View;
             
