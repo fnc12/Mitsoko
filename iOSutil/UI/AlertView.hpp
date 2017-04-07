@@ -3,18 +3,18 @@
 #define __VIPER__IOS_UTIL__UI__ALERT_VIEW__
 
 #include "View.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
-#include "Viper/iOSutil/NS/String.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
+#include "Mitsoko/iOSutil/NS/String.hpp"
 #include "TextField.hpp"
+
 #include <experimental/optional>
 #include <initializer_list>
 #include <map>
 #include <functional>
-//#include "Viper/Events.hpp"
 
 namespace UI {
     
-    struct AlertView:public UI::View{
+    struct AlertView : public UI::View {
         
         typedef UI::View Super;
         
@@ -36,10 +36,10 @@ namespace UI {
         void setClickedButtonAtIndex(ClickedButtonAtIndex f);
         
         enum class Style{
-            Default=UIAlertViewStyleDefault,
-            SecureTextInput=UIAlertViewStyleSecureTextInput,
-            PlainTextInput=UIAlertViewStylePlainTextInput,
-            LoginAndPasswordInput=UIAlertViewStyleLoginAndPasswordInput,
+            Default = UIAlertViewStyleDefault,
+            SecureTextInput = UIAlertViewStyleSecureTextInput,
+            PlainTextInput = UIAlertViewStylePlainTextInput,
+            LoginAndPasswordInput = UIAlertViewStyleLoginAndPasswordInput,
         };
         
         void setMessage(std::experimental::optional<std::string> newValue);
@@ -50,7 +50,7 @@ namespace UI {
         
         int addButtonWithTitle(const std::string &title);
         
-        int addButtonWithTitle(const CF::String &title);
+//        int addButtonWithTitle(const CF::String &title);
         
         void setCancelButtonIndex(int newValue);
         
@@ -70,7 +70,6 @@ namespace UI {
         
         UI::TextField textFieldAtIndex(int index);
         
-        
         static AlertView create(std::experimental::optional<std::string> title,
                                 std::experimental::optional<std::string> message,
                                 std::experimental::optional<std::string> cancelButtonTitle,
@@ -86,7 +85,7 @@ namespace UI {
          *  Instance is created and stored per one UI::AlertView after user assigns
          *  any callback to UI::AlertView instance.
          */
-        struct DelegateEventHandler{
+        struct DelegateEventHandler {
             typedef std::map<Handle, DelegateEventHandler> DelegateEventHandlersMap;
             static DelegateEventHandlersMap delegateEventHandlers;
 //            STATIC_VAR(DelegateEventHandlersMap, delegateEventHandlers, {});

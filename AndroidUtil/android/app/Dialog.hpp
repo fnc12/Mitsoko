@@ -2,14 +2,14 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__APP__DIALOG__
 #define __VIPER__ANDROID_UTIL__ANDROID__APP__DIALOG__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/android/view/Window.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/android/view/Window.hpp"
 
 namespace android{
     
     namespace app{
         
-        struct Dialog:public java::lang::Object{
+        struct Dialog : public java::lang::Object {
             
             using Object::Object;
             

@@ -7,8 +7,8 @@
 //
 
 #include "Request.hpp"
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 #include <iostream>
 #include <sys/time.h>
@@ -20,7 +20,7 @@
 using std::cout;
 using std::endl;
 
-const std::string Viper::Url::Request::crlf = "\r\n";
+const std::string Mitsoko::Url::Request::crlf = "\r\n";
 
 #ifdef __ANDROID__
 
@@ -28,7 +28,7 @@ static auto networkUrlRequestClassSignature = "kz/outlawstudio/viper/Network$Url
 
 #endif  //__ANDROID__
 
-Viper::Url::Request::Request(): headers({*this}){
+Mitsoko::Url::Request::Request(): headers({*this}){
 
 #ifdef __APPLE__
     request = NS::MutableURLRequest::create();
@@ -38,15 +38,15 @@ Viper::Url::Request::Request(): headers({*this}){
 
 }
 
-std::string Viper::Url::Request::MultipartAdapter::body() {
+std::string Mitsoko::Url::Request::MultipartAdapter::body() {
     return this->stream.str();
 }
 
-const std::string& Viper::Url::Request::MultipartAdapter::boundary() const {
+const std::string& Mitsoko::Url::Request::MultipartAdapter::boundary() const {
     return _boundary;
 }
 
-void Viper::Url::Request::MultipartAdapter::addFormField(const std::string &name, const std::string &value) {
+void Mitsoko::Url::Request::MultipartAdapter::addFormField(const std::string &name, const std::string &value) {
     this->stream << "--" << _boundary << crlf;
     this->stream << "Content-Disposition: form-data; name=\"" << name << "\"" << crlf;
     this->stream << "Content-Type: text/plain; charset=" << this->charset << crlf;
@@ -54,10 +54,10 @@ void Viper::Url::Request::MultipartAdapter::addFormField(const std::string &name
     this->stream << value << crlf;
 }
 
-void Viper::Url::Request::MultipartAdapter::addFilePart(const std::string &fieldName,
-                                                        const std::string &filepath,
-                                                        const std::string &fileName,
-                                                        const std::string &mimeType)
+void Mitsoko::Url::Request::MultipartAdapter::addFilePart(const std::string &fieldName,
+                                                          const std::string &filepath,
+                                                          const std::string &fileName,
+                                                          const std::string &mimeType)
 {
     auto count = fileSize(filepath);
     std::ifstream file(filepath);
@@ -75,14 +75,14 @@ void Viper::Url::Request::MultipartAdapter::addFilePart(const std::string &field
     }
 }
 
-Viper::Url::Request::MultipartAdapter::MultipartAdapter():charset("UTF-8"){}
+Mitsoko::Url::Request::MultipartAdapter::MultipartAdapter():charset("UTF-8"){}
 
-void Viper::Url::Request::performAsync(std::function<void(Response, std::vector<char>, Error)> callback) {
+void Mitsoko::Url::Request::performAsync(std::function<void(Response, std::vector<char>, Error)> callback) {
     this->performAsync<std::vector<char>>(callback);
 }
 
 template<>
-void Viper::Url::Request::performAsync<std::vector<char>>(std::function<void(Response, std::vector<char>, Error)> callback) {
+void Mitsoko::Url::Request::performAsync<std::vector<char>>(std::function<void(Response, std::vector<char>, Error)> callback) {
     
 #ifdef __APPLE__
     NS::URLConnection::sendAsynchronousRequest(request,
@@ -121,7 +121,7 @@ void Viper::Url::Request::performAsync<std::vector<char>>(std::function<void(Res
 }
 
 template<>
-void Viper::Url::Request::performAsync<Viper::Image>(std::function<void(Response, Image, Error)> callback) {
+void Mitsoko::Url::Request::performAsync<Mitsoko::Image>(std::function<void(Response, Image, Error)> callback) {
 #ifdef __APPLE__
     NS::URLConnection::sendAsynchronousRequest(request,
                                                NS::OperationQueue::mainQueue(),
@@ -132,7 +132,7 @@ void Viper::Url::Request::performAsync<Viper::Image>(std::function<void(Response
                                                    
                                                    //   create image from data..
                                                    auto image = UI::Image::create(data);
-                                                   Viper::Image i(image);
+                                                   Mitsoko::Image i(image);
                                                    
                                                    //   create error wrapper..
                                                    Error e(error);
@@ -146,11 +146,11 @@ void Viper::Url::Request::performAsync<Viper::Image>(std::function<void(Response
     auto requestId = request.sendMessage<int>("getId");
     request.sendMessage<void>("perform");
     request.sendMessage<void>("setReturnType", 2);      //  2 means image..
-    CallbackHolder<Viper::Image>::callbacks.insert({requestId, callback});
+    CallbackHolder<Mitsoko::Image>::callbacks.insert({requestId, callback});
 #endif  //__APPLE__
 }
 
-std::string Viper::Url::Request::url_encode(const std::string &value) {
+std::string Mitsoko::Url::Request::url_encode(const std::string &value) {
     std::ostringstream escaped;
     escaped.fill('0');
     escaped << std::hex;
@@ -173,7 +173,7 @@ std::string Viper::Url::Request::url_encode(const std::string &value) {
     return escaped.str();
 }
 
-std::string Viper::Url::Request::MultipartAdapter::generateBoundary() {
+std::string Mitsoko::Url::Request::MultipartAdapter::generateBoundary() {
     struct timeval tv;
     ::gettimeofday(&tv, nullptr);
     std::stringstream ss;
@@ -181,12 +181,12 @@ std::string Viper::Url::Request::MultipartAdapter::generateBoundary() {
     return ss.str();
 }
 
-void Viper::Url::Request::MultipartAdapter::finish() {
+void Mitsoko::Url::Request::MultipartAdapter::finish() {
     this->stream << crlf;
     this->stream << "--" << _boundary << "--" << crlf;
 }
 
-size_t Viper::Url::Request::MultipartAdapter::fileSize(const std::string &filepath) {
+size_t Mitsoko::Url::Request::MultipartAdapter::fileSize(const std::string &filepath) {
     std::ifstream file(filepath, std::ios::binary | std::ios::ate);
     if(file) {
         return static_cast<size_t>(file.tellg());
@@ -195,7 +195,7 @@ size_t Viper::Url::Request::MultipartAdapter::fileSize(const std::string &filepa
     }
 }
 
-void Viper::Url::Request::MultipartAdapter::stream_copy_n(std::istream &in, std::size_t count, std::ostream &out) {
+void Mitsoko::Url::Request::MultipartAdapter::stream_copy_n(std::istream &in, std::size_t count, std::ostream &out) {
     const std::size_t buffer_size = 4096;
     char buffer[buffer_size];
     while(count > buffer_size) {
@@ -208,7 +208,7 @@ void Viper::Url::Request::MultipartAdapter::stream_copy_n(std::istream &in, std:
     out.write(buffer, count);
 }
 
-auto Viper::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Request& {
+auto Mitsoko::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Request& {
     MultipartAdapter multipartAdapter;
     f(multipartAdapter);
     multipartAdapter.finish();
@@ -217,7 +217,7 @@ auto Viper::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Requ
     return *this;
 }
 
-auto Viper::Url::Request::setValueForHTTPHeaderField(std::string value, std::string field) -> Request&{
+auto Mitsoko::Url::Request::setValueForHTTPHeaderField(std::string value, std::string field) -> Request&{
 
 #ifdef __APPLE__
     request.setValueForHTTPHeaderField(value, field);
@@ -230,7 +230,7 @@ auto Viper::Url::Request::setValueForHTTPHeaderField(std::string value, std::str
     return *this;
 }
 
-auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter> getParameters) -> Request& {
+auto Mitsoko::Url::Request::url(const std::string &value, std::vector<GetParameter> getParameters) -> Request& {
     std::stringstream ss;
     ss << value;
     const auto getParametersCount = getParameters.size();
@@ -259,11 +259,11 @@ auto Viper::Url::Request::url(const std::string &value, std::vector<GetParameter
 
 }
 
-auto Viper::Url::Request::url(const std::string &value) -> Request& {
+auto Mitsoko::Url::Request::url(const std::string &value) -> Request& {
     return this->url(value, {});
 }
 
-std::string Viper::Url::Request::url() {
+std::string Mitsoko::Url::Request::url() {
     
 #ifdef __APPLE__
     return request.URL().absoluteString();
@@ -273,7 +273,7 @@ std::string Viper::Url::Request::url() {
     
 }
 
-auto Viper::Url::Request::method(const std::string &value) -> Request& {
+auto Mitsoko::Url::Request::method(const std::string &value) -> Request& {
     
 #ifdef __APPLE__
     request.setHTTPMethod(value);
@@ -285,7 +285,7 @@ auto Viper::Url::Request::method(const std::string &value) -> Request& {
     
 }
 
-std::string Viper::Url::Request::method() {
+std::string Mitsoko::Url::Request::method() {
     
 #ifdef __APPLE__
     if(auto res = request.HTTPMethod()){
@@ -299,7 +299,7 @@ std::string Viper::Url::Request::method() {
     
 }
 
-auto Viper::Url::Request::body(const std::string &s) -> Request& {
+auto Mitsoko::Url::Request::body(const std::string &s) -> Request& {
     
 #ifdef __APPLE__
     auto str = NS::String::stringWithCString(s.c_str(), NS::String::Encoding::UTF8);
@@ -314,7 +314,7 @@ auto Viper::Url::Request::body(const std::string &s) -> Request& {
 
 #ifdef __ANDROID__
 
-void Viper::Url::Request::urlResponseReceived(int requestId,
+void Mitsoko::Url::Request::urlResponseReceived(int requestId,
                                               java::lang::Object response,
                                               jbyteArray data,
                                               java::lang::Object error)
@@ -362,7 +362,7 @@ void Viper::Url::Request::urlResponseReceived(int requestId,
     }
 }
     
-    void Viper::Url::Request::urlResponseImageReceived(int requestId,
+    void Mitsoko::Url::Request::urlResponseImageReceived(int requestId,
                                                        java::lang::Object response,
                                                        android::graphics::Bitmap bitmap,
                                                        java::lang::Object error)

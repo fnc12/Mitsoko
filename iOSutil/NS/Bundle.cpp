@@ -7,7 +7,7 @@
 //
 
 #include "Bundle.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
 
 #ifdef __APPLE__
 
@@ -24,9 +24,9 @@ NS::Array NS::Bundle::preferredLocalizations(){
 }
 
 std::string NS::Bundle::pathForResource(const std::string &name, const std::string &ext){
-    auto n=CF::String::create(name);
-    auto e=CF::String::create(ext);
-    NS::String res=this->sendMessage<Handle>("pathForResource:ofType:", n.handle, e.handle);
+    auto n = CF::String::create(name);
+    auto e = CF::String::create(ext);
+    NS::String res = this->sendMessage<Handle>("pathForResource:ofType:", n.handle, e.handle);
     return res.UTF8String();
 }
 

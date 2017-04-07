@@ -3,12 +3,12 @@
 #define __VIPER__IOS_UTIL__NS__STRING__
 
 #include "Object.hpp"
-#include "Viper/Util.hpp"
+#include "Mitsoko/Util.hpp"
 #include "Data.hpp"
 
 namespace NS {
     
-    struct String:public NS::Object{
+    struct String : public NS::Object {
         
         using Object::Object;
         

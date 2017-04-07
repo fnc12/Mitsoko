@@ -2,8 +2,8 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__
 #define __VIPER__ANDROID_UTIL__ANDROID__TEXT__INPUT_TYPE__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 namespace android{
     
@@ -12,7 +12,7 @@ namespace android{
         /**
          *  Interface.
          */
-        struct InputType:public java::lang::Object{
+        struct InputType : public java::lang::Object {
             
             using Object::Object;
             

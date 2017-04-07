@@ -7,11 +7,11 @@
 //
 
 #include "Error.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
-Viper::Url::Error::Error(decltype(error) error_):error(error_){}
+Mitsoko::Url::Error::Error(decltype(error) error_):error(error_){}
 
-int Viper::Url::Error::code() {
+int Mitsoko::Url::Error::code() {
     
 #ifdef __APPLE__
     return error.code();
@@ -21,7 +21,7 @@ int Viper::Url::Error::code() {
     
 }
 
-std::string Viper::Url::Error::message() {
+std::string Mitsoko::Url::Error::message() {
     
 #ifdef __APPLE__
     return error.localizedDescription();
@@ -35,6 +35,6 @@ std::string Viper::Url::Error::message() {
     
 }
 
-Viper::Url::Error::operator bool() const {
+Mitsoko::Url::Error::operator bool() const {
     return bool(error);
 }

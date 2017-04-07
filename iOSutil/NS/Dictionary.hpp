@@ -2,8 +2,8 @@
 #ifndef __VIPER__IOS_UTIL__NS__DICTIONARY__
 #define __VIPER__IOS_UTIL__NS__DICTIONARY__
 
-#include "Viper/iOSutil/NS/Object.hpp"
-#include "Viper/Util.hpp"
+#include "Mitsoko/iOSutil/NS/Object.hpp"
+#include "Mitsoko/Util.hpp"
 
 namespace NS {
     

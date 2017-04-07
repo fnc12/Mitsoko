@@ -7,7 +7,7 @@
 //
 
 #include "InputMethodManager.hpp"
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 

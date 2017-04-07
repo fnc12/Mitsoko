@@ -7,8 +7,9 @@
 //
 
 #include "Annotation.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
+
 #include <iostream>
-#include "Viper/iOSutil/CF/String.hpp"
 
 #ifdef __APPLE__
 
@@ -16,11 +17,11 @@ MK::Annotation MK::Annotation::create(CL::Location::Coordinate2D coordinate,
                                       std::experimental::optional<std::string> title,
                                       std::experimental::optional<std::string> subtitle)
 {
-    if(auto newAnnotation=NS::Object::create<Annotation>("ViperMKAnnotation")){
+    if(auto newAnnotation = NS::Object::create<Annotation>("ViperMKAnnotation")){
         newAnnotation.sendMessage<void>("setCoordinate:", CLLocationCoordinate2D(coordinate));
-        auto t=CF::String::create(title);
+        auto t = CF::String::create(title);
         newAnnotation.sendMessage<void>("setTitle:", t.handle);
-        auto s=CF::String::create(subtitle);
+        auto s = CF::String::create(subtitle);
         newAnnotation.sendMessage<void>("setSubtitle:", s.handle);
         return newAnnotation;
     }else{

@@ -8,7 +8,7 @@ namespace android{
     
     namespace widget{
         
-        struct Button:public TextView{
+        struct Button : public TextView {
             
             using TextView::TextView;
             

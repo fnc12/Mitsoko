@@ -2,14 +2,14 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__PROVIDER__MEDIA_STORE__
 #define __VIPER__ANDROID_UTIL__ANDROID__PROVIDER__MEDIA_STORE__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
-#include "Viper/AndroidUtil/android/net/Uri.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/android/net/Uri.hpp"
 
 namespace android {
     
     namespace provider {
         
-        struct MediaStore:public java::lang::Object{
+        struct MediaStore : public java::lang::Object {
             
             using Object::Object;
             

@@ -20,7 +20,7 @@ UI::BarButtonItem::Observer UI::BarButtonItem::observer;
 
 UI::BarButtonItem UI::BarButtonItem::create(BarButtonSystemItem systemItem,
                                             Touched f,
-                                            const Viper::Disposable *disposable)
+                                            const Mitsoko::Disposable *disposable)
 {
     auto cls = NS::getClass(className);
     assert(cls);
@@ -38,13 +38,17 @@ UI::BarButtonItem UI::BarButtonItem::create(BarButtonSystemItem systemItem,
         assert(action);
         touchedMap.insert({res.handle, f});
         disposablesMap.insert({disposable->id, res.handle});
-        Viper::Disposable::subscribe(&observer);
+        Mitsoko::Disposable::subscribe(&observer);
     }
     res.initWithSystemItem(systemItem, target, action);
     return res;
 }
 
-UI::BarButtonItem UI::BarButtonItem::create(const UI::Image &image,Style style,Touched f,const Viper::Disposable *disposable){
+UI::BarButtonItem UI::BarButtonItem::create(const UI::Image &image,
+                                            Style style,
+                                            Touched f,
+                                            const Mitsoko::Disposable *disposable)
+{
     auto cls = NS::getClass(className);
     assert(cls);
     auto handle = sendMessage<Handle>(cls, "alloc");
@@ -61,13 +65,17 @@ UI::BarButtonItem UI::BarButtonItem::create(const UI::Image &image,Style style,T
         assert(action);
         touchedMap.insert({res.handle, f});
         disposablesMap.insert({disposable->id, res.handle});
-        Viper::Disposable::subscribe(&observer);
+        Mitsoko::Disposable::subscribe(&observer);
     }
     res.initWithImage(image, style, target, action);
     return res;
 }
 
-UI::BarButtonItem UI::BarButtonItem::create(const std::string &title,Style style,Touched f,const Viper::Disposable *disposable){
+UI::BarButtonItem UI::BarButtonItem::create(const std::string &title,
+                                            Style style,
+                                            Touched f,
+                                            const Mitsoko::Disposable *disposable)
+{
     auto cls = NS::getClass(className);
     assert(cls);
     auto handle = sendMessage<Handle>(cls, "alloc");
@@ -85,7 +93,7 @@ UI::BarButtonItem UI::BarButtonItem::create(const std::string &title,Style style
         assert(action);
         touchedMap.insert({res.handle, f});
         disposablesMap.insert({disposable->id, res.handle});
-        Viper::Disposable::subscribe(&observer);
+        Mitsoko::Disposable::subscribe(&observer);
     }
     res.initWithTitle(t, style, target, action);
     return res;
@@ -100,7 +108,7 @@ void UI::BarButtonItem::touched(Handle handle){
     }
 }
 
-void UI::BarButtonItem::Observer::disposableDidDispose(Viper::Disposable::Id id){
+void UI::BarButtonItem::Observer::disposableDidDispose(Mitsoko::Disposable::Id id){
     auto it=disposablesMap.find(id);
     if(it != disposablesMap.end()){
         auto handle=it->second;
@@ -109,7 +117,7 @@ void UI::BarButtonItem::Observer::disposableDidDispose(Viper::Disposable::Id id)
         if(it2 != touchedMap.end()){
             touchedMap.erase(it2);
         }
-        Viper::Disposable::unsubscribe(&observer);
+        Mitsoko::Disposable::unsubscribe(&observer);
     }
 }
 

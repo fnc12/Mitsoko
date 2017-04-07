@@ -2,13 +2,16 @@
 #ifndef __VIPER__IOS_UTIL__MK__MAP_VIEW__
 #define __VIPER__IOS_UTIL__MK__MAP_VIEW__
 
-#include "Viper/iOSutil/UI/View.hpp"
+#include "Mitsoko/iOSutil/UI/View.hpp"
 #include "Geometry.hpp"
 #include "Annotation.hpp"
 
 namespace MK {
-    struct MapView:public UI::View{
+    
+    struct MapView : public UI::View {
+        
         using View::View;
+        
 #ifdef __APPLE__
         static const std::string className;
 //        STATIC_VAR(const std::string, className, "MKMapView");

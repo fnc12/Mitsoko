@@ -7,7 +7,7 @@
 //
 
 #include "TextView.hpp"
-#include "Viper/AndroidUtil/android/text/TextWatcher.hpp"
+#include "Mitsoko/AndroidUtil/android/text/TextWatcher.hpp"
 
 #ifdef __ANDROID__
 
@@ -22,6 +22,10 @@ android::widget::TextView::TextWatcherEventHandler::AfterTextChangedMap android:
 android::widget::TextView::TextWatcherEventHandler::DisposablesMap android::widget::TextView::TextWatcherEventHandler::disposablesMap;
 
 android::widget::TextView::TextWatcherEventHandler::Observer android::widget::TextView::TextWatcherEventHandler::observer;
+
+void android::widget::TextView::setSelected(bool value) {
+    this->sendMessage<void>("setSelected", value);
+}
 
 void android::widget::TextView::setInputType(int type){
     this->sendMessage<void>("setInputType",type);

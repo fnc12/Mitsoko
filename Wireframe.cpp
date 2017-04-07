@@ -11,7 +11,7 @@
 //using android::content::Intent;
 //using android::app::Activity;
 
-void Viper::NavigationPusher::operator()(const void *handle, const std::string &viewName) {
+void Mitsoko::NavigationPusher::operator()(const void *handle, const std::string &viewName) {
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     auto object = NS::Object::create<UI::ViewController>(viewName);
@@ -19,14 +19,14 @@ void Viper::NavigationPusher::operator()(const void *handle, const std::string &
 #endif
 }
 
-Viper::NavigationClassPoper::NavigationClassPoper(const std::string &target_, bool animated_):
+Mitsoko::NavigationClassPoper::NavigationClassPoper(const std::string &target_, bool animated_):
 targetClassName(target_),
 animated(animated_)
 {
     //..
 }
 
-void Viper::NavigationClassPoper::operator()(const void *handle) {
+void Mitsoko::NavigationClassPoper::operator()(const void *handle) {
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     auto navigationController = vc.navigationController();
@@ -50,7 +50,7 @@ void Viper::NavigationClassPoper::operator()(const void *handle) {
 #endif
 }
 
-void Viper::FragmentStarter::operator()(const void *handle, const std::string &viewName) {
+void Mitsoko::FragmentStarter::operator()(const void *handle, const std::string &viewName) {
 #ifdef __ANDROID__
     android::app::Fragment fragment(handle);
     auto activity = fragment.getActivity();
@@ -60,7 +60,7 @@ void Viper::FragmentStarter::operator()(const void *handle, const std::string &v
 #endif
 }
 
-void Viper::ActivityStarter::operator()(const void *handle, const std::string &viewName) {
+void Mitsoko::ActivityStarter::operator()(const void *handle, const std::string &viewName) {
 #ifdef __ANDROID__
     android::app::Activity activity(handle);
     java::lang::Class cls = java::lang::Class::find(viewName);
@@ -76,11 +76,11 @@ void Viper::ActivityStarter::operator()(const void *handle, const std::string &v
 #endif
 }
 
-Viper::ActivityCloser::ActivityCloser(){}
+Mitsoko::ActivityCloser::ActivityCloser(){}
 
-Viper::ActivityCloser::ActivityCloser(int result_):result(std::make_shared<int>(result_)){}
+Mitsoko::ActivityCloser::ActivityCloser(int result_):result(std::make_shared<int>(result_)){}
 
-void Viper::ActivityCloser::operator()(const void *handle) {
+void Mitsoko::ActivityCloser::operator()(const void *handle) {
 #ifdef __ANDROID__
     android::app::Activity activity(handle);
     if(this->result){
@@ -90,7 +90,7 @@ void Viper::ActivityCloser::operator()(const void *handle) {
 #endif
 }
 
-void Viper::NavigationPoper::operator()(const void *handle) {
+void Mitsoko::NavigationPoper::operator()(const void *handle) {
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     vc.navigationController().popViewControllerAnimated(this->animated);

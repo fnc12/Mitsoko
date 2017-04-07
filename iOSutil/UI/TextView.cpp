@@ -10,7 +10,7 @@
 
 #ifdef __APPLE__
 
-const std::string UI::TextView::className="UITextView";
+const std::string UI::TextView::className = "UITextView";
 
 UI::TextView::DelegateEventHandler::DelegateEventHandlersMap UI::TextView::DelegateEventHandler::delegateEventHandlers;
 
@@ -168,115 +168,115 @@ bool UI::TextView::DelegateEventHandler::textViewShouldInteractWithURL(Handle se
     }
 }
 
-void UI::TextView::setShouldBeginEditing(ShouldBeginEditing value, const Viper::Disposable &disposable){
+void UI::TextView::setShouldBeginEditing(ShouldBeginEditing value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).shouldBeginEditing=value;
 }
 
-void UI::TextView::setDidBeginEditing(DidBeginEditing value, const Viper::Disposable &disposable){
+void UI::TextView::setDidBeginEditing(DidBeginEditing value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).didBeginEditing=value;
 }
 
-void UI::TextView::setShouldEndEditing(ShouldEndEditing value, const Viper::Disposable &disposable){
+void UI::TextView::setShouldEndEditing(ShouldEndEditing value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).shouldEndEditing=value;
 }
 
-void UI::TextView::setDidEndEditing(DidEndEditing value, const Viper::Disposable &disposable){
+void UI::TextView::setDidEndEditing(DidEndEditing value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).didEndEditing=value;
 }
 
-void UI::TextView::setShouldChangeTextInRange(ShouldChangeTextInRange value, const Viper::Disposable &disposable){
+void UI::TextView::setShouldChangeTextInRange(ShouldChangeTextInRange value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).shouldChangeTextInRange=value;
 }
 
-void UI::TextView::setDidChange(DidChange value, const Viper::Disposable &disposable){
+void UI::TextView::setDidChange(DidChange value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).didChange=value;
 }
 
-void UI::TextView::setDidChangeSelection(DidChangeSelection value, const Viper::Disposable &disposable){
+void UI::TextView::setDidChangeSelection(DidChangeSelection value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).didChangeSelection=value;
 }
 
-void UI::TextView::setShouldInteractWithTextAttachment(ShouldInteractWithTextAttachment value, const Viper::Disposable &disposable){
+void UI::TextView::setShouldInteractWithTextAttachment(ShouldInteractWithTextAttachment value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).shouldInteractWithTextAttachment=value;
 }
 
-void UI::TextView::setShouldInteractWithURL(ShouldInteractWithURL value, const Viper::Disposable &disposable){
+void UI::TextView::setShouldInteractWithURL(ShouldInteractWithURL value, const Mitsoko::Disposable &disposable){
     if(!DelegateEventHandler::get(this->handle)){
         auto sharedEventHandlerClass=NS::getClass("UITextViewDelegateEventHandler");
         auto sharedEventHandler=NS::Object::sendMessage<Handle>(sharedEventHandlerClass,"shared");
         this->sendMessage<void>("setDelegate:", sharedEventHandler);
         
         DelegateEventHandler::disposablesMap[disposable.id].push_back(this->handle);
-        Viper::Disposable::subscribe(&DelegateEventHandler::observer);
+        Mitsoko::Disposable::subscribe(&DelegateEventHandler::observer);
     }
     DelegateEventHandler::getOrCreate(this->handle).shouldInteractWithURL=value;
 }
 
-void UI::TextView::DelegateEventHandler::Observer::disposableDidDispose(Viper::Disposable::Id id){
+void UI::TextView::DelegateEventHandler::Observer::disposableDidDispose(Mitsoko::Disposable::Id id){
     auto it=disposablesMap.find(id);
     if(it != disposablesMap.end()){
         auto &textViewHandles=it->second;

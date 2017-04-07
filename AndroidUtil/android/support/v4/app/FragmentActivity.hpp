@@ -2,7 +2,7 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__V4__APP__FRAGMENT_ACTIVITY__
 #define __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__V4__APP__FRAGMENT_ACTIVITY__
 
-#include "Viper/AndroidUtil/android/app/Activity.hpp"
+#include "Mitsoko/AndroidUtil/android/app/Activity.hpp"
 
 namespace android{
     
@@ -12,7 +12,7 @@ namespace android{
             
             namespace app{
                 
-                struct FragmentActivity:public android::app::Activity{
+                struct FragmentActivity : public android::app::Activity {
                     
                     using Activity::Activity;
                     

@@ -7,17 +7,17 @@
 //
 
 #include "Context.hpp"
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 
 //const std::string android::content::Context::signature="android/content/Context";
 
-auto android::content::Context::getResources()->res::Resources{
+auto android::content::Context::getResources() -> res::Resources {
     return this->sendMessage<res::Resources>("getResources");
 }
 
-auto android::content::Context::getPackageName()->java::lang::String{
+auto android::content::Context::getPackageName() -> java::lang::String {
     return this->sendMessage<java::lang::String>("getPackageName");
 }
 

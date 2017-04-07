@@ -9,9 +9,9 @@
 #ifndef InputMethodManager_hpp
 #define InputMethodManager_hpp
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/android/os/IBinder.hpp"
-#include "Viper/AndroidUtil/android/view/View.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/android/os/IBinder.hpp"
+#include "Mitsoko/AndroidUtil/android/view/View.hpp"
 
 namespace android {
     

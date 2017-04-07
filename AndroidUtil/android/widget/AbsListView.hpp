@@ -8,7 +8,7 @@ namespace android{
     
     namespace widget{
         
-        struct AbsListView:public AdapterView{
+        struct AbsListView : public AdapterView {
             
             using AdapterView::AdapterView;
             

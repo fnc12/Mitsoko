@@ -12,7 +12,7 @@
 
 static auto actionSelectorName = "actionDidHappen:";
 
-using Viper::Disposable;
+using Mitsoko::Disposable;
 
 const std::string UI::Control::className = "UIControl";
 
@@ -32,7 +32,7 @@ bool UI::Control::isSelected() {
     return this->sendMessage<BOOL>("isSelected");
 }
 
-void UI::Control::setOnValueChanged(Callback cb, Viper::Disposable &target){
+void UI::Control::setOnValueChanged(Callback cb, Mitsoko::Disposable &target){
     if(cb){
         EventHandler<Events::ValueChanged>::add(this->handle, cb);
         auto cls = NS::getClass("UIControlValueChangedEventHandler");

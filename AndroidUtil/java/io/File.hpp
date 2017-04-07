@@ -2,11 +2,14 @@
 #ifndef __VIPER__ANDROID_UTIL__JAVA__IO__FILE__
 #define __VIPER__ANDROID_UTIL__JAVA__IO__FILE__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace java {
+    
     namespace io {
-        struct File:public java::lang::Object{
+        
+        struct File : public java::lang::Object {
+            
             using Object::Object;
             
 #ifdef __ANDROID__

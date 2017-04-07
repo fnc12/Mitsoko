@@ -2,12 +2,12 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__CONTENT__INTENT__
 #define __VIPER__ANDROID_UTIL__ANDROID__CONTENT__INTENT__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
-#include "Viper/AndroidUtil/android/net/Uri.hpp"
-#include "Viper/AndroidUtil/android/os/Bundle.hpp"
-#include "Viper/AndroidUtil/android/net/Uri.hpp"
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/android/net/Uri.hpp"
+#include "Mitsoko/AndroidUtil/android/os/Bundle.hpp"
+#include "Mitsoko/AndroidUtil/android/net/Uri.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 #include "Context.hpp"
 
 #include <vector>

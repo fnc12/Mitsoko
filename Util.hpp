@@ -9,7 +9,7 @@
 #ifndef Util_h
 #define Util_h
 
-#include "EnumUtil.hpp"
+//#include "EnumUtil.hpp"
 #include "Selfish.hpp"
 
 /**

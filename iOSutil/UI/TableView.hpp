@@ -3,10 +3,10 @@
 #define __VIPER__IOS_UTIL__UI__TABLE_VIEW__
 
 #include "ScrollView.hpp"
-#include "Viper/TableListAdapter.hpp"
+#include "Mitsoko/TableListAdapter.hpp"
 #include "ImageView.hpp"
 #include "Label.hpp"
-#include "Viper/iOSutil/NS/IndexSet.hpp"
+#include "Mitsoko/iOSutil/NS/IndexSet.hpp"
 
 namespace UI {
     
@@ -41,17 +41,17 @@ namespace UI {
          *  android::content::Context.
          */
         template<class T>
-        Viper::TableListAdapter::AdapterId setAdapter(T ad){
-            auto pointer=std::make_shared<T>(std::move(ad));
+        Mitsoko::TableListAdapter::AdapterId setAdapter(T ad){
+            auto pointer = std::make_shared<T>(std::move(ad));
             return this->setAdapter(pointer);
         }
         
         template<class T>
-        Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
-            auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
-            auto adapterId=Viper::TableListAdapter::registerAdapter(this->handle, adapterPointer);
-            auto sharedAdapterClass=NS::getClass("ViperTableViewAdapter");
-            auto sharedAdapter=NS::Object::sendMessage<Handle>(sharedAdapterClass,"shared");
+        Mitsoko::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer){
+            auto adapterPointer = std::dynamic_pointer_cast<Mitsoko::AdapterBase>(pointer);
+            auto adapterId = Mitsoko::TableListAdapter::registerAdapter(this->handle, adapterPointer);
+            auto sharedAdapterClass = NS::getClass("ViperTableViewAdapter");
+            auto sharedAdapter = NS::Object::sendMessage<Handle>(sharedAdapterClass,"shared");
             this->sendMessage<void>("setDataSource:", sharedAdapter);
             this->sendMessage<void>("setDelegate:", sharedAdapter);
             return adapterId;

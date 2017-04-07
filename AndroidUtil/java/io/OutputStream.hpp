@@ -2,7 +2,7 @@
 #ifndef __VIPER__ANDROID_UTIL__JAVA__IO__OUTPUT_STREAM__
 #define __VIPER__ANDROID_UTIL__JAVA__IO__OUTPUT_STREAM__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace java {
     

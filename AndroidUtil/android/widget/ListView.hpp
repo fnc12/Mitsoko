@@ -3,14 +3,14 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__WIDGET__LIST_VIEW__
 
 #include "AbsListView.hpp"
-#include "Viper/TableListAdapter.hpp"
+#include "Mitsoko/TableListAdapter.hpp"
 #include "ListAdapter.hpp"
 
 namespace android{
     
     namespace widget{
         
-        struct ListView:public AbsListView{
+        struct ListView : public AbsListView {
             
             using AbsListView::AbsListView;
             

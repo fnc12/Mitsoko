@@ -13,17 +13,17 @@
 using namespace java::lang;
 using namespace android::os;
 
-Viper::Dispatch::Callbacks Viper::Dispatch::callbacks;
+Mitsoko::Dispatch::Callbacks Mitsoko::Dispatch::callbacks;
 
-std::mutex Viper::Dispatch::callbacksMutex;
+std::mutex Mitsoko::Dispatch::callbacksMutex;
 
-std::mutex Viper::Dispatch::mainThreadHandlersMutex;
+std::mutex Mitsoko::Dispatch::mainThreadHandlersMutex;
 
-int Viper::Dispatch::callbackId=0;
+int Mitsoko::Dispatch::callbackId=0;
 
-Handler Viper::Dispatch::mainThreadHandler;
+Handler Mitsoko::Dispatch::mainThreadHandler;
 
-void Viper::Dispatch::postCallback(int callbackId,bool isMainThread){
+void Mitsoko::Dispatch::postCallback(int callbackId,bool isMainThread){
     std::function<void()> f;
     
     callbacksMutex.lock();
@@ -41,7 +41,7 @@ void Viper::Dispatch::postCallback(int callbackId,bool isMainThread){
     }
 }
 
-void Viper::Dispatch::initMainThreadHandler(){
+void Mitsoko::Dispatch::initMainThreadHandler(){
     if(auto handler=Handler::create()){
         auto globalHandler=java::lang::JNI::Env()->NewGlobalRef((jobject)handler.handle);
         mainThreadHandler=globalHandler;
@@ -51,7 +51,7 @@ void Viper::Dispatch::initMainThreadHandler(){
 }
 #endif
 
-void Viper::Dispatch::onBackground(std::function<void()> functionPointer){
+void Mitsoko::Dispatch::onBackground(std::function<void()> functionPointer){
 #ifdef __APPLE__
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         functionPointer();
@@ -74,7 +74,7 @@ void Viper::Dispatch::onBackground(std::function<void()> functionPointer){
 #endif
 }
 
-void Viper::Dispatch::onMainThread(std::function<void()> functionPointer){
+void Mitsoko::Dispatch::onMainThread(std::function<void()> functionPointer){
 #ifdef __APPLE__
     dispatch_async(dispatch_get_main_queue(), ^{
         functionPointer();
@@ -98,12 +98,12 @@ void Viper::Dispatch::onMainThread(std::function<void()> functionPointer){
 #endif
 }
 
-void Viper::operator--(std::function<void()> f){
-    Viper::Dispatch::onMainThread(f);
+void Mitsoko::operator--(std::function<void()> f){
+    Mitsoko::Dispatch::onMainThread(f);
 }
 
-void Viper::operator++(std::function<void()> f){
-    Viper::Dispatch::onBackground(f);
+void Mitsoko::operator++(std::function<void()> f){
+    Mitsoko::Dispatch::onBackground(f);
 }
 
 

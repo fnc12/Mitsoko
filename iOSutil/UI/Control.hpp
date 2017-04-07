@@ -3,8 +3,9 @@
 #define __VIPER__IOS_UTIL__UI__CONTROL__
 
 #include "View.hpp"
-#include "Viper/Util.hpp"
-#include "Viper/Disposable.hpp"
+#include "Mitsoko/Util.hpp"
+#include "Mitsoko/Disposable.hpp"
+
 #include <functional>
 #include <map>
 
@@ -16,7 +17,7 @@ namespace UI {
 
 #ifdef __APPLE__
         
-        enum class State:UIControlState{
+        enum class State : UIControlState {
             Normal = UIControlStateNormal,
             Highlighted = UIControlStateHighlighted,
             Disabled = UIControlStateDisabled,
@@ -38,9 +39,9 @@ namespace UI {
         
         bool isSelected();
         
-        void setOnValueChanged(Callback cb, Viper::Disposable &target);
+        void setOnValueChanged(Callback cb, Mitsoko::Disposable &target);
         
-        void setOnTouchUpInside(Callback cb, Viper::Disposable *target);
+        void setOnTouchUpInside(Callback cb, Mitsoko::Disposable *target);
         
         struct Events{
             struct TouchDown{};

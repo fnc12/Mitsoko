@@ -8,14 +8,14 @@
 
 #include "ViperGod.hpp"
 
-Viper::God Viper::God::shared;
+Mitsoko::God Mitsoko::God::shared;
 
 using std::cout;
 using std::endl;
 
-using Viper::PresenterBase;
+using Mitsoko::PresenterBase;
 
-Viper::God::ViewId Viper::God::createView(const std::string &viewName,const void *handle){
+Mitsoko::God::ViewId Mitsoko::God::createView(const std::string &viewName,const void *handle){
     std::vector<std::shared_ptr<Disposable>> disposablesVector;
     auto presenterPointer = this->_createView<R::ModulesTuple>(viewName,handle,disposablesVector);
     if(presenterPointer){
@@ -31,14 +31,14 @@ Viper::God::ViewId Viper::God::createView(const std::string &viewName,const void
 }
 
 template<>
-std::shared_ptr<PresenterBase> Viper::God::_createView<std::tuple<>>(const std::string &viewName,
+std::shared_ptr<PresenterBase> Mitsoko::God::_createView<std::tuple<>>(const std::string &viewName,
                                                                        const void *handle,
                                                                        std::vector<std::shared_ptr<Disposable>> &disposables)
 {
     return nullptr;
 }
 
-void Viper::God::viewWillAppear(ViewId viewId){
+void Mitsoko::God::viewWillAppear(ViewId viewId){
     auto it=this->presenters.find(viewId);
     if(it != this->presenters.end()){
         auto presenterPointer = it->second;
@@ -52,7 +52,7 @@ void Viper::God::viewWillAppear(ViewId viewId){
     }
 }
 
-void Viper::God::viewDidAppear(ViewId viewId){
+void Mitsoko::God::viewDidAppear(ViewId viewId){
     auto it=this->presenters.find(viewId);
     if(it != this->presenters.end()){
 //        auto viewBasePointer = it->second;
@@ -64,7 +64,7 @@ void Viper::God::viewDidAppear(ViewId viewId){
     }
 }
 
-void Viper::God::viewWillDisappear(ViewId viewId){
+void Mitsoko::God::viewWillDisappear(ViewId viewId){
     auto it=this->presenters.find(viewId);
     if(it != this->presenters.end()){
 //        auto viewBasePointer = it->second;
@@ -76,7 +76,7 @@ void Viper::God::viewWillDisappear(ViewId viewId){
     }
 }
 
-const void* Viper::God::destroyView(ViewId viewId){
+const void* Mitsoko::God::destroyView(ViewId viewId){
     const void *res = nullptr;
     const auto it = this->presenters.find(viewId);
     if(it != this->presenters.end()){
@@ -95,7 +95,7 @@ const void* Viper::God::destroyView(ViewId viewId){
     return res;
 }
 
-void Viper::God::sendMessageToView(ViewId viewId,int messageCode,std::string argumentsString){
+void Mitsoko::God::sendMessageToView(ViewId viewId,int messageCode,std::string argumentsString){
 //    cout << "argumentsString = " << argumentsString << endl;
 /*#ifdef __ANDROID__
     LOGI("%s", argumentsString.c_str());
@@ -110,7 +110,7 @@ void Viper::God::sendMessageToView(ViewId viewId,int messageCode,std::string arg
 }
 
 #ifdef __ANDROID__
-void Viper::God::onActivityResult(ViewId viewId,int requestCode,int resultCode,jobject data){
+void Mitsoko::God::onActivityResult(ViewId viewId,int requestCode,int resultCode,jobject data){
     const auto it=this->presenters.find(viewId);
     if(it != this->presenters.end()){
         it->second->getViewBase()->onActivityResult(requestCode,resultCode,data);

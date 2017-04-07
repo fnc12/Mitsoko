@@ -3,12 +3,13 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__APP__ALERT_DIALOG__
 
 #include "Dialog.hpp"
-#include "Viper/AndroidUtil/android/content/Context.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/android/content/Context.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/android/content/DialogInterface.hpp"
+#include "Mitsoko/AndroidUtil/android/view/View.hpp"
+
 #include <functional>
 #include <map>
-#include "Viper/AndroidUtil/android/content/DialogInterface.hpp"
-#include "Viper/AndroidUtil/android/view/View.hpp"
 
 namespace android{
     

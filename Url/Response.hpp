@@ -12,12 +12,12 @@
 #include <string>
 
 #ifdef __APPLE__
-#include "Viper/iOSutil/NS/HTTPURLResponse.hpp"
+#include "Mitsoko/iOSutil/NS/HTTPURLResponse.hpp"
 #else
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 #endif  //__APPLE__
 
-namespace Viper {
+namespace Mitsoko {
     
     namespace Url {
         

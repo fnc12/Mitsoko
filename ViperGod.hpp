@@ -22,34 +22,7 @@
 #include "View.hpp"
 #include "Dispatch.hpp"
 
-namespace Viper{
-    
-    /*template<class Arg,class W,class P>
-    struct PresenterIniter{
-        void init(std::shared_ptr<P> presenterPointer) const{
-            if(W::staticArgument()){
-                presenterPointer->init(std::move(*W::staticArgument()));
-                W::staticArgument() = {};
-            }
-        }
-    };
-    
-    template<class W,class P>
-    struct PresenterIniter<void,W,P>{
-        void init(std::shared_ptr<P> presenterPointer) const{
-            presenterPointer->init();
-        }
-    };*/
-    
-    /*template<class A, class P>
-    std::true_type is_base_of_argumentable_impl(Viper::Argumentable<A, P> *);
-    
-    std::false_type is_base_of_argumentable_impl(...);
-    
-    template<class T>
-    constexpr bool is_base_of_argumentable(T &t) {
-        return decltype(is_base_of_argumentable_impl(&t))::value;
-    }*/
+namespace Mitsoko{
     
     template <template <typename...> class C, typename...Ts>
     std::true_type is_base_of_template_impl(const C<Ts...>*);
@@ -64,9 +37,8 @@ namespace Viper{
     struct PresenterIniter;
     
     template<class T>
-    struct PresenterIniter<T, typename std::enable_if<is_base_of_template<T, Viper::Argumentable>::value>::type> {
+    struct PresenterIniter<T, typename std::enable_if<is_base_of_template<T, Mitsoko::Argumentable>::value>::type> {
         void operator()(T &t) const {
-//            cout << "PresenterIniter " << typeid(T).name() << ", staticArgument = " << bool(T::staticArgument()) << endl;
             if(T::staticArgument()){
                 t.init(std::move(*T::staticArgument()));
                 T::staticArgument() = {};
@@ -75,9 +47,8 @@ namespace Viper{
     };
     
     template<class T>
-    struct PresenterIniter<T, typename std::enable_if<!is_base_of_template<T, Viper::Argumentable>::value>::type> {
+    struct PresenterIniter<T, typename std::enable_if<!is_base_of_template<T, Mitsoko::Argumentable>::value>::type> {
         void operator()(T &t) const {
-//            cout << "PresenterIniter " << typeid(T).name() << endl;
             t.init();
         }
     };

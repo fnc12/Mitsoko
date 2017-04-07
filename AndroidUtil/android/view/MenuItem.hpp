@@ -2,13 +2,13 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__VIEW__MENU_ITEM__
 #define __VIPER__ANDROID_UTIL__ANDROID__VIEW__MENU_ITEM__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace android{
     
     namespace view{
         
-        struct MenuItem:public java::lang::Object{
+        struct MenuItem : public java::lang::Object {
             
             using Object::Object;
             

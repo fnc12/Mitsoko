@@ -2,7 +2,7 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__OS__BASE_BUNDLE__
 #define __VIPER__ANDROID_UTIL__ANDROID__OS__BASE_BUNDLE__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace android{
     

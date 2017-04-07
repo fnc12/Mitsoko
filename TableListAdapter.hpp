@@ -20,11 +20,11 @@
 #include <stdexcept>
 #include "Disposable.hpp"
 
-namespace Viper {
+namespace Mitsoko {
 //    using std::cout;
 //    using std::endl;
     
-    struct DataSourceBase{
+    struct DataSourceBase {
         std::function<int()> getSectionsCountLambda;
         
         virtual int getSectionsCount();
@@ -48,7 +48,7 @@ namespace Viper {
      *  a *std::tuple* (or any other POD data type) or even data model itself (this is a non-viper way).
      */
     template<class T>
-    struct DataSource:public DataSourceBase{
+    struct DataSource : public DataSourceBase {
         typedef T data_type;
         typedef DataSource<T> Super;
         
@@ -68,7 +68,7 @@ namespace Viper {
      *  instances of this class.
      *  Disposable is inherited for image caching callbacks.
      */
-    struct AdapterBase:public Viper::Disposable{
+    struct AdapterBase : public Mitsoko::Disposable{
         
         /**
          *  UITableViewCellStyle mirror enum. Used in iOS only.
@@ -112,7 +112,7 @@ namespace Viper {
          *  Context is required almost everywhere. This is why it is very important to store a
          *  pointer to it inside adapter. This value must be assigned manually.
          */
-        const void *activityHandle=nullptr;
+        const void *activityHandle = nullptr;
 #endif
         
         virtual void onRowSelected(int section,int row);
@@ -158,7 +158,7 @@ namespace Viper {
      *  appropriate lambdas to it.
      */
     template<class T>
-    struct Adapter:public AdapterBase{
+    struct Adapter : public AdapterBase{
         typedef T data_type;
         typedef DataSource<data_type> data_source_type;
         

@@ -20,4 +20,12 @@ UI::KeyboardType UI::TextInputTraits::keyboardType(){
     return KeyboardType(this->sendMessage<UIKeyboardType>("keyboardType"));
 }
 
+void UI::TextInputTraits::setSecureTextEntry(bool value) {
+    this->sendMessage<void>("setSecureTextEntry:", BOOL(value));
+}
+
+bool UI::TextInputTraits::isSecureTextEntry() {
+    return this->sendMessage<BOOL>("isSecureTextEntry");
+}
+
 #endif  //__APPLE__

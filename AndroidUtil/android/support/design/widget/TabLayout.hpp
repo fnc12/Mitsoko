@@ -2,8 +2,8 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__DESIGN__WIDGET__TAB_LAYOUT__
 #define __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__DESIGN__WIDGET__TAB_LAYOUT__
 
-#include "Viper/AndroidUtil/android/widget/HorizontalScrollView.hpp"
-#include "Viper/AndroidUtil/java/lang/CharSequence.hpp"
+#include "Mitsoko/AndroidUtil/android/widget/HorizontalScrollView.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/CharSequence.hpp"
 
 namespace android {
     
@@ -13,7 +13,7 @@ namespace android {
             
             namespace widget{
                 
-                struct TabLayout:public android::widget::HorizontalScrollView{
+                struct TabLayout : public android::widget::HorizontalScrollView {
                     
                     using HorizontalScrollView::HorizontalScrollView;
 #ifdef __ANDROID__

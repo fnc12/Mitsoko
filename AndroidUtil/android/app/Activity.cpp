@@ -7,7 +7,7 @@
 //
 
 #include "Activity.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 #ifdef __ANDROID__
 
@@ -27,7 +27,7 @@ int android::app::Activity::RESULT_CANCELED(){
 }
 
 int android::app::Activity::RESULT_OK(){
-    if(java::lang::Class cls=java::lang::Class::find<Activity>()){
+    if(java::lang::Class cls = java::lang::Class::find<Activity>()){
         return cls.getStaticField<int>("RESULT_OK");
     }else{
         return -1;

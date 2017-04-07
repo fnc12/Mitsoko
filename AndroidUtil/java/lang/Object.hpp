@@ -4,7 +4,8 @@
 
 #include "JNI.hpp"
 #include "JavaRuntime.hpp"
-#include "Viper/Util.hpp"
+#include "Mitsoko/Util.hpp"
+
 #include <type_traits>
 #include <iostream>
 

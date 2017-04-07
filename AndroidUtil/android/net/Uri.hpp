@@ -2,13 +2,13 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__NET__URI__
 #define __VIPER__ANDROID_UTIL__ANDROID__NET__URI__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace android {
     
     namespace net{
         
-        struct Uri:public java::lang::Object{
+        struct Uri : public java::lang::Object {
             
             using Object::Object;
             

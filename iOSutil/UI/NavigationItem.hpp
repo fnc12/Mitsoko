@@ -2,11 +2,13 @@
 #ifndef __VIPER__IOS_UTIL__UI__NAVIGATION_ITEM__
 #define __VIPER__IOS_UTIL__UI__NAVIGATION_ITEM__
 
-#include "Viper/iOSutil/NS/Object.hpp"
+#include "Mitsoko/iOSutil/NS/Object.hpp"
 #include "BarButtonItem.hpp"
 
 namespace UI {
-    struct NavigationItem:public NS::Object{
+    
+    struct NavigationItem : public NS::Object {
+        
         using Object::Object;
         
 #ifdef __APPLE__

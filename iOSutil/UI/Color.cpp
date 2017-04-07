@@ -10,6 +10,12 @@
 
 #ifdef __APPLE__
 
-const std::string UI::Color::className="UIColor";
+const std::string UI::Color::className = "UIColor";
+
+UI::Color UI::Color::colorWithRedGreenBlueAlpha(CG::Float red, CG::Float green, CG::Float blue, CG::Float alpha) {
+    auto cls = NS::getClass(className);
+    assert(cls);
+    return sendMessage<Handle>(cls, "colorWithRed:green:blue:alpha:", red, green, blue, alpha);
+}
 
 #endif  //__APPLE__

@@ -3,9 +3,9 @@
 #define __VIPER__IOS_UTIL__UI__IMAGE__
 
 #include "View.hpp"
-#include "Viper/iOSutil/NS/Data.hpp"
-#include "Viper/iOSutil/CG/Size.hpp"
-#include "Viper/iOSutil/CG/Image.hpp"
+#include "Mitsoko/iOSutil/NS/Data.hpp"
+#include "Mitsoko/iOSutil/CG/Size.hpp"
+#include "Mitsoko/iOSutil/CG/Image.hpp"
 
 namespace UI {
     

@@ -4,18 +4,21 @@
 
 #ifdef __APPLE__
 #import <MapKit/MapKit.h>
-#include "Viper/iOSutil/CL/Location.hpp"
+
+#include "Mitsoko/iOSutil/CL/Location.hpp"
 
 namespace MK {
     namespace Coordinate{
         
-        struct Span:public MKCoordinateSpan{
+        struct Span : public MKCoordinateSpan {
+            
             Span(MKCoordinateSpan s);
             
             static MK::Coordinate::Span make(CL::Location::Degrees latitudeDelta,CL::Location::Degrees longitudeDelta);
         };
         
-        struct Region:public MKCoordinateRegion{
+        struct Region : public MKCoordinateRegion {
+            
             Region(MKCoordinateRegion r);
             
             static MK::Coordinate::Region make(CL::Location::Coordinate2D centerCoordinate, MK::Coordinate::Span span);

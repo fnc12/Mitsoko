@@ -2,7 +2,8 @@
 #ifndef __VIPER__ANDROID_UTIL__JAVA__UTIL__MAP__
 #define __VIPER__ANDROID_UTIL__JAVA__UTIL__MAP__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+
 #include <type_traits>
 
 namespace java {
@@ -11,7 +12,7 @@ namespace java {
         
         template<class K,class V>
         
-        struct Map:public java::lang::Object{
+        struct Map : public java::lang::Object {
             
             using Object::Object;
             
@@ -20,8 +21,8 @@ namespace java {
 //            const std::string signature;
             STATIC_VAR(const std::string, signature, "java/util/Map");
             
-            static_assert(std::is_base_of<java::lang::Object,K>::value,"K must derive java::lang::Object");
-            static_assert(std::is_base_of<java::lang::Object,V>::value,"V must derive java::lang::Object");
+            static_assert(std::is_base_of<java::lang::Object,K>::value, "K must derive java::lang::Object");
+            static_assert(std::is_base_of<java::lang::Object,V>::value, "V must derive java::lang::Object");
             
             void clear();
             

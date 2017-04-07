@@ -2,14 +2,14 @@
 #ifndef __VIPER__ANDROID_UTIL__JAVA__UTIL__LOCALE__
 #define __VIPER__ANDROID_UTIL__JAVA__UTIL__LOCALE__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
 namespace java{
     
     namespace util{
         
-        struct Locale final : public java::lang::Object{
+        struct Locale final : public java::lang::Object {
             
             using Object::Object;
             

@@ -3,13 +3,14 @@
 #define __VIPER__IOS_UTIL__UI__ACTION_SHEET__
 
 #include "View.hpp"
-#include "Viper/iOSutil/NS/String.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
+#include "Mitsoko/iOSutil/NS/String.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
+
 #include <map>
 
 namespace UI {
     
-    struct ActionSheet:public UI::View{
+    struct ActionSheet : public UI::View {
         
         using View::View;
         
@@ -45,7 +46,7 @@ namespace UI {
         
         int addButtonWithTitle(const std::string &t);
         
-        int addButtonWithTitle(const CF::String &t);
+//        int addButtonWithTitle(const CF::String &t);
         
         void setTitle(const std::string &newValue);
         

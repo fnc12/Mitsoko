@@ -2,10 +2,11 @@
 #ifndef __VIPER__IOS_UTIL__UI__BAR_BUTTON_ITEM__
 #define __VIPER__IOS_UTIL__UI__BAR_BUTTON_ITEM__
 
-#include "Viper/iOSutil/NS/Object.hpp"
-#include "Viper/Disposable.hpp"
+#include "Mitsoko/iOSutil/NS/Object.hpp"
+#include "Mitsoko/Disposable.hpp"
 #include "Image.hpp"
 #include "BarItem.hpp"
+
 #include <functional>
 #include <map>
 
@@ -60,16 +61,16 @@ namespace UI {
         static UI::BarButtonItem create(const UI::Image &image,
                                         Style style,
                                         Touched f,
-                                        const Viper::Disposable *disposable);
+                                        const Mitsoko::Disposable *disposable);
         
         static UI::BarButtonItem create(const std::string &title,
                                         Style style,
                                         Touched f,
-                                        const Viper::Disposable *disposable);
+                                        const Mitsoko::Disposable *disposable);
         
         static UI::BarButtonItem create(BarButtonSystemItem systemItem,
                                         Touched f,
-                                        const Viper::Disposable *disposable);
+                                        const Mitsoko::Disposable *disposable);
         
         static void touched(Handle handle);
         
@@ -78,12 +79,12 @@ namespace UI {
         typedef std::map<Handle, Touched> TouchedMap;
         static TouchedMap touchedMap;
         
-        typedef std::map<Viper::Disposable::Id, Handle> DisposablesMap;
+        typedef std::map<Mitsoko::Disposable::Id, Handle> DisposablesMap;
         static DisposablesMap disposablesMap;
         
-        struct Observer : public Viper::Disposable::Observer {
+        struct Observer : public Mitsoko::Disposable::Observer {
             
-            virtual void disposableDidDispose(Viper::Disposable::Id id) override;
+            virtual void disposableDidDispose(Mitsoko::Disposable::Id id) override;
         };
         
         static Observer observer;

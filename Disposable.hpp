@@ -14,9 +14,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace Viper{
-//    using std::cout;
-//    using std::endl;
+namespace Mitsoko{
     
     struct Disposable{
         
@@ -45,17 +43,8 @@ namespace Viper{
     protected:
         
         static std::mutex observersMutex;
-        /*static std::mutex& observersMutex(){
-            static std::mutex res;
-            return res;
-        }*/
         
         static std::vector<Observer*> observers;
-        
-        /*static std::vector<Observer*>& observers(){
-            static std::vector<Observer*> res;
-            return res;
-        }*/
         
         static Id generateId();
     };

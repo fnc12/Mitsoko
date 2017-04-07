@@ -15,7 +15,7 @@
 
 #define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Viper::WireframeBase,Selfish<Wireframe>
 
-namespace Viper{
+namespace Mitsoko{
     
     namespace tuple_helper {
         

@@ -2,13 +2,13 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__WIDGET__ADAPTER_VIEW__
 #define __VIPER__ANDROID_UTIL__ANDROID__WIDGET__ADAPTER_VIEW__
 
-#include "Viper/AndroidUtil/android/view/ViewGroup.hpp"
+#include "Mitsoko/AndroidUtil/android/view/ViewGroup.hpp"
 
 namespace android{
     
     namespace widget{
         
-        struct AdapterView:public view::ViewGroup{
+        struct AdapterView : public view::ViewGroup {
             
             using ViewGroup::ViewGroup;
             

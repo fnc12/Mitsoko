@@ -2,7 +2,7 @@
 #ifndef __VIPER__ANDROID_UTIL__JAVA__UTIL__DATE__
 #define __VIPER__ANDROID_UTIL__JAVA__UTIL__DATE__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 
 namespace java{
     

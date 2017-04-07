@@ -2,14 +2,17 @@
 #ifndef __VIPER__IOS_UTIL__UI__COLOR__
 #define __VIPER__IOS_UTIL__UI__COLOR__
 
-#include "Viper/iOSutil/NS/Object.hpp"
+#include "Mitsoko/iOSutil/NS/Object.hpp"
+#include "Mitsoko/iOSutil/CG/CG.hpp"
 
 namespace UI {
-    struct Color:public NS::Object{
+    
+    struct Color : public NS::Object {
         using Object::Object;
 #ifdef __APPLE__
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UIColor");
+        
+        static UI::Color colorWithRedGreenBlueAlpha(CG::Float red, CG::Float green, CG::Float blue, CG::Float alpha);
         
 #define COLOR_UI_STATIC_FUNC(name) static UI::Color name(){\
     auto cls=NS::getClass(className);\

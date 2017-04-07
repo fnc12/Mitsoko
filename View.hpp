@@ -34,7 +34,7 @@
 #define FIELD_DECL(type,name) type name(){return java::lang::Object(this->handle).getField<type>(#name);}
 #endif
 
-namespace Viper{
+namespace Mitsoko{
     
     struct ViewBase{
         
@@ -71,39 +71,16 @@ namespace Viper{
     };
     
     //  base class for view..
-//    template<class EH,class UI>
-    struct View:public ViewBase,public Disposable/*,public UI*/{
-//        std::shared_ptr<EH> eventHandler;
-        
-//        using ViewBase::ViewBase;
+    struct View : public ViewBase, public Mitsoko::Disposable {
         
         std::function<void(const std::string&)> errorHappened;
         
         virtual void init(){}
         
-        /*virtual void willAppear() override{
-            this->eventHandler->viewWillAppear();
-        }*/
-        
-        /*virtual void didAppear() override{
-            this->eventHandler->viewDidAppear();
-        }*/
-        
-        /*virtual void willDisappear() override{
-            this->eventHandler->viewWillDisappear();
-        }*/
-        
-        /*template<class T>
-        void setEventHandler(std::shared_ptr<T> ptr){
-            this->eventHandler=std::dynamic_pointer_cast<EH>(ptr);
-        }*/
-        
         virtual void dispose() override{
-            this->Disposable::dispose();
-//            this->eventHandler=nullptr;
+            this->Mitsoko::Disposable::dispose();
         }
-    protected:
-//        typedef View<EH,UI> V;
+//    protected:
     };
 }
 

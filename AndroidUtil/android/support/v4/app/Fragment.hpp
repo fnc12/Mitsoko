@@ -2,9 +2,9 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__V4__APP__FRAGMENT__
 #define __VIPER__ANDROID_UTIL__ANDROID__SUPPORT__V4__APP__FRAGMENT__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
-#include "Viper/AndroidUtil/android/content/Intent.hpp"
-#include "Viper/AndroidUtil/android/support/v4/app/FragmentActivity.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/android/content/Intent.hpp"
+#include "Mitsoko/AndroidUtil/android/support/v4/app/FragmentActivity.hpp"
 
 namespace android{
     
@@ -14,7 +14,7 @@ namespace android{
             
             namespace app{
                 
-                struct Fragment:public java::lang::Object{
+                struct Fragment : public java::lang::Object {
                     
                     using Object::Object;
                     
@@ -25,7 +25,7 @@ namespace android{
                     
                     FragmentActivity getActivity();
                     
-                    void startActivityForResult(const android::content::Intent &intent,int requestCode);
+                    void startActivityForResult(const android::content::Intent &intent, int requestCode);
                     
 #endif  //__ANDROID__
                     

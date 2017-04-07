@@ -8,11 +8,11 @@
 
 #include "Response.hpp"
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
-Viper::Url::Response::Response(decltype(response) response_):response(response_){}
+Mitsoko::Url::Response::Response(decltype(response) response_):response(response_){}
 
-int Viper::Url::Response::statusCode() {
+int Mitsoko::Url::Response::statusCode() {
     
 #ifdef __APPLE__
     return response.statusCode();
@@ -22,7 +22,7 @@ int Viper::Url::Response::statusCode() {
     
 }
 
-std::string Viper::Url::Response::statusDescription() {
+std::string Mitsoko::Url::Response::statusDescription() {
     
 #ifdef __APPLE__
     if(auto res = NS::HTTPURLResponse::localizedStringForStatusCode(this->statusCode())){
@@ -40,6 +40,6 @@ std::string Viper::Url::Response::statusDescription() {
     
 }
 
-Viper::Url::Response::operator bool() const {
+Mitsoko::Url::Response::operator bool() const {
     return bool(response);
 }

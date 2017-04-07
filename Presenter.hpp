@@ -20,7 +20,7 @@
 
 #define PRESENTER_DECL(module) struct Presenter:public Viper::Presenter<module::UserInterface, module::EventHandler, module::Input, module::Output, module::Wireframe, module::Wireframe::argument_type>,Selfish<Presenter>
 
-namespace Viper{
+namespace Mitsoko{
     
 //    template<class UI, class EH>
 //    template<class V>

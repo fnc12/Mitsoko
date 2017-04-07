@@ -3,8 +3,8 @@
 #define __VIPER__IOS_UTIL__UI__VIEW__
 
 #include "Responder.hpp"
-#include "Viper/iOSutil/CG/AffineTransform.hpp"
-#include "Viper/iOSutil/CG/Rect.hpp"
+#include "Mitsoko/iOSutil/CG/AffineTransform.hpp"
+#include "Mitsoko/iOSutil/CG/Rect.hpp"
 #include "Color.hpp"
 
 namespace UI {
@@ -58,6 +58,8 @@ namespace UI {
         void setTag(int value);
         
         int tag();
+        
+        void layoutSubviews();
 #endif
     };
 }

@@ -38,6 +38,7 @@
 #include "NS/NotificationCenter.hpp"
 #include "NS/Object.hpp"
 #include "NS/OperationQueue.hpp"
+#include "NS/PathUtilities.hpp"
 #include "NS/String.hpp"
 #include "NS/TextAttachment.hpp"
 #include "NS/URL.hpp"

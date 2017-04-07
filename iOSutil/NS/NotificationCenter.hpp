@@ -3,13 +3,16 @@
 #define __VIPER__IOS_UTIL__NS__NOTIFICATION_CENTER__
 
 #include "Object.hpp"
-#include <functional>
-#include <map>
-#include "Viper/Disposable.hpp"
+#include "Mitsoko/Disposable.hpp"
 #include "String.hpp"
 
+#include <functional>
+#include <map>
+
 namespace NS {
-    struct NotificationCenter:public NS::Object{
+    
+    struct NotificationCenter : public NS::Object {
+        
         using Object::Object;
         
 #ifdef __APPLE__
@@ -20,7 +23,7 @@ namespace NS {
         static NotificationCenter defaultCenter();
         
         //  todo..
-        void addObserver(const Viper::Disposable &observer,std::function<void()> selector,NS::String name){
+        void addObserver(const Mitsoko::Disposable &observer, std::function<void()> selector,NS::String name){
             
         }
         

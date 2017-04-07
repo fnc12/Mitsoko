@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Viper/Util.hpp"
+#include "Mitsoko/Util.hpp"
 
 #include "java/lang/Array.hpp"
 #include "java/lang/CharSequence.hpp"

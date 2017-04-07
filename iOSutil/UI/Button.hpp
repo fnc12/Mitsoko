@@ -3,11 +3,11 @@
 #define __VIPER__IOS_UTIL__UI__BUTTON__
 
 #include "Control.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
 
 namespace UI {
     
-    struct Button:public UI::Control{
+    struct Button : public UI::Control {
         
         using Control::Control;
         

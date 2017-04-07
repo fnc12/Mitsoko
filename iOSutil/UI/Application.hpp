@@ -2,11 +2,11 @@
 #ifndef __VIPER__IOS_UTIL__UI__APPLICATION__
 #define __VIPER__IOS_UTIL__UI__APPLICATION__
 
-#include "Viper/iOSutil/NS/URL.hpp"
+#include "Mitsoko/iOSutil/NS/URL.hpp"
 
 namespace UI {
     
-    struct Application:public NS::Object{
+    struct Application : public NS::Object {
         
         using Object::Object;
         

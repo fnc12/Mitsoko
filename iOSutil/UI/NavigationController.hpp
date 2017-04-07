@@ -3,14 +3,15 @@
 #define __VIPER__IOS_UTIL__UI__NAVIGATION_CONTROLLER__
 
 #include "ViewController.hpp"
-#include "Viper/iOSutil/NS/Array.hpp"
+#include "Mitsoko/iOSutil/NS/Array.hpp"
 #include "NavigationBar.hpp"
 
 namespace UI {
     struct NavigationController;
     typedef _ViewController<NavigationController> ViewController;
     
-    struct NavigationController:public _ViewController<NavigationController>{
+    struct NavigationController : public _ViewController<NavigationController> {
+        
         using _ViewController::_ViewController;
         
 #ifdef __APPLE__

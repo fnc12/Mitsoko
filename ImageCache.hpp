@@ -10,28 +10,28 @@
 
 #include "sha256.hpp"
 #include "Dispatch.hpp"
-#include "Viper/Image.hpp"
+#include "Mitsoko/Image.hpp"
 
-namespace Viper {
+namespace Mitsoko {
     
     struct ImageCache{
         
         static ImageCache shared;
         
-        struct Callback : Disposable::Observer {
-            typedef std::function<void(Image)> type;
+        struct Callback : Mitsoko::Disposable::Observer {
+            typedef std::function<void(Mitsoko::Image)> type;
             
             type fun;
-            bool shouldFire=true;
-            Disposable::Id disposableId;
+            bool shouldFire = true;
+            Mitsoko::Disposable::Id disposableId;
             
-            Callback(type fun_,const Disposable &disposable);
+            Callback(type fun_,const Mitsoko::Disposable &disposable);
             
             Callback(const Callback &other);
             
-            void operator()(Image image) const;
+            void operator()(Mitsoko::Image image) const;
             
-            virtual void disposableDidDispose(Disposable::Id id) override;
+            virtual void disposableDidDispose(Mitsoko::Disposable::Id id) override;
         };
         
         /**
@@ -42,13 +42,13 @@ namespace Viper {
         /**
          *  Explicitly puts image with a given URL to RAM and FS
          */
-        void put(const std::string &url, Image image);
+        void put(const std::string &url, Mitsoko::Image image);
         
         /**
          *  Returns cached image from RAM or FS or null if one isn't cached.
          *  Doesn't perform request.
          */
-        Viper::Image getCached(const std::string &url, std::string *keyPointer = nullptr, std::string *filepathPointer = nullptr);
+        Mitsoko::Image getCached(const std::string &url, std::string *keyPointer = nullptr, std::string *filepathPointer = nullptr);
         
         std::string keyByUrl(const std::string &url) const;
         
@@ -64,11 +64,11 @@ namespace Viper {
     protected:
         std::map<std::string, std::vector<Callback>> callbacks;
         
-        void putIntoRAM(const std::string &key,Image image);
+        void putIntoRAM(const std::string &key, Mitsoko::Image image);
         
-        Image getImageFromRAM(const std::string &key);
+        Mitsoko::Image getImageFromRAM(const std::string &key);
         
-        Image getImageFromFS(const std::string &filepath);
+        Mitsoko::Image getImageFromFS(const std::string &filepath);
         
 #ifdef __APPLE__
         NS::MutableDictionary _ramCache;

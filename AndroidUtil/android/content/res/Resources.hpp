@@ -2,7 +2,7 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__CONTENT__RES__RESOURCES__
 #define __VIPER__ANDROID_UTIL__ANDROID__CONTENT__RES__RESOURCES__
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 
 namespace android{
     

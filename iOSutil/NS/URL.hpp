@@ -9,12 +9,12 @@
 #ifndef __VIPER__IOS_UTIL__NS__URL__
 #define __VIPER__IOS_UTIL__NS__URL__
 
-#include "Viper/iOSutil/NS/String.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
+#include "Mitsoko/iOSutil/NS/String.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
 
 namespace NS {
     
-    struct URL:public NS::Object{
+    struct URL : public NS::Object {
         
         using Object::Object;
         

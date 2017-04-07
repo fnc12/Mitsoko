@@ -9,9 +9,9 @@
 #include "TableListAdapter.hpp"
 #include <iostream>
 
-Viper::TableListAdapter::AdaptersMap Viper::TableListAdapter::adaptersMap;
+Mitsoko::TableListAdapter::AdaptersMap Mitsoko::TableListAdapter::adaptersMap;
 
-int Viper::DataSourceBase::getSectionsCount(){
+int Mitsoko::DataSourceBase::getSectionsCount(){
     if(this->getSectionsCountLambda){
         return getSectionsCountLambda();
     }else{
@@ -19,7 +19,7 @@ int Viper::DataSourceBase::getSectionsCount(){
     }
 }
 
-int Viper::DataSourceBase::getRowsCount(int section){
+int Mitsoko::DataSourceBase::getRowsCount(int section){
     if(this->getRowsCountLambda){
         return this->getRowsCountLambda(section);
     }else{
@@ -27,7 +27,7 @@ int Viper::DataSourceBase::getRowsCount(int section){
     }
 }
 
-std::string Viper::DataSourceBase::getItemId(int section,int row){
+std::string Mitsoko::DataSourceBase::getItemId(int section,int row){
     if(this->getItemIdLambda){
         return this->getItemIdLambda(section,row);
     }else{
@@ -35,17 +35,17 @@ std::string Viper::DataSourceBase::getItemId(int section,int row){
     }
 }
 
-Viper::AdapterBase::~AdapterBase(){
+Mitsoko::AdapterBase::~AdapterBase(){
     this->dispose();
 }
 
-void Viper::AdapterBase::onRowSelected(int section,int row){
+void Mitsoko::AdapterBase::onRowSelected(int section,int row){
     if(this->rowSelectedLambda){
         this->rowSelectedLambda(section,row);
     }
 }
 
-std::string Viper::AdapterBase::getHeaderClass(int section){
+std::string Mitsoko::AdapterBase::getHeaderClass(int section){
     if(this->getHeaderClassLambda){
         return this->getHeaderClassLambda(section);
     }else{
@@ -53,7 +53,7 @@ std::string Viper::AdapterBase::getHeaderClass(int section){
     }
 }
 
-double Viper::AdapterBase::getHeaderHeight(int section){
+double Mitsoko::AdapterBase::getHeaderHeight(int section){
     if(this->getHeaderHeightLambda){
         return this->getHeaderHeightLambda(section);
     }else{
@@ -61,14 +61,15 @@ double Viper::AdapterBase::getHeaderHeight(int section){
     }
 }
 
-void Viper::AdapterBase::onCreateHeader(const void *headerHandle,int section){
+void Mitsoko::AdapterBase::onCreateHeader(const void *headerHandle,int section){
     if(this->onCreateHeaderLambda){
         this->onCreateHeaderLambda(headerHandle,section);
     }
 }
-Viper::TableListAdapter::AdapterId Viper::TableListAdapter::registerAdapter(const void *tableOrListView,
-                                                                            AdapterBasePointer adapter,
-                                                                            const void *jni)
+
+Mitsoko::TableListAdapter::AdapterId Mitsoko::TableListAdapter::registerAdapter(const void *tableOrListView,
+                                                                                AdapterBasePointer adapter,
+                                                                                const void *jni)
 {
     auto it=adaptersMap.end();
     it=adaptersMap.find(tableOrListView);
@@ -88,7 +89,7 @@ Viper::TableListAdapter::AdapterId Viper::TableListAdapter::registerAdapter(cons
     return tableOrListView;
 }
 
-void Viper::TableListAdapter::didEndDisplayingCell(const void *tableOrListView, const void *cell, int section, int row, const void *jni){
+void Mitsoko::TableListAdapter::didEndDisplayingCell(const void *tableOrListView, const void *cell, int section, int row, const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -103,7 +104,7 @@ void Viper::TableListAdapter::didEndDisplayingCell(const void *tableOrListView, 
     }
 }
 
-void Viper::TableListAdapter::willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni){
+void Mitsoko::TableListAdapter::willDisplayCell(const void *tableOrListView,const void *cell,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -118,7 +119,7 @@ void Viper::TableListAdapter::willDisplayCell(const void *tableOrListView,const 
     }
 }
 
-void Viper::TableListAdapter::didSelectRow(const void *tableOrListView,int section,int row,const void *jni){
+void Mitsoko::TableListAdapter::didSelectRow(const void *tableOrListView,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -133,7 +134,7 @@ void Viper::TableListAdapter::didSelectRow(const void *tableOrListView,int secti
     }
 }
 
-double Viper::TableListAdapter::rowHeight(const void *tableOrListView,int section,int row){
+double Mitsoko::TableListAdapter::rowHeight(const void *tableOrListView,int section,int row){
     auto it=adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
         return it->second->getRowHeight(section, row);
@@ -142,7 +143,7 @@ double Viper::TableListAdapter::rowHeight(const void *tableOrListView,int sectio
     }
 }
 
-void Viper::TableListAdapter::cellCreated(const void *tableOrListView,const void *cell,int section,int row,const void *jni){
+void Mitsoko::TableListAdapter::cellCreated(const void *tableOrListView,const void *cell,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -157,7 +158,7 @@ void Viper::TableListAdapter::cellCreated(const void *tableOrListView,const void
     }
 }
 
-Viper::AdapterBase::RowStyle Viper::TableListAdapter::cellStyle(const void *tableOrListView,int section,int row){
+Mitsoko::AdapterBase::RowStyle Mitsoko::TableListAdapter::cellStyle(const void *tableOrListView,int section,int row){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -171,7 +172,7 @@ Viper::AdapterBase::RowStyle Viper::TableListAdapter::cellStyle(const void *tabl
     }
 }
 
-void Viper::TableListAdapter::headerCreated(const void *tableOrListView,const void *header,int section,const void *jni){
+void Mitsoko::TableListAdapter::headerCreated(const void *tableOrListView,const void *header,int section,const void *jni){
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -181,7 +182,7 @@ void Viper::TableListAdapter::headerCreated(const void *tableOrListView,const vo
     }
 }
 
-double Viper::TableListAdapter::headerHeight(const void *tableOrListView,int section,const void *jni){
+double Mitsoko::TableListAdapter::headerHeight(const void *tableOrListView,int section,const void *jni){
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -191,7 +192,7 @@ double Viper::TableListAdapter::headerHeight(const void *tableOrListView,int sec
     }
 }
 
-std::string Viper::TableListAdapter::headerViewClassName(const void *tableOrListView,int section,const void *jni){
+std::string Mitsoko::TableListAdapter::headerViewClassName(const void *tableOrListView,int section,const void *jni){
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -201,7 +202,7 @@ std::string Viper::TableListAdapter::headerViewClassName(const void *tableOrList
     }
 }
 
-std::string Viper::TableListAdapter::cellClassName(const void *tableOrListView,int section,int row,const void *jni){
+std::string Mitsoko::TableListAdapter::cellClassName(const void *tableOrListView,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -216,7 +217,7 @@ std::string Viper::TableListAdapter::cellClassName(const void *tableOrListView,i
     }
 }
 
-std::string Viper::TableListAdapter::rowId(const void *tableOrListView,int section,int row,const void *jni){
+std::string Mitsoko::TableListAdapter::rowId(const void *tableOrListView,int section,int row,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -231,7 +232,7 @@ std::string Viper::TableListAdapter::rowId(const void *tableOrListView,int secti
     }
 }
 
-int Viper::TableListAdapter::rowsCount(const void *tableOrListView,int section,const void *jni){
+int Mitsoko::TableListAdapter::rowsCount(const void *tableOrListView,int section,const void *jni){
     auto it=adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
@@ -246,7 +247,7 @@ int Viper::TableListAdapter::rowsCount(const void *tableOrListView,int section,c
     }
 }
 
-int Viper::TableListAdapter::sectionsCount(const void *tableOrListView,const void *jni){
+int Mitsoko::TableListAdapter::sectionsCount(const void *tableOrListView,const void *jni){
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){

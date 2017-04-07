@@ -56,13 +56,14 @@ std::string UI::AlertView::message(){
 }
 
 int UI::AlertView::addButtonWithTitle(const std::string &title){
-    auto t=CF::String::create(title);
-    return this->addButtonWithTitle(t);
+    auto t = CF::String::create(title);
+//    return this->addButtonWithTitle(t);
+    return int(this->sendMessage<NSInteger>("addButtonWithTitle:", t.handle));
 }
 
-int UI::AlertView::addButtonWithTitle(const CF::String &title){
+/*int UI::AlertView::addButtonWithTitle(const CF::String &title){
     return int(this->sendMessage<NSInteger>("addButtonWithTitle:", title.handle));
-}
+}*/
 
 void UI::AlertView::setCancelButtonIndex(int newValue){
     this->sendMessage<void>("setCancelButtonIndex:", NSInteger(newValue));
@@ -124,11 +125,11 @@ UI::AlertView UI::AlertView::create(const CF::String &title,
         res.setTitle(title);
         res.setMessage(message);
         if(cancelButtonTitle){
-            res.setCancelButtonIndex(res.addButtonWithTitle(cancelButtonTitle));
+            res.setCancelButtonIndex(res.addButtonWithTitle(NS::String(cancelButtonTitle).UTF8String()));
         }
         for(const auto &t:otherButtonTitles){
-            auto s=CF::String::create(t);
-            res.addButtonWithTitle(s);
+//            auto s = CF::String::create(t);
+            res.addButtonWithTitle(t);
         }
         return res;
     }else{

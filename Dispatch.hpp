@@ -19,30 +19,22 @@
 #include <mutex>
 #include <vector>
 
-namespace Viper{
+namespace Mitsoko{
+    
     struct Dispatch{
+        
 #ifdef __ANDROID__
-//        STATIC_VAR(jobject, frontActivity, nullptr);
     protected:
         typedef std::map<int,std::function<void()>> Callbacks;
         static Callbacks callbacks;
         
         static std::mutex callbacksMutex;
-//        STATIC_VAR(Callbacks, callbacks, {});
-        /*static std::mutex& callbacksMutex(){
-            static std::mutex res;
-            return res;
-        }*/
+
         static std::mutex mainThreadHandlersMutex;
-        /*static std::mutex& mainThreadHandlersMutex(){
-            static std::mutex res;
-            return res;
-        }*/
+        
         static int callbackId;
-//        STATIC_VAR(int, callbackId, 0);
+
         static android::os::Handler mainThreadHandler;
-//        STATIC_VAR(Handler, mainThreadHandler, {});
-//        STATIC_VAR(std::vector<jobject>, mainThreadHandlers, {});
     public:
         static void postCallback(int callbackId,bool isMainThread);
         

@@ -9,10 +9,10 @@
 #ifndef VIPER__IMAGE
 #define VIPER__IMAGE
 
-#include "Viper/iOSutil/UI/Image.hpp"
-#include "Viper/AndroidUtil/android/graphics/Bitmap.hpp"
+#include "Mitsoko/iOSutil/UI/Image.hpp"
+#include "Mitsoko/AndroidUtil/android/graphics/Bitmap.hpp"
 
-namespace Viper {
+namespace Mitsoko {
     
     struct Image {
         

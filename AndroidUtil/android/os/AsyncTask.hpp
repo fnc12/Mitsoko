@@ -9,7 +9,7 @@
 #ifndef VIPER__ANDROID_UTIL__ANDROID__OS__ASYNC_TASK
 #define VIPER__ANDROID_UTIL__ANDROID__OS__ASYNC_TASK
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 
 namespace android{
     

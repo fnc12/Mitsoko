@@ -8,9 +8,9 @@
 
 #include "Image.hpp"
 
-#include "Viper/AndroidUtil/java/io/FileOutputStream.hpp"
-#include "Viper/AndroidUtil/java/io/File.hpp"
-#include "Viper/AndroidUtil/java/io/BufferedOutputStream.hpp"
+#include "Mitsoko/AndroidUtil/java/io/FileOutputStream.hpp"
+#include "Mitsoko/AndroidUtil/java/io/File.hpp"
+#include "Mitsoko/AndroidUtil/java/io/BufferedOutputStream.hpp"
 
 #include <iostream>
 
@@ -20,19 +20,19 @@ using java::io::FileOutputStream;
 
 using android::graphics::Bitmap;
 
-Viper::Image::Image():image(){}
+Mitsoko::Image::Image():image(){}
 
-Viper::Image::Image(decltype(image) image_):image(image_){}
+Mitsoko::Image::Image(decltype(image) image_):image(image_){}
 
-Viper::Image::operator bool() const {
+Mitsoko::Image::operator bool() const {
     return bool(image);
 }
 
-Viper::Image::operator decltype(image) () {
+Mitsoko::Image::operator decltype(image) () {
     return image;
 }
 
-void Viper::Image::writeToFile(const std::string &filepath) {
+void Mitsoko::Image::writeToFile(const std::string &filepath) {
     
 #ifdef __APPLE__
     if(auto i = image) {
@@ -54,6 +54,6 @@ void Viper::Image::writeToFile(const std::string &filepath) {
 #endif  //__APPLE__
 }
 
-auto Viper::Image::get() -> decltype(image) {
+auto Mitsoko::Image::get() -> decltype(image) {
     return image;
 }

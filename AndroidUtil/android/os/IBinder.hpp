@@ -9,7 +9,7 @@
 #ifndef IBinder_hpp
 #define IBinder_hpp
 
-#include "Viper/AndroidUtil/java/lang/Object.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 
 namespace android {
     

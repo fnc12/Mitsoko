@@ -2,8 +2,8 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__CONTENT__CONTEXT__
 #define __VIPER__ANDROID_UTIL__ANDROID__CONTENT__CONTEXT__
 
-#include "Viper/AndroidUtil/java/lang/String.hpp"
-#include "Viper/AndroidUtil/android/content/res/Resources.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/android/content/res/Resources.hpp"
 
 namespace android{
     

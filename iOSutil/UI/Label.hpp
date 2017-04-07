@@ -3,9 +3,9 @@
 #define __VIPER__IOS_UTIL__UI__LABEL__
 
 #include "View.hpp"
-#include "Viper/iOSutil/UI/Color.hpp"
-#include "Viper/iOSutil/CF/String.hpp"
-#include "Viper/Util.hpp"
+#include "Mitsoko/iOSutil/UI/Color.hpp"
+#include "Mitsoko/iOSutil/CF/String.hpp"
+#include "Mitsoko/Util.hpp"
 
 namespace UI {
     struct Label:public UI::View{

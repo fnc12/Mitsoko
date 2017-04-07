@@ -65,4 +65,8 @@ CG::AffineTransform UI::View::transform(){
     return this->sendMessage<CGAffineTransform>("transform");
 }
 
+void UI::View::layoutSubviews() {
+    this->sendMessage<void>("layoutSubviews");
+}
+
 #endif  //__APPLE__

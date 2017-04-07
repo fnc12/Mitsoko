@@ -2,10 +2,10 @@
 #ifndef __VIPER__ANDROID_UTIL__ANDROID__VIEW__VIEW__
 #define __VIPER__ANDROID_UTIL__ANDROID__VIEW__VIEW__
 
-#include "Viper/AndroidUtil/java/lang/Class.hpp"
-#include "Viper/AndroidUtil/android/content/Context.hpp"
-#include "Viper/AndroidUtil/android/os/IBinder.hpp"
-#include "Viper/Disposable.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/android/content/Context.hpp"
+#include "Mitsoko/AndroidUtil/android/os/IBinder.hpp"
+#include "Mitsoko/Disposable.hpp"
 
 #include <functional>
 #include <map>

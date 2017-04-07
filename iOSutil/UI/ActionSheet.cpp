@@ -74,13 +74,14 @@ NS::String UI::ActionSheet::buttonTitleAtIndex(int index){
 }
 
 int UI::ActionSheet::addButtonWithTitle(const std::string &t){
-    auto str=CF::String::create(t);
-    return this->addButtonWithTitle(str);
+    auto str = CF::String::create(t);
+//    return this->addButtonWithTitle(str);
+    return int(this->sendMessage<NSInteger>("addButtonWithTitle:", str.handle));
 }
 
-int UI::ActionSheet::addButtonWithTitle(const CF::String &t){
+/*int UI::ActionSheet::addButtonWithTitle(const CF::String &t){
     return int(this->sendMessage<NSInteger>("addButtonWithTitle:", t.handle));
-}
+}*/
 
 void UI::ActionSheet::setTitle(const std::string &newValue){
     auto str=CF::String::create(newValue);
