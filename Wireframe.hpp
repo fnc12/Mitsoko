@@ -74,21 +74,29 @@ namespace Mitsoko{
     struct Callbackable {
         typedef C return_type;
         std::function<void(C)> callback;
-        STATIC_VAR(std::function<void(C)>, staticCallback, {});
+//        STATIC_VAR(std::function<void(C)>, staticCallback, {});
+        static std::function<void(C)> staticCallback;
         
-        Callbackable():callback(std::move(staticCallback())){}
+        Callbackable():callback(std::move(staticCallback)){}
     };
+    
+    template<class C,class W>
+    std::function<void(C)> Callbackable<C, W>::staticCallback;
     
     template<class W>
     struct Callbackable<void,W> {
         typedef void return_type;
         std::function<void()> callback;
-        STATIC_VAR(std::function<void()>, staticCallback, {});
+//        STATIC_VAR(std::function<void()>, staticCallback, {});
+        static std::function<void()> staticCallback;
         
-        Callbackable():callback(std::move(staticCallback())){}
+        Callbackable():callback(std::move(staticCallback)){}
     };
     
-    template<class A,class W>
+    template<class W>
+    std::function<void()> Callbackable<void, W>::staticCallback;
+    
+    template<class A, class W>
     struct Argumentable{
         typedef A argument_type;
         
@@ -96,11 +104,16 @@ namespace Mitsoko{
          *  Tempopary storage for argument. Must be assigned from called module wireframe before 
          *  switching to another module.
          */
-        static std::experimental::optional<argument_type>& staticArgument(){
+        /*static std::experimental::optional<argument_type>& staticArgument(){
             static std::experimental::optional<argument_type> res;
             return res;
-        }
+        }*/
+        
+        static std::experimental::optional<argument_type> staticArgument;
     };
+    
+    template<class A, class W>
+    std::experimental::optional<A> Argumentable<A, W>::staticArgument;
     
     template<class W>
     struct Argumentable<void, W> {
@@ -122,64 +135,13 @@ namespace Mitsoko{
         
         template<class P, class T>
         void processOpenArgument(Argument_t<T> a) {
-            P::staticArgument() = std::move(a.t);
-//            std::cout << "void processOpenArgument(Argument_t<T> a)" << std::endl;
-            //            LOGI("staticArgument assigned");
+            P::staticArgument = std::move(a.t);
         }
         
         template<class P, class T>
         void processOpenArgument(Callback_t<T> c) {
-            P::staticCallback() = std::move(c.t);
-//            std::cout << "void processOpenArgument(Callback_t<T> c)" << std::endl;
+            P::staticCallback = std::move(c.t);
         }
-        
-//        template<class P, class ...Args>
-//        void processOpenArguments(Args ...args);
-        
-        /*template<class P, class ...Args>
-        void processOpenArguments(Args ... args) {
-            auto t = std::make_tuple(std::forward<Args>(args)...);
-            tuple_helper::iterator<std::tuple_size<decltype(t)>::value, Args...>()(t, [=](auto &a){
-                this->processOpenArgument<P>(a);
-            });
-//            this->processOpenArgument<P>(std::move(h));
-//            this->processOpenArguments<P>(std::forward<Args>(args)...);
-            
-        }*/
-        
-        /*template<class P, class T, class ...Args>
-        void processOpenArguments<P, Argument_t<T>, Args...>(Argument_t<T> a, Args ...args) {
-            P::staticArgument() = std::move(a.t);
-            this->processOpenArguments<P, Args...>(args...);
-        }
-        
-        template<class P, class T, class ...Args>
-        void processOpenArguments<P, Callback_t<T>, Args...>(Callback_t<T> c, Args ...args) {
-            P::staticCallback() = std::move(c.t);
-            this->processOpenArguments<P, Args...>(args...);
-        }*/
-        
-        /*template<class P>
-        void processOpenArguments<P>(){
-            //..
-        }*/
-        
-        /*template<class P, class T>
-        void processOpenArgument(T t) {
-            static_assert(false, "unknown argument type in processOpenArgument");
-        }*/
-        
-        /* {
-            //..
-            std::cout << "void processOpenArguments(Args ...args)" << std::endl;
-        }*/
-        
-        /*template<class P, class H, class ...Args>
-        void processOpenArguments(H h, Args ...args) {
-            std::cout << __func__ << std::tuple_size<std::tuple<Args...>>::value << ", H = " << typeid(H).name() << std::endl;
-            this->processOpenArgument<P>(std::move(h));
-            this->processOpenArguments<P>(std::forward<Args>(args)...);
-        }*/
         
         template<class I, class A>
         void open(const std::string &viewName, I i, A a) {
@@ -192,13 +154,10 @@ namespace Mitsoko{
         
         template<class P, class I, class A, class ...Args>
         void open(I i, A a, Args ...args) {
-//            std::cout << "open arguments count = " << std::tuple_size<std::tuple<Args...>>::value << std::endl;
             typedef std::tuple<Args...> tuple_t;
             auto t = std::make_tuple(std::forward<Args>(args)...);
-//            this->processOpenArguments<P>(std::forward<Args>(args)...);
             tuple_helper::iterator<std::tuple_size<tuple_t>::value - 1, Args...> it;
             it(t, [=](auto &v){
-//                std::cout << "ototo" << std::endl;
                 this->processOpenArgument<P>(std::move(v));
             });
             this->open(P::view_type::viewName, i, a);

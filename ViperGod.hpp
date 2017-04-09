@@ -39,9 +39,9 @@ namespace Mitsoko{
     template<class T>
     struct PresenterIniter<T, typename std::enable_if<is_base_of_template<T, Mitsoko::Argumentable>::value>::type> {
         void operator()(T &t) const {
-            if(T::staticArgument()){
-                t.init(std::move(*T::staticArgument()));
-                T::staticArgument() = {};
+            if(T::staticArgument){
+                t.init(std::move(*T::staticArgument));
+                T::staticArgument = {};
             }
         }
     };
