@@ -11,9 +11,9 @@
 #include <iostream>
 
 #include "Util.hpp"
-#include "Selfish.hpp"
+//#include "Selfish.hpp"
 
-#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Viper::WireframeBase,Selfish<Wireframe>
+//#define WIREFRAME_DECL(module,arg,ret) struct Wireframe:public Viper::Argumentable<arg,Wireframe>,Viper::Callbackable<ret,Wireframe>,Viper::WireframeBase,Selfish<Wireframe>
 
 namespace Mitsoko{
     

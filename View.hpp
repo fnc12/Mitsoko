@@ -17,13 +17,13 @@
 #include <functional>
 
 #include "Disposable.hpp"
-#include "ViewPresenterIF.hpp"
+//#include "ViewPresenterIF.hpp"
 #include "ImageCache.hpp"
 #include "Language.hpp"
 #include "iOSutil/iOSutil.hpp"
 #include "AndroidUtil/AndroidUtil.hpp"
 
-#define VIEW_DECL(module) struct View:public Viper::View<module::EventHandler, module::UserInterface>,Selfish<View>
+//#define VIEW_DECL(module) struct View:public Viper::View<module::EventHandler, module::UserInterface>,Selfish<View>
 
 /**
  *  Used fo simplifying client member references declaration.
@@ -52,10 +52,11 @@ namespace Mitsoko{
         std::function<void()> willAppear;
         std::function<void()> didAppear;
         std::function<void()> willDisappear;
+        std::function<void(int, std::string)> messageReceived;
         
 //        typedef std::map<std::string,std::string> Arguments;
         
-        virtual void messageReceived(int messageCode, std::string args) {};
+//        virtual void messageReceived(int messageCode, std::string args) {};
         
         virtual void onActivityResult(int requestCode, int resultCode, android::content::Intent data);
         

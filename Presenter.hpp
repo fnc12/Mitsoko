@@ -13,12 +13,12 @@
 #include <string>
 
 #include "Disposable.hpp"
-#include "Selfish.hpp"
+//#include "Selfish.hpp"
 #include "Language.hpp"
 #include "Wireframe.hpp"
 #include "View.hpp"
 
-#define PRESENTER_DECL(module) struct Presenter:public Viper::Presenter<module::UserInterface, module::EventHandler, module::Input, module::Output, module::Wireframe, module::Wireframe::argument_type>,Selfish<Presenter>
+//#define PRESENTER_DECL(module) struct Presenter:public Viper::Presenter<module::UserInterface, module::EventHandler, module::Input, module::Output, module::Wireframe, module::Wireframe::argument_type>,Selfish<Presenter>
 
 namespace Mitsoko{
     

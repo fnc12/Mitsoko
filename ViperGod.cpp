@@ -96,14 +96,11 @@ const void* Mitsoko::God::destroyView(ViewId viewId){
 }
 
 void Mitsoko::God::sendMessageToView(ViewId viewId,int messageCode,std::string argumentsString){
-//    cout << "argumentsString = " << argumentsString << endl;
-/*#ifdef __ANDROID__
-    LOGI("%s", argumentsString.c_str());
-#endif  //  __ANDROID__*/
     const auto it = this->presenters.find(viewId);
     if(it != this->presenters.end()){
-        it->second->getViewBase()->messageReceived(messageCode, std::move(argumentsString));
-//        it->second->messageReceived(messageCode,std::move(argumentsString));
+        if(it->second->getViewBase()->messageReceived){
+            it->second->getViewBase()->messageReceived(messageCode, std::move(argumentsString));
+        }
     }else{
         cout<<"view not found with id "<<viewId<<endl;
     }

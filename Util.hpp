@@ -10,7 +10,7 @@
 #define Util_h
 
 //#include "EnumUtil.hpp"
-#include "Selfish.hpp"
+//#include "Selfish.hpp"
 
 /**
  *  Macro for static vars declaration through static functions in header only classes.
@@ -20,7 +20,7 @@
 #ifdef __ANDROID__
 #include <android/log.h>
 
-#define  LOG_TAG    "ViperLog"
+#define  LOG_TAG    "MitsokoLog"
 
 #define  LOGV(...)  __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
