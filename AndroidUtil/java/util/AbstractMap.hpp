@@ -9,7 +9,7 @@ namespace java {
     namespace util{
         
         template<class K,class V>
-        struct AbstractMap:public Map<K,V>{
+        struct AbstractMap : public Map<K,V> {
             
             typedef Map<K,V> Super;
             
@@ -17,8 +17,8 @@ namespace java {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/util/AbstractMap");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/util/AbstractMap");
             
 #endif  //__ANDROID__
             
@@ -28,8 +28,8 @@ namespace java {
 
 #ifdef __ANDROID__
 
-/*template<class K,class V>
- const std::string java::util::AbstractMap<K,V>::signature="java/util/AbstractMap";*/
+template<class K,class V>
+const std::string java::util::AbstractMap<K,V>::signature = "java/util/AbstractMap";
 
 #endif  //__ANDROID__
 

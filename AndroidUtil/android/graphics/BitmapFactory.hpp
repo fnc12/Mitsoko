@@ -9,25 +9,25 @@ namespace android {
     
     namespace graphics {
         
-        struct BitmapFactory:public java::lang::Object{
+        struct BitmapFactory : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory");
             
             static Bitmap decodeFile(const std::string &pathName);
             
             static Bitmap decodeFile(const java::lang::String &pathName);
             
-            struct Options:public java::lang::Object{
+            struct Options : public java::lang::Object {
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory$Options");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory$Options");
                 
                 static Options create();
                 

@@ -11,7 +11,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::TextView::signature="android/widget/TextView";
+const std::string android::widget::TextView::signature = "android/widget/TextView";
 
 android::widget::TextView::TextWatcherEventHandler::OnTextChangedMap android::widget::TextView::TextWatcherEventHandler::onTextChangedMap;
 
@@ -62,7 +62,7 @@ void android::widget::TextView::addTextChangedListener(const android::text::Text
 void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChanged,
                                                        BeforeTextChanged beforeTextChanged,
                                                        AfterTextChanged afterTextChanged,
-                                                       const Viper::Disposable &disposable)
+                                                       const Mitsoko::Disposable &disposable)
 {
 //    android::text::TextWatcher textWatcher;
     auto classSignature="kz/outlawstudio/viper/EventHandlers$TextViewTextChangedListener";
@@ -84,10 +84,10 @@ void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChang
 
 android::widget::TextView::TextWatcherEventHandler::Observer::Observer(){
     //  this object must be subscribed forever..
-    Viper::Disposable::subscribe(&TextWatcherEventHandler::observer);
+    Mitsoko::Disposable::subscribe(&TextWatcherEventHandler::observer);
 }
 
-void android::widget::TextView::TextWatcherEventHandler::Observer::disposableDidDispose(Viper::Disposable::Id id){
+void android::widget::TextView::TextWatcherEventHandler::Observer::disposableDidDispose(Mitsoko::Disposable::Id id){
     auto it=TextWatcherEventHandler::disposablesMap.find(id);
     if(it != TextWatcherEventHandler::disposablesMap.end()){
         auto &textWatcherIds=it->second;

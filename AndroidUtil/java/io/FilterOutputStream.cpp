@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::io::File::signature="java/io/FilterOutputStream";
+const std::string java::io::FilterOutputStream::signature = "java/io/FilterOutputStream";
 
 #endif  //__ANDROID__

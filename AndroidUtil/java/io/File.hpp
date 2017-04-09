@@ -14,8 +14,8 @@ namespace java {
             
 #ifdef __ANDROID__
             
-//            static const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/io/File");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/io/File");
             
             static File create(const std::string &path);
             

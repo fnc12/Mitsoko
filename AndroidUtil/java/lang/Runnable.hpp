@@ -5,15 +5,17 @@
 #include "Object.hpp"
 
 namespace java{
+    
     namespace lang{
-        struct Runnable:public Object{
+        
+        struct Runnable : public Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Runnable");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Runnable");
             
 #endif  //__ANDROID__
             

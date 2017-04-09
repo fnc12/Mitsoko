@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::CompoundButton::signature="android/widget/CompoundButton";
-
-//const std::string android::widget::CompoundButton::OnCheckedChangeListener::signature="android/widget/CompoundButton$OnCheckedChangeListener";
+const std::string android::widget::CompoundButton::signature = "android/widget/CompoundButton";
+ 
+const std::string android::widget::CompoundButton::OnCheckedChangeListener::signature = "android/widget/CompoundButton$OnCheckedChangeListener";
 
 android::widget::CompoundButton::OnCheckedMap android::widget::CompoundButton::onCheckedMap;
 

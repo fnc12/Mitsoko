@@ -217,7 +217,7 @@ namespace Mitsoko {
 #ifdef __ANDROID__
 
 template<class R>
-std::map<int, std::function<void(Viper::Url::Response, R, Viper::Url::Error)>> Viper::Url::Request::CallbackHolder<R>::callbacks;
+std::map<int, std::function<void(Mitsoko::Url::Response, R, Mitsoko::Url::Error)>> Mitsoko::Url::Request::CallbackHolder<R>::callbacks;
 
 #endif  //__ANDROID__
 

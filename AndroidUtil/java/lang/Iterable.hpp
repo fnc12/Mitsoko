@@ -10,13 +10,13 @@ namespace java{
         /**
          *  Generic interface.
          */
-        struct Iterable:public java::lang::Object{
+        struct Iterable : public java::lang::Object {
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Iterable");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Iterable");
             
 #endif  //__ANDROID__
         };

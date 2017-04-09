@@ -15,8 +15,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/ImageView");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/ImageView");
             
             /**
              *  This method doesn't exist in SDK but it is created to

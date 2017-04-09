@@ -262,7 +262,7 @@ int Mitsoko::TableListAdapter::sectionsCount(const void *tableOrListView,const v
 }
 
 #ifdef __ANDROID__
-int Viper::TableListAdapter::getAdapterId(const void *tableOrListView,JNIEnv *java_env){
+int Mitsoko::TableListAdapter::getAdapterId(const void *tableOrListView,JNIEnv *java_env){
     if(java_env){
         auto listView=static_cast<jobject>(const_cast<void*>(tableOrListView));
         auto listViewClazz=java_env->GetObjectClass(listView);

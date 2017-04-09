@@ -15,24 +15,24 @@ namespace android {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/provider/MediaStore");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/provider/MediaStore");
             
             static java::lang::String ACTION_IMAGE_CAPTURE();
             
-            struct Images:public java::lang::Object{
+            struct Images : public java::lang::Object {
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/provider/MediaStore$Images");
+            static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/provider/MediaStore$Images");
                 
                 struct Media:public java::lang::Object{
                     
                     using Object::Object;
                     
-//            const std::string signature;
-                    STATIC_VAR(const std::string, signature, "android/provider/MediaStore$Images$Media");
+                    static const std::string signature;
+//                    STATIC_VAR(const std::string, signature, "android/provider/MediaStore$Images$Media");
                     
                     static android::net::Uri EXTERNAL_CONTENT_URI();
                 };

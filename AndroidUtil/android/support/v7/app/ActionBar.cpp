@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::support::v7::app::ActionBar::signature="android/support/v7/app/ActionBar";
+const std::string android::support::v7::app::ActionBar::signature = "android/support/v7/app/ActionBar";
 
 java::lang::CharSequence android::support::v7::app::ActionBar::getTitle(){
     return this->sendMessage<java::lang::CharSequence>("getTitle");

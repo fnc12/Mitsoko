@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::support::v4::app::FragmentActivity::signature="android/support/v4/app/FragmentActivity";
+const std::string android::support::v4::app::FragmentActivity::signature = "android/support/v4/app/FragmentActivity";
 
 #endif  //__ANDROID__

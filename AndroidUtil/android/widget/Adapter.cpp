@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::Adapter::signature="android/widget/Adapter";
+const std::string android::widget::Adapter::signature = "android/widget/Adapter";
 
 #endif  //__ANDROID__

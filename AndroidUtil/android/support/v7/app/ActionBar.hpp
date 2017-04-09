@@ -13,14 +13,14 @@ namespace android{
             
             namespace app{
                 
-                struct ActionBar:public java::lang::Object{
+                struct ActionBar : public java::lang::Object {
                     
                     using Object::Object;
                     
 #ifdef __ANDROID__
                     
-//            const std::string signature;
-                    STATIC_VAR(const std::string, signature, "android/support/v7/app/ActionBar");
+                    static const std::string signature;
+//                    STATIC_VAR(const std::string, signature, "android/support/v7/app/ActionBar");
                     
                     java::lang::CharSequence getTitle();
                     

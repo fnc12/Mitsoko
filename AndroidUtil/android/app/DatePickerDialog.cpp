@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::app::DatePickerDialog::signature="android/app/DatePickerDialog";
+const std::string android::app::DatePickerDialog::signature = "android/app/DatePickerDialog";
 
 #endif  //__ANDROID__

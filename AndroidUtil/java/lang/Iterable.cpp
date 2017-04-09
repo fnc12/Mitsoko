@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::Iterable::signature="java/lang/Iterable";
+const std::string java::lang::Iterable::signature = "java/lang/Iterable";
 
 #endif  //__ANDROID__

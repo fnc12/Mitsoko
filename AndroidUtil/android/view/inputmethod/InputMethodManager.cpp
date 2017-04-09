@@ -11,6 +11,8 @@
 
 #ifdef __ANDROID__
 
+const std::string android::view::inputmethod::InputMethodManager::signature = "android/view/inputmethod/InputMethodManager";
+
 bool android::view::inputmethod::InputMethodManager::hideSoftInputFromWindow(const android::os::IBinder &windowToken, int flags) {
     return this->sendMessage<bool>("hideSoftInputFromWindow", windowToken, flags);
 }

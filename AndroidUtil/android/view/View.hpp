@@ -20,29 +20,29 @@ namespace android {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/view/View");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/view/View");
             
             typedef std::function<void(Handle)> OnClick;
             
             typedef std::map<int,OnClick> OnClickMap;
             static OnClickMap onClickMap;
             
-            typedef std::map<Viper::Disposable::Id,int> DisposablesMap;
+            typedef std::map<Mitsoko::Disposable::Id,int> DisposablesMap;
             static DisposablesMap disposablesMap;
             
             struct OnClickListener : public java::lang::Object{
                 
                 using Object::Object;
                 
-//            const std::string signature;
+                static const std::string signature;
                 
-                STATIC_VAR(const std::string, signature, "android/view/View$OnClickListener");
+//                STATIC_VAR(const std::string, signature, "android/view/View$OnClickListener");
             };
             
             static void onClick(int id,android::view::View v);
             
-            void setOnClickListener(OnClick cb,const Viper::Disposable &disposable);
+            void setOnClickListener(OnClick cb,const Mitsoko::Disposable &disposable);
             
             /**
              *  Implemented in ViewGroup.hpp"

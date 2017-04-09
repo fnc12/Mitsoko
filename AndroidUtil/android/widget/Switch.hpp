@@ -8,14 +8,14 @@ namespace android{
     
     namespace widget{
         
-        struct Switch:public CompoundButton{
+        struct Switch : public CompoundButton {
             
             using CompoundButton::CompoundButton;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/Switch");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/Switch");
             
 #endif  //__ANDROID__
             

@@ -10,11 +10,11 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::view::ViewGroup::signature="android/view/ViewGroup";
+const std::string android::view::ViewGroup::signature = "android/view/ViewGroup";
 
-//const std::string android::view::ViewGroup::LayoutParams::signature="android/view/ViewGroup$LayoutParams";
+const std::string android::view::ViewGroup::LayoutParams::signature = "android/view/ViewGroup$LayoutParams";
 
-//const std::string android::view::ViewGroup::MarginLayoutParams::signature="android/view/ViewGroup$MarginLayoutParams";
+const std::string android::view::ViewGroup::MarginLayoutParams::signature = "android/view/ViewGroup$MarginLayoutParams";
 
 template<>
 void android::view::View::setLayoutParams<android::view::ViewGroup::LayoutParams>(const android::view::ViewGroup::LayoutParams &params){

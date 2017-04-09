@@ -15,15 +15,15 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/view/ViewGroup");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/view/ViewGroup");
             
             struct LayoutParams : public java::lang::Object {
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$LayoutParams");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$LayoutParams");
                 
                 static int MATCH_PARENT();
                 
@@ -34,8 +34,8 @@ namespace android{
                 
                 using LayoutParams::LayoutParams;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$MarginLayoutParams");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$MarginLayoutParams");
                 
             };
             

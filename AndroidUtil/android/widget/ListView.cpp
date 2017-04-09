@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::ListView::signature="android/widget/ListView";
+const std::string android::widget::ListView::signature = "android/widget/ListView";
 
 auto android::widget::ListView::getAdapter()->ListAdapter{
     return this->sendMessage<ListAdapter>("getAdapter");

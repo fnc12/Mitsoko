@@ -17,14 +17,14 @@ namespace android{
     
     namespace content{
         
-        struct Intent:public java::lang::Object{
+        struct Intent : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/content/Intent");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/content/Intent");
             
             static Intent create(const Context &context, const java::lang::Class &cls);
             

@@ -11,8 +11,8 @@ namespace java {
             
 #ifdef __ANDROID__
             
-//            static const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/io/BufferedOutputStream");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/io/BufferedOutputStream");
             
             static BufferedOutputStream create(const OutputStream &out);
             

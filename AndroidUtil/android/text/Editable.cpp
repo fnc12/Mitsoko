@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::text::Editable::signature="android/text/Editable";
+const std::string android::text::Editable::signature = "android/text/Editable";
 
 #endif  //__ANDROID__

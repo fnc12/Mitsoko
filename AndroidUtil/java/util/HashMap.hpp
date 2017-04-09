@@ -9,10 +9,10 @@ namespace java {
     namespace util{
         
         template<class K,class V>
-        struct HashMap:public AbstractMap<K, V>{
+        struct HashMap : public AbstractMap<K, V> {
             
             typedef AbstractMap<K, V> Super;
-            typedef HashMap<K,V> Self;
+            typedef HashMap<K, V> Self;
             
             using Super::Super;
             
@@ -20,8 +20,8 @@ namespace java {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/util/HashMap");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/util/HashMap");
             
             static Self create();
             
@@ -34,6 +34,12 @@ namespace java {
 #endif  //__ANDROID__
             
         };
+        
+#ifdef __ANDROID__
+        
+        template<class K,class V>
+        const std::string HashMap<K, V>::signature = "java/util/HashMap";
+#endif  //__ANDROID__
     }
 }
 
@@ -42,8 +48,8 @@ namespace java {
 /*template<class K,class V>
  const std::string java::util::HashMap<K,V>::signature="java/util/HashMap";*/
 
-template<class K,class V>
-auto java::util::HashMap<K,V>::create()->Self{
+template<class K, class V>
+auto java::util::HashMap<K,V>::create() -> Self {
     return std::move(java::lang::Object::create<Self>());
 }
 

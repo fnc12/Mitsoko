@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::app::Dialog::signature="android/app/Dialog";
+const std::string android::app::Dialog::signature = "android/app/Dialog";
 
-auto android::app::Dialog::getWindow()->view::Window{
+auto android::app::Dialog::getWindow() -> view::Window {
     return this->sendMessage<view::Window>("getWindow");
 }
 

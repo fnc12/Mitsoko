@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::text::InputType::signature="android/text/InputType";
+const std::string android::text::InputType::signature = "android/text/InputType";
 
 #endif  //__ANDROID__

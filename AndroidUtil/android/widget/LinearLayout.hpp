@@ -14,15 +14,15 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/LinearLayout");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/LinearLayout");
             
-            struct LayoutParams:public android::view::ViewGroup::MarginLayoutParams{
+            struct LayoutParams : public android::view::ViewGroup::MarginLayoutParams{
                 
                 using MarginLayoutParams::MarginLayoutParams;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/widget/LinearLayout$LayoutParams");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/widget/LinearLayout$LayoutParams");
                 
                 static LayoutParams create(int width, int height);
             };

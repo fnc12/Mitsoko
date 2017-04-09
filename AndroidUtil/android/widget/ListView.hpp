@@ -16,8 +16,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/ListView");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/ListView");
             
             ListAdapter getAdapter();
             
@@ -28,7 +28,7 @@ namespace android{
              *  settings a core crossplarform adapter to a listView.
              */
             template<class T>
-            Viper::TableListAdapter::AdapterId setAdapter(T ad,
+            Mitsoko::TableListAdapter::AdapterId setAdapter(T ad,
                                                           const content::Context &context)
             {
                 auto pointer=std::make_shared<T>(std::move(ad));
@@ -36,17 +36,17 @@ namespace android{
             }
             
             template<class T>
-            Viper::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer,
+            Mitsoko::TableListAdapter::AdapterId setAdapter(std::shared_ptr<T> pointer,
                                                           const content::Context &context)
             {
-                auto adapterPointer=std::dynamic_pointer_cast<Viper::AdapterBase>(pointer);
+                auto adapterPointer=std::dynamic_pointer_cast<Mitsoko::AdapterBase>(pointer);
                 if(auto java_env=java::lang::JNI::Env()){
                     if(auto clazz=java::lang::Class::find("kz/outlawstudio/viper/ViperTableViewAdapter")){
                         auto signature=java::lang::Object::generateMethodSignature<void,ListView,content::Context>();
                         if(auto ctor = java_env->GetMethodID(clazz, "<init>", signature.c_str())){
                             ListAdapter adapter=java_env->NewObject(clazz, ctor, this->handle,context.handle);
                             auto adapterId=adapter.getField<int>("adapterId");
-                            auto res=Viper::TableListAdapter::registerAdapter((const void*)(intptr_t)adapterId, adapterPointer, java_env);
+                            auto res=Mitsoko::TableListAdapter::registerAdapter((const void*)(intptr_t)adapterId, adapterPointer, java_env);
                             this->setAdapter(adapter);
                             return res;
                         }else{

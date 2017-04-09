@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::HorizontalScrollView::signature="android/widget/HorizontalScrollView";
+const std::string android::widget::HorizontalScrollView::signature = "android/widget/HorizontalScrollView";
 
 #endif  //__ANDROID__

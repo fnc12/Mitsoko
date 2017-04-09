@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::content::DialogInterface::signature="android/content/DialogInterface";
+const std::string android::content::DialogInterface::signature = "android/content/DialogInterface";
 
-//const std::string android::content::DialogInterface::OnClickListener::signature="android/content/DialogInterface$OnClickListener";
+const std::string android::content::DialogInterface::OnClickListener::signature = "android/content/DialogInterface$OnClickListener";
 
 void android::content::DialogInterface::cancel(){
     this->sendMessage<void>("cancel");

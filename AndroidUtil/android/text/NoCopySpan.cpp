@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::text::NoCopySpan::signature="android/text/NoCopySpan";
+const std::string android::text::NoCopySpan::signature = "android/text/NoCopySpan";
 
 #endif  //__ANDROID__

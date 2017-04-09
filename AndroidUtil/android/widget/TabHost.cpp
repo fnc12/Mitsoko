@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::TabHost::signature="android/widget/TabHost";
+const std::string android::widget::TabHost::signature = "android/widget/TabHost";
 
 int android::widget::TabHost::getCurrentTab(){
     return this->sendMessage<int>("getCurrentTab");

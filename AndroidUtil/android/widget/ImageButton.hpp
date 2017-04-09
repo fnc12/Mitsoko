@@ -10,7 +10,6 @@
 #define __VIPER__ANDROID_UTIL__ANDROID__WIDGET__ImageButton_hpp
 
 #include "Mitsoko/AndroidUtil/android/widget/ImageView.hpp"
-//#include "Viper/AndroidUtil/android/graphics/Bitmap.hpp"
 
 namespace android{
     
@@ -19,9 +18,10 @@ namespace android{
         struct ImageButton : public ImageView {
             
             using ImageView::ImageView;
+            
 #ifdef __ANDROID__
-            //            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/ImageButton");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/ImageButton");
             
             
             

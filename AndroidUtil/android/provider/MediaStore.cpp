@@ -11,11 +11,11 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::provider::MediaStore::signature="android/provider/MediaStore";
+const std::string android::provider::MediaStore::signature = "android/provider/MediaStore";
 
-//const std::string android::provider::MediaStore::Images::signature="android/provider/MediaStore$Images";
+const std::string android::provider::MediaStore::Images::signature = "android/provider/MediaStore$Images";
 
-//const std::string android::provider::MediaStore::Images::Media::signature="android/provider/MediaStore$Images$Media";
+const std::string android::provider::MediaStore::Images::Media::signature = "android/provider/MediaStore$Images$Media";
 
 java::lang::String android::provider::MediaStore::ACTION_IMAGE_CAPTURE(){
     if(java::lang::Class cls=java::lang::Class::find<MediaStore>()){

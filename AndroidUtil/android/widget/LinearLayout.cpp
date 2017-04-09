@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::LinearLayout::signature="android/widget/LinearLayout";
+const std::string android::widget::LinearLayout::signature = "android/widget/LinearLayout";
 
-//const std::string android::widget::LinearLayout::LayoutParams::signature="android/widget/LinearLayout$LayoutParams";
+const std::string android::widget::LinearLayout::LayoutParams::signature = "android/widget/LinearLayout$LayoutParams";
 
 auto android::widget::LinearLayout::LayoutParams::create(int width, int height)->LayoutParams{
     return java::lang::Object::create<LayoutParams>(width,height);

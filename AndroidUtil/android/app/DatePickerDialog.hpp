@@ -8,14 +8,14 @@ namespace android{
     
     namespace app{
         
-        struct DatePickerDialog:public AlertDialog{
+        struct DatePickerDialog : public AlertDialog {
             
             using AlertDialog::AlertDialog;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/app/DatePickerDialog");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/app/DatePickerDialog");
             
 #endif  //__ANDROID__
             

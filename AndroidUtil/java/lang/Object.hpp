@@ -13,7 +13,7 @@ namespace java{
     
     namespace lang{
         
-        struct Object{
+        struct Object {
             
             typedef const void *Handle;
             Handle handle;
@@ -31,14 +31,10 @@ namespace java{
                 return this->handle;
             }
             
-            /*Handle operator->() const{
-                return this->handle;
-            }*/
-            
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Object");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Object");
             
             static Handle newGlobalRef(const Object &object){
                 if(object){
@@ -53,7 +49,7 @@ namespace java{
             }
             
         protected:
-            bool isGlobal=false;
+//            bool isGlobal = false;
             
             template<class T>
             void _setField(JNIEnv *java_env,jfieldID fieldId,const T &value){
@@ -117,7 +113,7 @@ namespace java{
             T getField(const char *fieldName){
                 if(auto java_env=JNI::Env()){
                     if(auto clazz=this->getClass()){
-                        if(auto field = java_env->GetFieldID(clazz, fieldName, ("L"+T::signature()+";").c_str())){
+                        if(auto field = java_env->GetFieldID(clazz, fieldName, ("L"+T::signature+";").c_str())){
                             return java_env->GetObjectField((jobject)this->handle, field);
                         }else{
                             return nullptr;
@@ -135,7 +131,7 @@ namespace java{
                 return std::move(this->getField<T>(fieldName.c_str()));
             }
             
-            void makeGlobal();
+//            void makeGlobal();
             
             template<class RT,class ...Args>
             RT sendMessage(const std::string &message,const Args& ...args){
@@ -163,12 +159,12 @@ namespace java{
             template<class RT,class ...Args>
             static std::string generateMethodSignature(){
                 std::stringstream ss;
-                ss<<"("<<SignatureGenerator<Args...>()()<<")"<<TypeSignatureGenerator<RT>()();
+                ss << "(" << SignatureGenerator<Args...>()() << ")" << TypeSignatureGenerator<RT>()();
                 return std::move(ss.str());
             }
             
             template<class ...Args>
-            static Object create(const std::string &className,Args ...args){
+            static Object create(const std::string &className, Args ...args) {
                 if(auto java_env = JNI::Env()){
                     if(auto cls = java_env->FindClass(className.c_str())){
                         auto methodSignature = std::move(generateMethodSignature<void,Args...>());
@@ -185,11 +181,11 @@ namespace java{
                 }
             }
             
-            template<class T,class ...Args>
+            template<class T, class ...Args>
             static T create(Args ...args){
-                static_assert(std::is_base_of<Object,T>::value,"T must inherit java::lang::Object");
+                static_assert(std::is_base_of<Object,T>::value, "T must inherit java::lang::Object");
                 if(auto java_env = JNI::Env()){
-                    if(auto cls = java_env->FindClass(T::signature().c_str())){
+                    if(auto cls = java_env->FindClass(T::signature.c_str())){
                         auto methodSignature = std::move(generateMethodSignature<void,Args...>());
                         if(auto methodId = java_env->GetMethodID(cls,"<init>",methodSignature.c_str())){
                             return java_env->NewObject(cls,methodId,ArgumentProxy<Args>::cast(args)...);

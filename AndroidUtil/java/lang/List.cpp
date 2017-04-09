@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::List::signature="java/lang/List";
+const std::string java::lang::List::signature = "java/lang/List";
 
 #endif  //__ANDROID__

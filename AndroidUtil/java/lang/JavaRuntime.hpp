@@ -19,7 +19,7 @@ template<class T>
 struct TypeSignatureGenerator{
     std::string operator()()const{
         std::stringstream ss;
-        ss<<"L"<<T::signature()<<";";
+        ss << "L" << T::signature << ";";
         return std::move(ss.str());
     }
 };
@@ -28,7 +28,9 @@ struct TypeSignatureGenerator{
 TYPE_SIGNATURE(void,"V");
 TYPE_SIGNATURE(int,"I");
 TYPE_SIGNATURE(bool,"Z");
+TYPE_SIGNATURE(float,"F");
 TYPE_SIGNATURE(double,"D");
+TYPE_SIGNATURE(long,"J");
 #undef TYPE_SIGNATURE
 
 //  array specialization..
@@ -89,6 +91,13 @@ template<>
 struct ArgumentProxy<int>{
     static jint cast(const int &value){
         return jint(value);
+    }
+};
+
+template<>
+struct ArgumentProxy<long>{
+    static jlong cast(const long &value){
+        return jlong(value);
     }
 };
 

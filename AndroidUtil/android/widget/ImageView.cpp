@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::ImageView::signature="android/widget/ImageView";
+const std::string android::widget::ImageView::signature = "android/widget/ImageView";
 
 void android::widget::ImageView::setImageResource(const std::string &resName,const content::Context &context){
     if(auto java_env=java::lang::JNI::Env()){

@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::content::res::Resources::signature="android/content/res/Resources";
+const std::string android::content::res::Resources::signature = "android/content/res/Resources";
 
 #endif  //__ANDROID__

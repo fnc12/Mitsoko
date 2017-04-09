@@ -23,8 +23,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/TextView");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/TextView");
             
             typedef std::function<void(java::lang::CharSequence,int,int,int)> OnTextChanged;
             typedef std::function<void(java::lang::CharSequence,int,int,int)> BeforeTextChanged;
@@ -54,7 +54,7 @@ namespace android{
             void addTextChangedListener(OnTextChanged onTextChanged,
                                         BeforeTextChanged beforeTextChanged,
                                         AfterTextChanged afterTextChanged,
-                                        const Viper::Disposable &disposable);
+                                        const Mitsoko::Disposable &disposable);
             
             struct TextWatcherEventHandler{
                 typedef std::map<int,OnTextChanged> OnTextChangedMap;
@@ -66,14 +66,14 @@ namespace android{
                 typedef std::map<int,AfterTextChanged> AfterTextChangedMap;
                 static AfterTextChangedMap afterTextChangedMap;
                 
-                typedef std::map<Viper::Disposable::Id,std::vector<int>> DisposablesMap;
+                typedef std::map<Mitsoko::Disposable::Id,std::vector<int>> DisposablesMap;
                 static DisposablesMap disposablesMap;
                 
-                struct Observer : public Viper::Disposable::Observer {
+                struct Observer : public Mitsoko::Disposable::Observer {
                     
                     Observer();
                     
-                    virtual void disposableDidDispose(Viper::Disposable::Id id) override;
+                    virtual void disposableDidDispose(Mitsoko::Disposable::Id id) override;
                 };
                 
                 static Observer observer;

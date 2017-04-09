@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::view::WindowManager::signature="android/view/WindowManager";
+const std::string android::view::WindowManager::signature = "android/view/WindowManager";
 
-//const std::string android::view::WindowManager::LayoutParams::signature="android/view/WindowManager$LayoutParams";
+const std::string android::view::WindowManager::LayoutParams::signature = "android/view/WindowManager$LayoutParams";
 
 int android::view::WindowManager::LayoutParams::SOFT_INPUT_STATE_VISIBLE(){
     if(java::lang::Class cls=java::lang::Class::find<WindowManager::LayoutParams>()){

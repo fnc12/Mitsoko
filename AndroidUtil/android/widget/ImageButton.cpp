@@ -7,3 +7,9 @@
 //
 
 #include "ImageButton.hpp"
+
+#ifdef __ANDROID__
+
+const std::string android::widget::ImageButton::signature = "android/widget/ImageButton";
+
+#endif  //  __ANDROID__

@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::os::Handler::signature="android/os/Handler";
+const std::string android::os::Handler::signature = "android/os/Handler";
 
 bool android::os::Handler::post(const java::lang::Runnable &runnable){
     return this->sendMessage<bool>("post",runnable);

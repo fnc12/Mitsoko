@@ -8,14 +8,14 @@ namespace android{
     
     namespace os{
         
-        struct BaseBundle:public java::lang::Object{
+        struct BaseBundle : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/os/BaseBundle");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/os/BaseBundle");
             
             java::lang::Object get(const char *key);
             

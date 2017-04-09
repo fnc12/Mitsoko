@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::Button::signature="android/widget/Button";
+const std::string android::widget::Button::signature = "android/widget/Button";
 
 #endif  //__ANDROID__

@@ -18,8 +18,8 @@ namespace java {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/util/Map");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/util/Map");
             
             static_assert(std::is_base_of<java::lang::Object,K>::value, "K must derive java::lang::Object");
             static_assert(std::is_base_of<java::lang::Object,V>::value, "V must derive java::lang::Object");
@@ -47,6 +47,11 @@ namespace java {
 #endif  //__ANDROID__
             
         };
+        
+#ifdef __ANDROID__
+        template<class K,class V>
+        const std::string Map<K, V>::signature = "java/util/Map";
+#endif  //__ANDROID__
     }
 }
 

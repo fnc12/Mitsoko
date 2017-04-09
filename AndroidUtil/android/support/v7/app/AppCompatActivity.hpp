@@ -19,8 +19,8 @@ namespace android{
                     
 #ifdef __ANDROID__
                     
-//            const std::string signature;
-                    STATIC_VAR(const std::string, signature, "android/support/v7/app/AppCompatActivity");
+                    static const std::string signature;
+//                    STATIC_VAR(const std::string, signature, "android/support/v7/app/AppCompatActivity");
                     
                     ActionBar getSupportActionBar();
                     

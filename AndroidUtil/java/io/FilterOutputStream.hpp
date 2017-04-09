@@ -8,14 +8,14 @@ namespace java {
     
     namespace io {
         
-        struct FilterOutputStream:public OutputStream{
+        struct FilterOutputStream : public OutputStream {
             
             using OutputStream::OutputStream;
             
 #ifdef __ANDROID__
             
-//            static const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/io/FilterOutputStream");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/io/FilterOutputStream");
             
 #endif  //__ANDROID__
             

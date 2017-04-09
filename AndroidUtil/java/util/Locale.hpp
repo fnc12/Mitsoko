@@ -15,8 +15,8 @@ namespace java{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/util/Locale");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/util/Locale");
             
             void start();
             

@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::io::File::signature="java/io/OutputStream";
+const std::string java::io::OutputStream::signature = "java/io/OutputStream";
 
 void java::io::OutputStream::close(){
     this->sendMessage<void>("close");

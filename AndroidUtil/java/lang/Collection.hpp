@@ -10,13 +10,14 @@ namespace java{
         /**
          *  Generic interface.
          */
-        struct Collection:public Iterable{
+        struct Collection : public Iterable {
+            
             using Iterable::Iterable;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Collection");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Collection");
             
 #endif  //__ANDROID__
             

@@ -12,12 +12,16 @@
 #include "NoCopySpan.hpp"
 
 namespace android {
+    
     namespace text {
-        struct TextWatcher:public NoCopySpan{
+        
+        struct TextWatcher : public NoCopySpan{
+            
             using NoCopySpan::NoCopySpan;
+            
 #ifdef __ANDROID__
-            //            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/text/TextWatcher");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/text/TextWatcher");
             
 #endif  //__ANDROID__
             

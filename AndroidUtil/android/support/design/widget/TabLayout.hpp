@@ -18,15 +18,15 @@ namespace android {
                     using HorizontalScrollView::HorizontalScrollView;
 #ifdef __ANDROID__
                     
-//            const std::string signature;
-                    STATIC_VAR(const std::string, signature, "android/support/design/widget/TabLayout");
+            static const std::string signature;
+//                    STATIC_VAR(const std::string, signature, "android/support/design/widget/TabLayout");
                     
                     struct Tab:public java::lang::Object{
                         
                         using Object::Object;
                         
-//            const std::string signature;
-                        STATIC_VAR(const std::string, signature, "android/support/design/widget/TabLayout$Tab");
+            static const std::string signature;
+//                        STATIC_VAR(const std::string, signature, "android/support/design/widget/TabLayout$Tab");
                         
                         Tab& setText(const std::string &text);
                         

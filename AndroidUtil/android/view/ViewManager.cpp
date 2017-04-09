@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::view::ViewManager::signature="android/view/ViewManager";
+const std::string android::view::ViewManager::signature = "android/view/ViewManager";
 
 #endif  //__ANDROID__

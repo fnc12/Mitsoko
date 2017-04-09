@@ -9,14 +9,14 @@ namespace java{
     
     namespace lang{
         
-        struct Thread:public Object{
+        struct Thread : public Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Thread");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Thread");
             
             void start();
             

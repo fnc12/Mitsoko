@@ -8,14 +8,14 @@ namespace android{
     
     namespace widget{
         
-        struct BaseAdapter:public ListAdapter{
+        struct BaseAdapter : public ListAdapter{
             
             using ListAdapter::ListAdapter;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/BaseAdapter");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/BaseAdapter");
             
 #endif  //__ANDROID__
             

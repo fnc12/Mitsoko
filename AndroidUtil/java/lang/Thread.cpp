@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::Thread::signature="java/lang/Thread";
+const std::string java::lang::Thread::signature = "java/lang/Thread";
 
 void java::lang::Thread::start(){
     this->sendMessage<void>("start");

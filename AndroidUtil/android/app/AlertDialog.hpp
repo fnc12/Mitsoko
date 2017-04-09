@@ -15,14 +15,14 @@ namespace android{
     
     namespace app{
         
-        struct AlertDialog:public Dialog{
+        struct AlertDialog : public Dialog {
             
             using Dialog::Dialog;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/app/AlertDialog");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/app/AlertDialog");
             
             void show();
             
@@ -30,13 +30,12 @@ namespace android{
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/app/AlertDialog$Builder");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/app/AlertDialog$Builder");
                 
                 typedef std::function<void(content::DialogInterface,int)> OnClickCallback;
                 typedef std::map<int,OnClickCallback> OnClickMap;
                 static OnClickMap onClickMap;
-//                STATIC_VAR(OnClickMap, onClickMap, {});
                 
                 static Builder create(const content::Context &context);
                 

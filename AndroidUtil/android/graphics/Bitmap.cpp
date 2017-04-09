@@ -14,11 +14,11 @@ using std::endl;
 
 #ifdef __ANDROID__
 
-//const std::string android::graphics::Bitmap::signature="android/graphics/Bitmap";
+const std::string android::graphics::Bitmap::signature = "android/graphics/Bitmap";
 
-//const std::string android::graphics::Bitmap::CompressFormat::signature="android/graphics/Bitmap$CompressFormat";
+const std::string android::graphics::Bitmap::CompressFormat::signature = "android/graphics/Bitmap$CompressFormat";
 
-//const std::string android::graphics::Bitmap::Config::signature="android/graphics/Bitmap$Config";
+const std::string android::graphics::Bitmap::Config::signature = "android/graphics/Bitmap$Config";
 
 void android::graphics::Bitmap::recycle(){
     this->sendMessage<void>("recycle");
@@ -93,8 +93,13 @@ bool android::graphics::Bitmap::compress(CompressFormat format, int quality, con
     return this->sendMessage<bool>("compress", format, quality, stream);
 }
 
-auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter)->Bitmap{
-    if(auto java_env = java::lang::JNI::Env()){
+auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWidth, int dstHeight, bool filter) -> Bitmap {
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.callStaticFunc<Bitmap>("createScaledBitmap", src, dstWidth, dstHeight, filter);
+    }else{
+        return {};
+    }
+    /*if(auto java_env = java::lang::JNI::Env()){
         auto clazz = java_env->FindClass(signature().c_str());
         auto methodSignature = generateMethodSignature<Bitmap,Bitmap,int,int,bool>();
         auto mid = java_env->GetStaticMethodID(clazz,
@@ -108,7 +113,7 @@ auto android::graphics::Bitmap::createScaledBitmap(const Bitmap &src, int dstWid
                                                 jboolean(filter));
     }else{
         return {};
-    }
+    }*/
 }
 
 auto android::graphics::Bitmap::createBitmap(const Bitmap &source,
@@ -117,7 +122,12 @@ auto android::graphics::Bitmap::createBitmap(const Bitmap &source,
                                              int width,
                                              int height) -> Bitmap
 {
-    if(auto java_env = java::lang::JNI::Env()){
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.callStaticFunc<Bitmap>("createBitmap", source, x, y, width, height);
+    }else{
+        return {};
+    }
+    /*if(auto java_env = java::lang::JNI::Env()){
         auto clazz = java_env->FindClass(signature().c_str());
         auto methodSignature = generateMethodSignature<Bitmap,Bitmap,int,int,int,int>();
         auto mid = java_env->GetStaticMethodID(clazz,
@@ -132,7 +142,7 @@ auto android::graphics::Bitmap::createBitmap(const Bitmap &source,
                                                 jint(height));
     }else{
         return {};
-    }
+    }*/
 }
 
 #endif  //__ANDROID__

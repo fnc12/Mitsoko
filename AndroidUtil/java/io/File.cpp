@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::io::File::signature="java/io/File";
+const std::string java::io::File::signature = "java/io/File";
 
 auto java::io::File::create(const std::string &path)->File{
     auto p=java::lang::String::create(path);

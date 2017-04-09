@@ -11,25 +11,25 @@ namespace android{
         /**
          *  Interface.
          */
-        struct DialogInterface:public java::lang::Object{
+        struct DialogInterface : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/content/DialogInterface");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/content/DialogInterface");
             
             void cancel();
             
             void dismiss();
             
-            struct OnClickListener:public java::lang::Object{
+            struct OnClickListener : public java::lang::Object {
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/content/DialogInterface$OnClickListener");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/content/DialogInterface$OnClickListener");
                 
             };
             

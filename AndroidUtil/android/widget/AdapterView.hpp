@@ -14,8 +14,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/AdapterView");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/AdapterView");
             
 #endif  //__ANDROID__
             

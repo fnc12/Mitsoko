@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::EditText::signature="android/widget/EditText";
+const std::string android::widget::EditText::signature = "android/widget/EditText";
 
 auto android::widget::EditText::create(const content::Context &context)->EditText{
     return std::move(java::lang::Object::create<EditText>(context));

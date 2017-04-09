@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::CheckBox::signature="android/widget/CheckBox";
+const std::string android::widget::CheckBox::signature = "android/widget/CheckBox";
 
 #endif  //__ANDROID__

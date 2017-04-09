@@ -7,3 +7,9 @@
 //
 
 #include "IBinder.hpp"
+
+#ifdef __ANDROID__
+
+const std::string android::os::IBinder::signature = "android/os/IBinder";
+
+#endif  //__ANDROID__

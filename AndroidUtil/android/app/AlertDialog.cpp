@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::app::AlertDialog::signature="android/app/AlertDialog";
+const std::string android::app::AlertDialog::signature = "android/app/AlertDialog";
 
-//const std::string java::app::AlertDialog::Builder::signature="android/app/AlertDialog$Builder";
+const std::string android::app::AlertDialog::Builder::signature = "android/app/AlertDialog$Builder";
 
 android::app::AlertDialog::Builder::OnClickMap android::app::AlertDialog::Builder::onClickMap;
 

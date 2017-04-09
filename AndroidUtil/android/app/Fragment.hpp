@@ -15,8 +15,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/app/Fragment");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/app/Fragment");
             
             Activity getActivity();
             

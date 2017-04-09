@@ -7,12 +7,13 @@
 //
 
 #include "BitmapFactory.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 
-//const std::string android::graphics::BitmapFactory::signature="android/graphics/BitmapFactory";
+const std::string android::graphics::BitmapFactory::signature = "android/graphics/BitmapFactory";
 
-//const std::string android::graphics::BitmapFactory::Options::signature="android/graphics/BitmapFactory$Options";
+const std::string android::graphics::BitmapFactory::Options::signature = "android/graphics/BitmapFactory$Options";
 
 auto android::graphics::BitmapFactory::decodeFile(const std::string &pathName)->Bitmap{
     auto s=java::lang::String::create(pathName);
@@ -21,9 +22,10 @@ auto android::graphics::BitmapFactory::decodeFile(const std::string &pathName)->
 
 auto android::graphics::BitmapFactory::decodeFile(const java::lang::String &pathName)->Bitmap{
     if(auto java_env=java::lang::JNI::Env()){
-        auto clazz = java_env->FindClass(signature().c_str());
+//        auto clazz = java_env->FindClass(signature().c_str());
+        auto clazz = java::lang::Class::find<BitmapFactory>();
         auto methodSignature=generateMethodSignature<Bitmap,java::lang::String>();
-        auto mid=java_env->GetStaticMethodID(clazz,"decodeFile",methodSignature.c_str());
+        auto mid=java_env->GetStaticMethodID(clazz, "decodeFile", methodSignature.c_str());
         return java_env->CallStaticObjectMethod(clazz,mid,(jobject)pathName.handle);
     }else{
         return {};

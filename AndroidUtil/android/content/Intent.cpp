@@ -7,10 +7,11 @@
 //
 
 #include "Intent.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 
-//const std::string android::content::Intent::signature="android/content/Intent";
+const std::string android::content::Intent::signature = "android/content/Intent";
 
 auto android::content::Intent::create(const Context &context,const java::lang::Class &cls)->Intent{
     return std::move(java::lang::Object::create<Intent>(context,cls));
@@ -73,24 +74,19 @@ java::lang::String android::content::Intent::EXTRA_TEXT() {
 }
 
 auto android::content::Intent::createChooser(const Intent &target, const std::string &title) -> Intent {
-    /*
-    return this->sendMessage<Intent>("createChooser", target, t);*/
-    /*if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("EXTRA_TEXT");
-    }else{
-        return {};
-    }*/
     if(auto java_env = java::lang::JNI::Env()){
         auto t = java::lang::String::create(title);
-        auto clazz = java_env->FindClass(signature().c_str());
-        auto methodSignature = generateMethodSignature<Intent, Intent, java::lang::CharSequence>();
+//        auto clazz = java_env->FindClass(signature().c_str());
+        java::lang::Class clazz = java::lang::Class::find<Intent>();
+        /*auto methodSignature = generateMethodSignature<Intent, Intent, java::lang::CharSequence>();
         auto mid = java_env->GetStaticMethodID(clazz,
                                                "createChooser",
                                                methodSignature.c_str());
         return java_env->CallStaticObjectMethod(clazz,
                                                 mid,
                                                 target.handle,
-                                                t.handle);
+                                                t.handle);*/
+        return clazz.callStaticFunc<Intent>("createChooser", target, t);
     }else{
         return {};
     }

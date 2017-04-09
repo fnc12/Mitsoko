@@ -11,7 +11,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::content::Context::signature="android/content/Context";
+const std::string android::content::Context::signature = "android/content/Context";
 
 auto android::content::Context::getResources() -> res::Resources {
     return this->sendMessage<res::Resources>("getResources");

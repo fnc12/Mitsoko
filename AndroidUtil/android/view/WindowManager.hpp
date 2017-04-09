@@ -9,14 +9,14 @@ namespace android{
     
     namespace view{
         
-        struct WindowManager:public java::lang::Object{
+        struct WindowManager : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/view/WindowManager");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/view/WindowManager");
             
             struct LayoutParams:public ViewGroup::LayoutParams{
                 
@@ -24,8 +24,8 @@ namespace android{
                 
                 using Super::Super;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/view/WindowManager$LayoutParams");
+            static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/view/WindowManager$LayoutParams");
                 
                 static int SOFT_INPUT_STATE_VISIBLE();
             };

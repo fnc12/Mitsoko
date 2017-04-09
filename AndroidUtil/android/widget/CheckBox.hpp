@@ -8,14 +8,14 @@ namespace android{
     
     namespace widget{
         
-        struct CheckBox:public CompoundButton{
+        struct CheckBox : public CompoundButton {
             
             using CompoundButton::CompoundButton;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/CheckBox");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/CheckBox");
             
 #endif  //__ANDROID__
             

@@ -10,26 +10,25 @@ namespace android{
     
     namespace widget{
         
-        struct CompoundButton:public Button{
+        struct CompoundButton : public Button {
             
             using Button::Button;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/CompoundButton");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/CompoundButton");
             
             typedef std::function<void(CompoundButton,bool)> OnCheckedChangeCallback;
             typedef std::map<int,OnCheckedChangeCallback> OnCheckedMap;
             static OnCheckedMap onCheckedMap;
-//            STATIC_VAR(OnCheckedMap, onCheckedMap, {});
             
-            struct OnCheckedChangeListener:public java::lang::Object{
+            struct OnCheckedChangeListener : public java::lang::Object {
                 
                 using Object::Object;
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/widget/CompoundButton$OnCheckedChangeListener");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/widget/CompoundButton$OnCheckedChangeListener");
             };
             
             static void onCheckedChanged(int id,jobject sender,bool checked);

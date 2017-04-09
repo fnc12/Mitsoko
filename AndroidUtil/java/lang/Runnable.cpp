@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::Runnable::signature="java/lang/Runnable";
+const std::string java::lang::Runnable::signature = "java/lang/Runnable";
 
 #endif  //__ANDROID__

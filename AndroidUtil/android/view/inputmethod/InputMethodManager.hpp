@@ -23,8 +23,8 @@ namespace android {
 #ifdef __ANDROID__
                 using Object::Object;
                 
-                //            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/view/inputmethod/InputMethodManager");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/view/inputmethod/InputMethodManager");
                 
                 bool hideSoftInputFromWindow(const android::os::IBinder &windowToken, int flags);
                 

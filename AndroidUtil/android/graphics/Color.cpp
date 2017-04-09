@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::graphics::BitmapFactory::signature="android/graphics/Color";
+const std::string android::graphics::Color::signature = "android/graphics/Color";
 
 #endif  //__ANDROID__

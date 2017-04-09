@@ -11,7 +11,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::app::Activity::signature="android/app/Activity";
+const std::string android::app::Activity::signature = "android/app/Activity";
 
 java::lang::Object android::app::Activity::getSystemService(const std::string &name) {
     auto str = java::lang::String::create(name);

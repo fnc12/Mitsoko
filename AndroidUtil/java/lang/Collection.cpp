@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::Collection::signature="java/lang/Collection";
+const std::string java::lang::Collection::signature = "java/lang/Collection";
 
 #endif  //__ANDROID__

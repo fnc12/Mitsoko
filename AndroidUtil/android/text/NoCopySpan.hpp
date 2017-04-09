@@ -12,12 +12,16 @@
 #include "Mitsoko/AndroidUtil/java/lang/Object.hpp"
 
 namespace android {
+    
     namespace text {
-        struct NoCopySpan:public java::lang::Object{
+        
+        struct NoCopySpan : public java::lang::Object {
+            
             using Object::Object;
+            
 #ifdef __ANDROID__
-            //            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/text/NoCopySpan");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/text/NoCopySpan");
             
 #endif  //__ANDROID__
             

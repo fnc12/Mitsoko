@@ -9,14 +9,14 @@ namespace java{
     
     namespace lang{
         
-        struct String:public _CharSequence<String>{
+        struct String : public _CharSequence<String> {
             
             using _CharSequence::_CharSequence;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/String");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/String");
             
             const char* c_str() const;
             

@@ -14,8 +14,8 @@ namespace android {
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/graphics/Color");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/graphics/Color");
             
 #define STATIC_FINAL_INT(name) static int name(){ if(java::lang::Class cls=java::lang::Class::find<Color>()){ return cls.getStaticField<int>(#name); }else{ return -1; } }
             

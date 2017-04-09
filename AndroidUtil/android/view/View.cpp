@@ -10,9 +10,9 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::view::View::signature="android/view/View";
+const std::string android::view::View::signature = "android/view/View";
 
-//const std::string android::view::View::OnClickListener::signature="android/view/View$OnClickListener";
+const std::string android::view::View::OnClickListener::signature = "android/view/View$OnClickListener";
 
 android::view::View::OnClickMap android::view::View::onClickMap;
 
@@ -27,7 +27,7 @@ void android::view::View::onClick(int id,android::view::View v){
     }
 }
 
-void android::view::View::setOnClickListener(OnClick cb,const Viper::Disposable &disposable){
+void android::view::View::setOnClickListener(OnClick cb,const Mitsoko::Disposable &disposable){
     OnClickListener l;
     if(onClick){
         auto classSignature="kz/outlawstudio/viper/EventHandlers$ViewOnClickListener";

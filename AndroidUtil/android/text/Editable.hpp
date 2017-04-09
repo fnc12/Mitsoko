@@ -8,14 +8,14 @@ namespace android{
     
     namespace text{
         
-        struct Editable:public java::lang::_CharSequence<java::lang::String>{
+        struct Editable : public java::lang::_CharSequence<java::lang::String> {
             
             using _CharSequence::_CharSequence;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/text/Editable");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/text/Editable");
             
 #endif  //__ANDROID__
             

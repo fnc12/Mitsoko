@@ -10,16 +10,16 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::support::design::widget::TabLayout::signature="android/support/design/widget/TabLayout";
+const std::string android::support::design::widget::TabLayout::signature = "android/support/design/widget/TabLayout";
 
-//const std::string android::support::design::widget::TabLayout::Tab::signature="android/support/design/widget/TabLayout$Tab";
+const std::string android::support::design::widget::TabLayout::Tab::signature = "android/support/design/widget/TabLayout$Tab";
 
-auto android::support::design::widget::TabLayout::Tab::setText(const std::string &text)->Tab&{
+auto android::support::design::widget::TabLayout::Tab::setText(const std::string &text) -> Tab& {
     auto s=java::lang::String::create(text);
     return this->setText(s);
 }
 
-auto android::support::design::widget::TabLayout::Tab::setText(const java::lang::CharSequence &text)->Tab&{
+auto android::support::design::widget::TabLayout::Tab::setText(const java::lang::CharSequence &text) -> Tab& {
     this->sendMessage<Tab>("setText",text);
     return *this;
 }

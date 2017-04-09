@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::os::BaseBundle::signature="android/os/BaseBundle";
+const std::string android::os::BaseBundle::signature = "android/os/BaseBundle";
 
 java::lang::Object android::os::BaseBundle::get(const char *key){
     return std::move(this->get(std::string(key)));

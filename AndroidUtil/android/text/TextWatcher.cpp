@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::text::TextWatcher::signature="android/text/TextWatcher";
+const std::string android::text::TextWatcher::signature = "android/text/TextWatcher";
 
 #endif  //__ANDROID__

@@ -15,13 +15,13 @@ namespace android{
     
     namespace os{
         
-        struct AsyncTask: public java::lang::Object {
+        struct AsyncTask : public java::lang::Object {
             
             using Object::Object;
 #ifdef __ANDROID__
             
-            //            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/os/AsyncTask");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/os/AsyncTask");
             
 #endif  //__ANDROID__
         };

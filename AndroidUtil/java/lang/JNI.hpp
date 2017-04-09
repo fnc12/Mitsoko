@@ -50,7 +50,6 @@ namespace java{
              *  This variable contains appId like `kz.outlawstudio.groozim`.
              */
             static std::string appId;
-//            STATIC_VAR(std::string, appId, {});
             
             /**
              *  This variable contains `appId` but with '.' characters replaced with '/'
@@ -59,23 +58,17 @@ namespace java{
              *  classes for accessing helper classes like `ViperTableViewAdapter`.
              */
             static std::string appNamespace;
-//            STATIC_VAR(std::string, appNamespace, {});
         protected:
-            bool hasValue=false;
+            bool hasValue = false;
             
             typedef std::map<std::thread::id, JNIEnv*> JNIEnvMap;
             static JNIEnvMap envMap;
-//            STATIC_VAR(JNIEnvMap, envMap, {});
             
             void insertEnv(JNIEnv *env);
             
             void removeEnv();
             
             static std::mutex envMapMutex;
-            /*static std::mutex& envMapMutex(){
-                static std::mutex res;
-                return res;
-            }*/
         };
 #endif  //__ANDROID__
     }

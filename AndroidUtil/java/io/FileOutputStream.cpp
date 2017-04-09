@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string java::io::File::signature="java/io/FileOutputStream";
+const std::string java::io::FileOutputStream::signature = "java/io/FileOutputStream";
 
 auto java::io::FileOutputStream::create(const File &file)->FileOutputStream{
     return java::lang::Object::create<FileOutputStream>(file);

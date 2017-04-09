@@ -11,14 +11,14 @@ namespace java{
         /**
          *  Generic interface.
          */
-        struct List:public Collection{
+        struct List : public Collection {
             
             using Collection::Collection;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/List");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/List");
             
 #endif  //__ANDROID__
             

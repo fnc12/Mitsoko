@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::view::MenuItem::signature="android/view/MenuItem";
+const std::string android::view::MenuItem::signature = "android/view/MenuItem";
 
 auto android::view::MenuItem::setTitle(const std::string &title)->MenuItem&{
     auto str=java::lang::String::create(title);

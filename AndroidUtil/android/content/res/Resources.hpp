@@ -16,8 +16,8 @@ namespace android{
                 
 #ifdef __ANDROID__
                 
-//            const std::string signature;
-                STATIC_VAR(const std::string, signature, "android/content/res/Resources");
+                static const std::string signature;
+//                STATIC_VAR(const std::string, signature, "android/content/res/Resources");
 #endif  //__ANDROID__
             };
         }

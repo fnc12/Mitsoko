@@ -9,14 +9,14 @@ namespace android{
     
     namespace content{
         
-        struct Context:public java::lang::Object{
+        struct Context : public java::lang::Object {
             
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/content/Context");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/content/Context");
             
             res::Resources getResources();
             

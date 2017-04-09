@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::os::Bundle::signature="android/os/Bundle";
+const std::string android::os::Bundle::signature = "android/os/Bundle";
 
 #endif  //__ANDROID__

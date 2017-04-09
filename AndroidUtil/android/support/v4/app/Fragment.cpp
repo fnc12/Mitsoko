@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::support::v4::app::Fragment::signature="android/support/v4/app/Fragment";
+const std::string android::support::v4::app::Fragment::signature = "android/support/v4/app/Fragment";
 
 auto android::support::v4::app::Fragment::getActivity()->FragmentActivity{
     return this->sendMessage<FragmentActivity>("getActivity");

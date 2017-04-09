@@ -164,7 +164,7 @@ NS::MutableDictionary& Mitsoko::ImageCache::ramCache(){
 
 #else
 
-auto Viper::ImageCache::ramCache()->decltype(_ramCache)&{
+auto Mitsoko::ImageCache::ramCache()->decltype(_ramCache)&{
     if(!_ramCache){
         _ramCache = java::util::HashMap<java::lang::String, android::graphics::Bitmap>::create();
         _ramCache.handle = java::lang::JNI::Env()->NewGlobalRef((jobject)_ramCache.handle);

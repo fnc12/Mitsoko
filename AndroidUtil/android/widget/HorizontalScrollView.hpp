@@ -8,14 +8,14 @@ namespace android{
     
     namespace widget{
         
-        struct HorizontalScrollView:public FrameLayout{
+        struct HorizontalScrollView : public FrameLayout {
             
             using FrameLayout::FrameLayout;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/widget/HorizontalScrollView");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/widget/HorizontalScrollView");
             
 #endif  //__ANDROID__
             

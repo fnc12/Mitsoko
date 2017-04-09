@@ -10,7 +10,7 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::ListAdapter::signature="android/widget/ListAdapter";
+const std::string android::widget::ListAdapter::signature = "android/widget/ListAdapter";
 
 void android::widget::ListAdapter::notifyDataSetChanged(){
     this->sendMessage<void>("notifyDataSetChanged");

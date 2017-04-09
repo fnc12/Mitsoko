@@ -14,8 +14,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/view/ViewManager");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/view/ViewManager");
             
 #endif  //__ANDROID__
             

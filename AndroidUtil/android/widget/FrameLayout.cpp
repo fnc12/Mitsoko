@@ -10,6 +10,6 @@
 
 #ifdef __ANDROID__
 
-//const std::string android::widget::FrameLayout::signature="android/widget/FrameLayout";
+const std::string android::widget::FrameLayout::signature = "android/widget/FrameLayout";
 
 #endif  //__ANDROID__

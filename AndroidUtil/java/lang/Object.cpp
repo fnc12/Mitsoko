@@ -18,16 +18,16 @@ java::lang::Object::operator bool() const{
 
 #ifdef __ANDROID__
 
-//const std::string java::lang::Object::signature="java/lang/Object";
+const std::string java::lang::Object::signature = "java/lang/Object";
 
 java::lang::Object::~Object(){
-    if(this->isGlobal){
+    /*if(this->isGlobal){
         if(auto java_env=JNI::Env()){
             java_env->DeleteGlobalRef((jobject)this->handle);
             this->isGlobal=false;
             this->handle=nullptr;
         }
-    }
+    }*/
 }
 
 template<>
@@ -77,13 +77,13 @@ jclass java::lang::Object::getClass(){
     }
 }
 
-void java::lang::Object::makeGlobal(){
+/*void java::lang::Object::makeGlobal(){
     if(!this->isGlobal){
         if(auto java_env=JNI::Env()){
             this->handle=decltype(this->handle)(java_env->NewGlobalRef((jobject(this->handle))));
             this->isGlobal=true;
         }
     }
-}
+}*/
 
 #endif  //__ANDROID__

@@ -5,20 +5,23 @@
 #include "Object.hpp"
 
 namespace java{
+    
     namespace lang{
-        struct Class:public Object{
+        
+        struct Class : public Object {
+            
             using Object::Object;
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "java/lang/Class");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "java/lang/Class");
             
             static jclass find(const std::string &signature);
             
             template<class T>
             static jclass find(){
-                return find(T::signature());
+                return find(T::signature);
             }
             
             template<class T>
@@ -41,12 +44,41 @@ namespace java{
                 return std::move(getStaticField<T>(name.c_str()));
             }
             
+            template<class R, class ...Args>
+            R callStaticFunc(const std::string &functionName, Args ...args) {
+                if(auto env = java::lang::JNI::Env()){
+//                    if(auto clazz = java::lang::Class::find<Intent>()){
+                        auto methodSignature = generateMethodSignature<R, Args...>();
+                    auto mid = env->GetStaticMethodID(jclass(this->handle),
+                                                      functionName.c_str(),
+                                                      methodSignature.c_str());
+                        /*return java_env->CallStaticObjectMethod(clazz,
+                                                                mid,
+                                                                target.handle,
+                                                                t.handle);*/
+                        return _callStaticFunc<R>(env, jclass(this->handle), mid, args...);
+                    /*}else{
+                        return MessageSender<R>().failure();
+                    }*/
+                }else{
+                    return MessageSender<R>().failure();
+                }
+            }
+            
         protected:
             
             template<class T>
             T _getStaticField(jfieldID fieldID, JNIEnv *env){
                 return env->GetStaticObjectField(jclass(this->handle),fieldID);
             }
+            
+            template<class R, class ...Args>
+            R _callStaticFunc(JNIEnv *env, jclass cls, jmethodID mid, Args ...args) {
+                return env->CallStaticObjectMethod(cls,
+                                                   mid,
+                                                   ArgumentProxy<Args>::cast(args)...);
+            }
+            
 #endif  //__ANDROID__
         };
         

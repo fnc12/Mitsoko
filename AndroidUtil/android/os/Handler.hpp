@@ -15,8 +15,8 @@ namespace android{
             
 #ifdef __ANDROID__
             
-//            const std::string signature;
-            STATIC_VAR(const std::string, signature, "android/os/Handler");
+            static const std::string signature;
+//            STATIC_VAR(const std::string, signature, "android/os/Handler");
             
             bool post(const java::lang::Runnable &runnable);
             
