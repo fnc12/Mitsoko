@@ -21,7 +21,6 @@ namespace android {
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/view/View");
             
             typedef std::function<void(Handle)> OnClick;
             
@@ -31,13 +30,11 @@ namespace android {
             typedef std::map<Mitsoko::Disposable::Id,int> DisposablesMap;
             static DisposablesMap disposablesMap;
             
-            struct OnClickListener : public java::lang::Object{
+            struct OnClickListener : public java::lang::Object {
                 
                 using Object::Object;
                 
                 static const std::string signature;
-                
-//                STATIC_VAR(const std::string, signature, "android/view/View$OnClickListener");
             };
             
             static void onClick(int id,android::view::View v);
@@ -78,6 +75,8 @@ namespace android {
             int getHeight();
             
             android::os::IBinder getWindowToken();
+            
+            View getRootView();
             
             static int VISIBLE();
             
