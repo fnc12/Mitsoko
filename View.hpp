@@ -40,21 +40,12 @@ namespace Mitsoko{
         
         const void *handle = nullptr;
         
-//        ViewBase(decltype(handle)handle_);
-//        ViewBase(const ViewBase&) = delete;
-        
         virtual ~ViewBase();
-        
-//        virtual void willAppear()=0;
-//        virtual void didAppear()=0;
-//        virtual void willDisappear()=0;
         
         std::function<void()> willAppear;
         std::function<void()> didAppear;
         std::function<void()> willDisappear;
         std::function<void(int, std::string)> messageReceived;
-        
-//        typedef std::map<std::string,std::string> Arguments;
         
 //        virtual void messageReceived(int messageCode, std::string args) {};
         
@@ -81,7 +72,6 @@ namespace Mitsoko{
         virtual void dispose() override{
             this->Mitsoko::Disposable::dispose();
         }
-//    protected:
     };
 }
 

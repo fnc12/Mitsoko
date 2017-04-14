@@ -22,22 +22,11 @@
 
 namespace Mitsoko{
     
-//    template<class UI, class EH>
-//    template<class V>
-    struct PresenterBase : /*public EH,*/ public Disposable {
-//        std::shared_ptr<UI> userInterface;
+    struct PresenterBase : public Disposable {
         WireframeBase wireframe;
-//        V view;
-        
-        /*template<class T>
-        void setUserInterface(std::shared_ptr<T> ptr) {
-            this->userInterface = std::dynamic_pointer_cast<UI>(ptr);
-        }*/
         
         virtual void dispose() override {
             this->Disposable::dispose();
-//            this->userInterface = nullptr;
-//            this->input = nullptr;
         }
         
         virtual ViewBase* getViewBase()=0;
@@ -49,10 +38,7 @@ namespace Mitsoko{
         V view;
         
         virtual void init(){
-            /*if(W::staticArgument()){
-                this->init(std::move(*W::staticArgument()));
-                W::staticArgument() = {};
-            }*/
+            //..
         }
         
         virtual ViewBase* getViewBase() override {

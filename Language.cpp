@@ -16,11 +16,11 @@ const std::string& Viper::Language::current(){
     if(!_current.length()){
         languageOnceMutex.lock();
 #ifdef __APPLE__
-        NS::String currentLanguage=NS::Bundle::mainBundle().preferredLocalizations()[0];
-        _current=currentLanguage.UTF8String();
+        NS::String currentLanguage = NS::Bundle::mainBundle().preferredLocalizations()[0];
+        _current = currentLanguage.UTF8String();
 #else
-        auto language=java::util::Locale::getDefault().getLanguage();
-        _current=language.c_str();
+        auto language = java::util::Locale::getDefault().getLanguage();
+        _current = language.c_str();
 #endif
         languageOnceMutex.unlock();
     }

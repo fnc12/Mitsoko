@@ -14,16 +14,8 @@ namespace Viper{
         static void setCurrent(const std::string &newValue);
     protected:
         static std::string _current;
-        /*static std::string& _current(){
-            static std::string res;
-            return res;
-        }*/
         
         static std::mutex languageOnceMutex;
-        /*static std::mutex& languageOnceMutex(){
-            static std::mutex res;
-            return res;
-        }*/
     };
     
     std::string localizedString(const std::string &key,const std::string &lang);
