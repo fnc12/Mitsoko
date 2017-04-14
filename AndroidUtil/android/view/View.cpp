@@ -114,4 +114,8 @@ android::os::IBinder android::view::View::getWindowToken() {
     return this->sendMessage<android::os::IBinder>("getWindowToken");
 }
 
+android::view::View android::view::View::getRootView() {
+    return this->sendMessage<View>("getRootView");
+}
+
 #endif  //__ANDROID__
