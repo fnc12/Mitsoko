@@ -28,6 +28,8 @@ namespace NS {
         
         void setHTTPBody(const NS::Data &newValue);
         
+        NS::Data HTTPBody();
+        
         void setHTTPMethod(const NS::String &newValue);
         
         void setHTTPMethod(const std::string &newValue);
