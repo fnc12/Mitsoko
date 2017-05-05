@@ -32,6 +32,10 @@ void NS::MutableURLRequest::setHTTPMethod(const char *newValue) {
     this->setHTTPMethod(std::string(newValue));
 }
 
+NS::Data NS::MutableURLRequest::HTTPBody() {
+    return this->sendMessage<Handle>("HTTPBody");
+}
+
 void NS::MutableURLRequest::setHTTPBody(const NS::Data &newValue) {
     this->sendMessage<void>("setHTTPBody:", newValue.handle);
 }

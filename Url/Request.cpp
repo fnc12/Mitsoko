@@ -302,8 +302,16 @@ std::string Mitsoko::Url::Request::method() {
 auto Mitsoko::Url::Request::body(const std::string &s) -> Request& {
     
 #ifdef __APPLE__
-    auto str = NS::String::stringWithCString(s.c_str(), NS::String::Encoding::UTF8);
-    request.setHTTPBody(str.dataUsingEncoding(NS::String::Encoding::UTF8));
+//    auto str = NS::String::stringWithCString(s.c_str(), NS::String::Encoding::UTF8);
+    auto str = [NSString stringWithUTF8String:s.c_str()];
+//    str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    auto data = NS::String((__bridge const void*)str).dataUsingEncoding(NS::String::Encoding::UTF8);
+    request.setHTTPBody(data);
+    /*{
+        auto body = request.HTTPBody();
+        auto s = NS::String::create(body, NS::String::Encoding::UTF8);
+        NSLog(@"s = %s", s.UTF8String());
+    }*/
 #else
     auto str = java::lang::String::create(s);
     request.sendMessage<void>("setBodyString", str);
