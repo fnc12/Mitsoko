@@ -23,6 +23,26 @@ android::widget::TextView::TextWatcherEventHandler::DisposablesMap android::widg
 
 android::widget::TextView::TextWatcherEventHandler::Observer android::widget::TextView::TextWatcherEventHandler::observer;
 
+android::widget::TextView android::widget::TextView::create(const android::content::Context &context) {
+    return java::lang::Object::create<TextView>(context);
+}
+
+void android::widget::TextView::setTextSize(float size) {
+    this->sendMessage<void>("setTextSize", size);
+}
+
+float android::widget::TextView::getTextSize() {
+    return this->sendMessage<float>("getTextSize");
+}
+
+void android::widget::TextView::setGravity(int gravity) {
+    this->sendMessage<void>("setGravity", gravity);
+}
+
+int android::widget::TextView::getGravity() {
+    return this->sendMessage<int>("getGravity");
+}
+
 void android::widget::TextView::setSelected(bool value) {
     this->sendMessage<void>("setSelected", value);
 }

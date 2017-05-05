@@ -81,6 +81,13 @@ struct ArgumentProxy<double>{
 };
 
 template<>
+struct ArgumentProxy<float>{
+    static jfloat cast(const float &value){
+        return jfloat(value);
+    }
+};
+
+template<>
 struct ArgumentProxy<bool>{
     static jboolean cast(const bool &value){
         return jboolean(value);
@@ -150,6 +157,17 @@ struct MessageSender<double>{
         return java_env->CallDoubleMethod(receiver,methodId,ArgumentProxy<Args>::cast(args)...);
     }
     double failure()const{
+        return -1;
+    }
+};
+
+template<>
+struct MessageSender<float>{
+    template<class ...Args>
+    float operator()(JNIEnv *java_env,jobject receiver,jmethodID methodId,const Args& ...args)const{
+        return java_env->CallFloatMethod(receiver,methodId,ArgumentProxy<Args>::cast(args)...);
+    }
+    float failure()const{
         return -1;
     }
 };

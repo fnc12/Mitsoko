@@ -185,9 +185,9 @@ namespace Mitsoko {
         virtual void onCreateCell(const void *cellHandle,int section,int row,const data_type &item) throw (std::runtime_error){
             if(this->onCreateCellLambda){
                 this->onCreateCellLambda(cellHandle, section, row, item);
-            }else{
+            }/*else{
                 throw std::runtime_error("onCreateCell is not implemented. Either implement it in you adapter subclass or assign onCreateCellLambda to your adapter instance");
-            }
+            }*/
         }
         
         virtual void onDisplayCell(const void *cellHandle,int section,int row,const data_type &item){

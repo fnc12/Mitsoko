@@ -64,6 +64,7 @@
 #include "android/text/Editable.hpp"
 #include "android/text/InputType.hpp"
 
+#include "android/view/Gravity.hpp"
 #include "android/view/MenuItem.hpp"
 #include "android/view/View.hpp"
 #include "android/view/ViewGroup.hpp"
@@ -88,6 +89,7 @@
 #include "android/widget/LinearLayout.hpp"
 #include "android/widget/ListAdapter.hpp"
 #include "android/widget/ListView.hpp"
+#include "android/widget/RelativeLayout.hpp"
 #include "android/widget/Switch.hpp"
 #include "android/widget/TabHost.hpp"
 #include "android/widget/TextView.hpp"

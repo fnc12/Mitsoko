@@ -7,6 +7,7 @@
 #include "Mitsoko/AndroidUtil/android/graphics/Color.hpp"
 #include "Mitsoko/AndroidUtil/android/text/TextWatcher.hpp"
 #include "Mitsoko/AndroidUtil/android/text/Editable.hpp"
+#include "Mitsoko/AndroidUtil/android/content/Context.hpp"
 #include "Mitsoko/Disposable.hpp"
 
 #include <functional>
@@ -24,19 +25,26 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/widget/TextView");
+            
+            static TextView create(const android::content::Context &context);
             
             typedef std::function<void(java::lang::CharSequence,int,int,int)> OnTextChanged;
             typedef std::function<void(java::lang::CharSequence,int,int,int)> BeforeTextChanged;
             typedef std::function<void(android::text::Editable)> AfterTextChanged;
+            
+            void setTextSize(float size);
+            
+            float getTextSize();
+            
+            void setGravity(int gravity);
+            
+            int getGravity();
             
             void setInputType(int type);
             
             void setTextColor(int color);
             
             void setText(const std::string &value);
-            
-//            void setText(const java::lang::String &str);
             
             void setSelected(bool value);
             

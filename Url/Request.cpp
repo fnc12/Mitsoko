@@ -333,11 +333,11 @@ void Mitsoko::Url::Request::urlResponseReceived(int requestId,
             std::vector<char> d;
             if(auto env = java::lang::JNI::Env()){
                 if(data){
-                    LOGI("env = %p", env);
+//                    LOGI("env = %p", env);
                     auto buffer = env->GetByteArrayElements(data, NULL);
-                    LOGI("buffer = %p",buffer);
+//                    LOGI("buffer = %p",buffer);
                     auto size = env->GetArrayLength(data);
-                    LOGI("size = %ld",long(size));
+//                    LOGI("size = %ld",long(size));
                     
                     auto dataBegin = buffer;
                     auto dataEnd = dataBegin + size;

@@ -74,7 +74,6 @@ namespace Mitsoko{
     struct Callbackable {
         typedef C return_type;
         std::function<void(C)> callback;
-//        STATIC_VAR(std::function<void(C)>, staticCallback, {});
         static std::function<void(C)> staticCallback;
         
         Callbackable():callback(std::move(staticCallback)){}
@@ -87,7 +86,6 @@ namespace Mitsoko{
     struct Callbackable<void,W> {
         typedef void return_type;
         std::function<void()> callback;
-//        STATIC_VAR(std::function<void()>, staticCallback, {});
         static std::function<void()> staticCallback;
         
         Callbackable():callback(std::move(staticCallback)){}
@@ -104,11 +102,6 @@ namespace Mitsoko{
          *  Tempopary storage for argument. Must be assigned from called module wireframe before 
          *  switching to another module.
          */
-        /*static std::experimental::optional<argument_type>& staticArgument(){
-            static std::experimental::optional<argument_type> res;
-            return res;
-        }*/
-        
         static std::experimental::optional<argument_type> staticArgument;
     };
     

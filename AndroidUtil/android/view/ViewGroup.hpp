@@ -9,21 +9,25 @@ namespace android{
     
     namespace view{
         
-        struct ViewGroup:public View{
+        struct ViewGroup : public View {
             
             using View::View;
             
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/view/ViewGroup");
+            
+            void removeAllViews();
+            
+            void addView(const android::view::View &v);
             
             struct LayoutParams : public java::lang::Object {
                 
                 using Object::Object;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$LayoutParams");
+                
+                static LayoutParams create(int width, int height);
                 
                 static int MATCH_PARENT();
                 
@@ -35,7 +39,6 @@ namespace android{
                 using LayoutParams::LayoutParams;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/view/ViewGroup$MarginLayoutParams");
                 
             };
             
