@@ -16,4 +16,11 @@ void android::webkit::WebView::loadUrl(const java::lang::String &url) {
     this->sendMessage<void>("loadUrl", url);
 }
 
+void android::webkit::WebView::loadData(const std::string &data,
+                                        const std::string &mimeType,
+                                        const std::string &encoding)
+{
+    this->sendMessage<void>("loadData", java::lang::String::create(data), java::lang::String::create(mimeType), java::lang::String::create(encoding));
+}
+
 #endif  //__ANDROID__

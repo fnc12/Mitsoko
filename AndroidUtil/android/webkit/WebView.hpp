@@ -26,6 +26,10 @@ namespace android {
             
             void loadUrl(const java::lang::String &url);
             
+            void loadData(const std::string &data,
+                          const std::string &mimeType,
+                          const std::string &encoding);
+            
 #endif  //  __ANDROID__
             
         };

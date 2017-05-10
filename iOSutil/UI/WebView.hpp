@@ -22,6 +22,8 @@ namespace UI {
         static const std::string className;
         
         void loadRequest(const NS::URLRequest &request);
+        
+        void loadHTMLString(const std::string &str, const NS::URL &baseURL);
 #endif
         
     };
