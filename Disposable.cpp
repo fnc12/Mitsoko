@@ -8,6 +8,11 @@
 
 #include "Disposable.hpp"
 
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
 std::mutex Mitsoko::Disposable::observersMutex;
 
 std::vector<Mitsoko::Disposable::Observer*> Mitsoko::Disposable::observers;
@@ -21,6 +26,7 @@ Mitsoko::Disposable::Disposable():id(generateId()){}
 void Mitsoko::Disposable::dispose(){
     for(auto observer : observers) {
         const auto id = this->id;
+//        cout << "observer = " << observer <<endl;
         observer->disposableDidDispose(id);
     }
 }
@@ -28,11 +34,13 @@ void Mitsoko::Disposable::dispose(){
 void Mitsoko::Disposable::subscribe(Observer *observer){
     observersMutex.lock();
     observers.emplace_back(observer);
+//    cout << "subscribe " << observer << ", observers count = " << observers.size() << endl;
     observersMutex.unlock();
 }
 
 void Mitsoko::Disposable::unsubscribe(Observer *observer){
     observersMutex.lock();
+//    cout << "unsubscribe " << observer << ", observers count = " << observers.size() << endl;
     const auto it=std::find(observers.begin(),
                             observers.end(),
                             observer);

@@ -76,5 +76,6 @@
 #include "UI/TextView.hpp"
 #include "UI/View.hpp"
 #include "UI/ViewController.hpp"
+#include "UI/WebView.hpp"
 
 #endif /* iOSutil_h */

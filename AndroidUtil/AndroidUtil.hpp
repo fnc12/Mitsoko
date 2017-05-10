@@ -75,6 +75,7 @@
 #include "android/view/inputmethod/InputMethodManager.hpp"
 
 #include "android/widget/AbsListView.hpp"
+#include "android/widget/AbsoluteLayout.hpp"
 #include "android/widget/Adapter.hpp"
 #include "android/widget/AdapterView.hpp"
 #include "android/widget/BaseAdapter.hpp"
@@ -93,6 +94,8 @@
 #include "android/widget/Switch.hpp"
 #include "android/widget/TabHost.hpp"
 #include "android/widget/TextView.hpp"
+
+#include "android/webkit/WebView.hpp"
 
 #ifdef __ANDROID__
 
