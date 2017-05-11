@@ -49,7 +49,8 @@ namespace NS {
         
         NS::Data dataUsingEncoding(Encoding encoding);
         
-//        static NS::String create(const std::string &str);
+        NS::String stringByAddingPercentEscapesUsingEncoding(NS::String::Encoding enc);
+        
         static NS::String stringWithCString(const char *cStr, NS::String::Encoding encoding);
         
         static NS::String create(const NS::Data &data, NS::String::Encoding encoding);

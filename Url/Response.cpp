@@ -10,7 +10,7 @@
 
 #include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 
-Mitsoko::Url::Response::Response(decltype(response) response_):response(response_){}
+Mitsoko::Url::Response::Response(decltype(response) response_):response(response_),headers{*this}{}
 
 int Mitsoko::Url::Response::statusCode() {
     
@@ -42,4 +42,34 @@ std::string Mitsoko::Url::Response::statusDescription() {
 
 Mitsoko::Url::Response::operator bool() const {
     return bool(response);
+}
+
+std::string Mitsoko::Url::Response::Headers::operator[](const std::string &key) {
+#ifdef __APPLE__
+    auto nsKey = NS::String::stringWithCString(key.c_str(), NS::String::Encoding::UTF8);
+    auto headersDict = response.response.allHeaderFields();
+    if(auto value = headersDict[nsKey].as<NS::String>()){
+        return value.UTF8String();
+    }else{
+        return {};
+    }
+#else
+    using namespace java::lang;
+    using namespace java::util;
+    auto javaKey = String::create(key);
+    auto headersMap = response.response.sendMessage<Map<String, List<String>>>("getHeaders");
+    if(auto resList = headersMap.get(javaKey)){
+        if(resList.size()){
+            if(auto res = resList.get(0)){
+                return res.c_str();
+            }else{
+                return {};
+            }
+        }else{
+            return {};
+        }
+    }else{
+        return {};
+    }
+#endif
 }

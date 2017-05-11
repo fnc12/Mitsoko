@@ -51,8 +51,10 @@ void NS::MutableURLRequest::setValueForHTTPHeaderField(const NS::String &value, 
 }
 
 void NS::MutableURLRequest::setValueForHTTPHeaderField(const std::string &value,const std::string &field) {
-    auto v = NS::String::stringWithCString(value.c_str(), NS::String::Encoding::UTF8);
-    auto f = NS::String::stringWithCString(field.c_str(), NS::String::Encoding::UTF8);
+//    auto v = NS::String::stringWithCString(value.c_str(), NS::String::Encoding::UTF8);
+    auto v = CF::String::create(value);
+//    auto f = NS::String::stringWithCString(field.c_str(), NS::String::Encoding::UTF8);
+    auto f = CF::String::create(field);
     this->setValueForHTTPHeaderField(v, f);
 }
 

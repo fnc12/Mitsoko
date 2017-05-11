@@ -19,7 +19,6 @@ namespace java {
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "java/util/Map");
             
             static_assert(std::is_base_of<java::lang::Object,K>::value, "K must derive java::lang::Object");
             static_assert(std::is_base_of<java::lang::Object,V>::value, "V must derive java::lang::Object");
@@ -49,16 +48,13 @@ namespace java {
         };
         
 #ifdef __ANDROID__
-        template<class K,class V>
+        template<class K, class V>
         const std::string Map<K, V>::signature = "java/util/Map";
 #endif  //__ANDROID__
     }
 }
 
 #ifdef __ANDROID__
-
-/*template<class K,class V>
- const std::string java::util::Map<K,V>::signature="java/util/Map";*/
 
 template<class K,class V>
 void java::util::Map<K,V>::clear(){
@@ -81,7 +77,7 @@ bool java::util::Map<K,V>::equals(const java::lang::Object &object){
 }
 
 template<class K,class V>
-V java::util::Map<K,V>::get(const java::lang::Object &key){
+V java::util::Map<K, V>::get(const java::lang::Object &key){
     return (V)this->sendMessage<java::lang::Object>("get",key);
 }
 

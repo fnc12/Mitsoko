@@ -22,4 +22,8 @@ NS::String NS::HTTPURLResponse::localizedStringForStatusCode(int statusCode) {
     return sendMessage<Handle>(cls, "localizedStringForStatusCode:", NSInteger(statusCode));
 }
 
+NS::Dictionary NS::HTTPURLResponse::allHeaderFields() {
+    return this->sendMessage<Handle>("allHeaderFields");
+}
+
 #endif  //__APPLE__

@@ -25,9 +25,17 @@ namespace Mitsoko {
         
         struct Response {
             
+            struct Headers {
+                Response &response;
+                
+                std::string operator[](const std::string &key);
+            };
+            
             int statusCode();
             
             std::string statusDescription();
+            
+            Headers headers;
             
             operator bool () const;
             

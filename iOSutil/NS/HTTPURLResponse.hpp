@@ -11,6 +11,7 @@
 
 #include "URLResponse.hpp"
 #include "String.hpp"
+#include "Mitsoko/iOSutil/NS/Dictionary.hpp"
 
 namespace NS {
     
@@ -23,6 +24,8 @@ namespace NS {
         static const std::string className;
         
         int statusCode();
+        
+        NS::Dictionary allHeaderFields();
         
         static NS::String localizedStringForStatusCode(int statusCode);
         
