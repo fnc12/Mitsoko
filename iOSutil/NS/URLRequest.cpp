@@ -20,4 +20,10 @@ NS::String NS::URLRequest::HTTPMethod() {
     return this->sendMessage<Handle>("HTTPMethod");
 }
 
+NS::URLRequest NS::URLRequest::requestWithURL(const NS::URL &url) {
+    auto cls = NS::getClass(className);
+    assert(cls);
+    return NS::Object::sendMessage<Handle>(cls, "requestWithURL:", url.handle);
+}
+
 #endif  //__APPLE__

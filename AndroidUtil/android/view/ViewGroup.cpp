@@ -21,9 +21,15 @@ void android::view::View::setLayoutParams<android::view::ViewGroup::LayoutParams
     this->sendMessage<void>("setLayoutParams",params);
 }
 
+android::view::ViewGroup::LayoutParams android::view::ViewGroup::LayoutParams::create(int width, int height) {
+    return java::lang::Object::create<LayoutParams>(width, height);
+}
+
 int android::view::ViewGroup::LayoutParams::MATCH_PARENT(){
-    if(java::lang::Class cls=java::lang::Class::find<LayoutParams>()){
-        return cls.getStaticField<int>("MATCH_PARENT");
+    if(java::lang::Class cls = java::lang::Class::find<LayoutParams>()){
+        auto res = cls.getStaticField<int>("MATCH_PARENT");
+//        java::lang::JNI::Env()->DeleteLocalRef(jobject(cls.handle));
+        return res;
     }else{
         return -1;
     }
@@ -31,10 +37,20 @@ int android::view::ViewGroup::LayoutParams::MATCH_PARENT(){
 
 int android::view::ViewGroup::LayoutParams::WRAP_CONTENT(){
     if(java::lang::Class cls=java::lang::Class::find<LayoutParams>()){
-        return cls.getStaticField<int>("WRAP_CONTENT");
+        auto res = cls.getStaticField<int>("WRAP_CONTENT");
+//        java::lang::JNI::Env()->DeleteLocalRef(jobject(cls.handle));
+        return res;
     }else{
         return -1;
     }
+}
+
+void android::view::ViewGroup::removeAllViews() {
+    this->sendMessage<void>("removeAllViews");
+}
+
+void android::view::ViewGroup::addView(const android::view::View &v) {
+    this->sendMessage<void>("addView", v);
 }
 
 #endif

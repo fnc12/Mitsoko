@@ -34,7 +34,6 @@ namespace java{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "java/lang/Object");
             
             static Handle newGlobalRef(const Object &object){
                 if(object){
@@ -49,7 +48,6 @@ namespace java{
             }
             
         protected:
-//            bool isGlobal = false;
             
             template<class T>
             void _setField(JNIEnv *java_env,jfieldID fieldId,const T &value){

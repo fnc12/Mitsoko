@@ -23,6 +23,8 @@ namespace NS {
         
         static const std::string className;
         
+        static NS::URLRequest requestWithURL(const NS::URL &url);
+        
         NS::URL URL();
         
         NS::String HTTPMethod();
