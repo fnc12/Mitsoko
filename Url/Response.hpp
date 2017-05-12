@@ -39,6 +39,10 @@ namespace Mitsoko {
             
             operator bool () const;
             
+            Response(const Response& other);
+            
+            Response(Response &&other);
+            
         protected:
             
 #ifdef __APPLE__

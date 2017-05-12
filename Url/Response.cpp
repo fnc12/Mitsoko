@@ -12,6 +12,14 @@
 
 Mitsoko::Url::Response::Response(decltype(response) response_):response(response_),headers{*this}{}
 
+Mitsoko::Url::Response::Response(const Response& other):headers{*this}, response(other.response) {
+    //..
+}
+
+Mitsoko::Url::Response::Response(Response &&other):headers{*this}, response(std::move(other.response)) {
+    //..
+}
+
 int Mitsoko::Url::Response::statusCode() {
     
 #ifdef __APPLE__
@@ -19,7 +27,6 @@ int Mitsoko::Url::Response::statusCode() {
 #else
     return response.sendMessage<int>("getStatusCode");
 #endif  //__APPLE__
-    
 }
 
 std::string Mitsoko::Url::Response::statusDescription() {

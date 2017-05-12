@@ -13,7 +13,9 @@
 const std::string NS::HTTPURLResponse::className = "NSHTTPURLResponse";
 
 int NS::HTTPURLResponse::statusCode() {
-    return int(this->sendMessage<NSInteger>("statusCode"));
+//    return int(this->sendMessage<NSInteger>("statusCode"));
+    auto res = ((__bridge NSHTTPURLResponse*)this->handle).statusCode;
+    return (int)res;
 }
 
 NS::String NS::HTTPURLResponse::localizedStringForStatusCode(int statusCode) {
@@ -23,7 +25,9 @@ NS::String NS::HTTPURLResponse::localizedStringForStatusCode(int statusCode) {
 }
 
 NS::Dictionary NS::HTTPURLResponse::allHeaderFields() {
-    return this->sendMessage<Handle>("allHeaderFields");
+//    return this->sendMessage<Handle>("allHeaderFields");
+    auto headers = ((__bridge NSHTTPURLResponse*)this->handle).allHeaderFields;
+    return (__bridge Handle)headers;
 }
 
 #endif  //__APPLE__
