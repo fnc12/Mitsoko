@@ -109,8 +109,8 @@ namespace java{
             
             template<class T>
             T getField(const char *fieldName){
-                if(auto java_env=JNI::Env()){
-                    if(auto clazz=this->getClass()){
+                if(auto java_env = JNI::Env()){
+                    if(auto clazz = this->getClass()){
                         if(auto field = java_env->GetFieldID(clazz, fieldName, ("L"+T::signature+";").c_str())){
                             return java_env->GetObjectField((jobject)this->handle, field);
                         }else{
@@ -129,20 +129,22 @@ namespace java{
                 return std::move(this->getField<T>(fieldName.c_str()));
             }
             
-//            void makeGlobal();
-            
-            template<class RT,class ...Args>
-            RT sendMessage(const std::string &message,const Args& ...args){
-                return sendMessage<RT>(this->handle,message,args...);
+            template<class RT, class ...Args>
+            RT sendMessage(const std::string &message, const Args& ...args){
+                return sendMessage<RT>(this->handle, message, args...);
             }
             
-            template<class RT,class R,class ...Args>
-            static RT sendMessage(const R &receiver,const std::string &message,const Args& ...args){
-                if(auto java_env=JNI::Env()){
-                    if(auto cls=java_env->GetObjectClass(jobject(receiver))){
-                        auto methodSignature=std::move(generateMethodSignature<RT,Args...>());
-                        if(auto methodId=java_env->GetMethodID(cls,message.c_str(),methodSignature.c_str())){
-                            return MessageSender<RT>()(java_env,jobject(receiver),methodId,args...);
+            template<class RT, class R, class ...Args>
+            static RT sendMessage(const R &receiver, const std::string &message, const Args& ...args) {
+//                LOGI("receiver = %p", receiver);
+                if(auto java_env = JNI::Env()){
+//                    LOGI("java_env = %p", java_env);
+                    if(auto cls = java_env->GetObjectClass(jobject(receiver))){
+//                        LOGI("cls = %p", cls);
+                        auto methodSignature = std::move(generateMethodSignature<RT, Args...>());
+//                        LOGI("methodSignature = %s", methodSignature.c_str());
+                        if(auto methodId = java_env->GetMethodID(cls, message.c_str(), methodSignature.c_str())){
+                            return MessageSender<RT>()(java_env, jobject(receiver), methodId, args...);
                         }else{
                             return MessageSender<RT>().failure();
                         }
@@ -154,7 +156,7 @@ namespace java{
                 }
             }
             
-            template<class RT,class ...Args>
+            template<class RT, class ...Args>
             static std::string generateMethodSignature(){
                 std::stringstream ss;
                 ss << "(" << SignatureGenerator<Args...>()() << ")" << TypeSignatureGenerator<RT>()();

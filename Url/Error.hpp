@@ -29,7 +29,7 @@ namespace Mitsoko {
             
             operator bool () const;
             
-        protected:
+        public:
             
 #ifdef __APPLE__
             NS::Error error;
@@ -37,6 +37,7 @@ namespace Mitsoko {
             java::lang::Object error;
 #endif  //__APPLE__
             
+        protected:
             Error(decltype(error));
             
             friend class Request;

@@ -6,11 +6,9 @@
 #include "java/lang/Array.hpp"
 #include "java/lang/CharSequence.hpp"
 #include "java/lang/Class.hpp"
-#include "java/lang/Collection.hpp"
 #include "java/lang/Iterable.hpp"
 #include "java/lang/JavaRuntime.hpp"
 #include "java/lang/JNI.hpp"
-#include "java/lang/List.hpp"
 #include "java/lang/Object.hpp"
 #include "java/lang/Runnable.hpp"
 #include "java/lang/String.hpp"
@@ -24,9 +22,11 @@
 
 #include "java/util/AbstractMap.hpp"
 #include "java/util/Calendar.hpp"
+#include "java/util/Collection.hpp"
 #include "java/util/Date.hpp"
 #include "java/util/HashMap.hpp"
 #include "java/util/Locale.hpp"
+#include "java/util/List.hpp"
 #include "java/util/Map.hpp"
 
 #include "android/app/Activity.hpp"

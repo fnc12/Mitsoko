@@ -43,13 +43,14 @@ namespace Mitsoko {
             
             Response(Response &&other);
             
-        protected:
+        public:
             
 #ifdef __APPLE__
             NS::HTTPURLResponse response;
 #else
             java::lang::Object response;
 #endif
+        protected:
             Response(decltype(response));
             
             friend class Request;

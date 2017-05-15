@@ -39,6 +39,13 @@ namespace java{
 #endif  //__ANDROID__
             
         };
+        
+#ifdef __ANDROID__
+        
+        template<class E>
+        const std::string java::util::List<E>::signature = "java/util/List";
+        
+#endif  //__ANDROID__
     }
 }
 

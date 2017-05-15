@@ -10,7 +10,7 @@ namespace java {
     
     namespace util{
         
-        template<class K,class V>
+        template<class K, class V>
         
         struct Map : public java::lang::Object {
             

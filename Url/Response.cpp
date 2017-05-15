@@ -9,6 +9,9 @@
 #include "Response.hpp"
 
 #include "Mitsoko/AndroidUtil/java/lang/String.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
+#include "Mitsoko/AndroidUtil/java/util/List.hpp"
+#include "Mitsoko/AndroidUtil/java/util/Map.hpp"
 
 Mitsoko::Url::Response::Response(decltype(response) response_):response(response_),headers{*this}{}
 
@@ -25,7 +28,10 @@ int Mitsoko::Url::Response::statusCode() {
 #ifdef __APPLE__
     return response.statusCode();
 #else
-    return response.sendMessage<int>("getStatusCode");
+//    LOGI("Mitsoko::Url::Response::statusCode, response = %p", response.handle);    
+    auto res = response.sendMessage<int>("getStatusCode");
+//    LOGI("/Mitsoko::Url::Response::statusCode %d", res);
+    return res;
 #endif  //__APPLE__
 }
 
@@ -63,15 +69,35 @@ std::string Mitsoko::Url::Response::Headers::operator[](const std::string &key) 
 #else
     using namespace java::lang;
     using namespace java::util;
-    auto javaKey = String::create(key);
-    auto headersMap = response.response.sendMessage<Map<String, List<String>>>("getHeaders");
-    if(auto resList = headersMap.get(javaKey)){
-        if(resList.size()){
-            if(auto res = resList.get(0)){
+    LOGI("response.response = %p", response.response.handle);
+    if(response){
+        if(auto javaKey = String::create(key)){
+            LOGI("javaKey = %p", javaKey.handle);
+            if(auto res = response.response.sendMessage<String>("headerValueFor", javaKey)){
                 return res.c_str();
             }else{
                 return {};
             }
+            /*if(auto headersMap = response.response.sendMessage<Map<String, List<String>>>("getHeaders")){
+                LOGI("headersMap = %p", headersMap.handle);
+                if(auto resList = headersMap.get(javaKey)){
+                    LOGI("resList = %p", resList.handle);
+                    if(resList.size()){
+                        if(auto res = resList.get(0)){
+                            return res.c_str();
+                        }else{
+                            return {};
+                        }
+                    }else{
+                        return {};
+                    }
+                }else{
+                    return {};
+                }
+            }else{
+                LOGI("headersMap is null");
+                return {};
+            }*/
         }else{
             return {};
         }
