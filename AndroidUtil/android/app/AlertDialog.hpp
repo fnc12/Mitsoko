@@ -22,7 +22,6 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/app/AlertDialog");
             
             void show();
             
@@ -31,7 +30,6 @@ namespace android{
                 using Object::Object;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/app/AlertDialog$Builder");
                 
                 typedef std::function<void(content::DialogInterface,int)> OnClickCallback;
                 typedef std::map<int,OnClickCallback> OnClickMap;
@@ -47,7 +45,7 @@ namespace android{
                 
                 AlertDialog create();
                 
-                Builder& setItems(const std::vector<std::string> &items,OnClickCallback cb);
+                Builder& setItems(const std::vector<std::string> &items, OnClickCallback cb);
                 
                 Builder& setMessage(const std::string &title);
                 

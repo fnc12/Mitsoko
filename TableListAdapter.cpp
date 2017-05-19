@@ -173,7 +173,7 @@ Mitsoko::AdapterBase::RowStyle Mitsoko::TableListAdapter::cellStyle(const void *
 }
 
 void Mitsoko::TableListAdapter::headerCreated(const void *tableOrListView,const void *header,int section,const void *jni){
-    auto it=adaptersMap.end();
+    auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
         it->second->onCreateHeader(header, section);
@@ -183,7 +183,7 @@ void Mitsoko::TableListAdapter::headerCreated(const void *tableOrListView,const 
 }
 
 double Mitsoko::TableListAdapter::headerHeight(const void *tableOrListView,int section,const void *jni){
-    auto it=adaptersMap.end();
+    auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
         return it->second->getHeaderHeight(section);
@@ -193,7 +193,7 @@ double Mitsoko::TableListAdapter::headerHeight(const void *tableOrListView,int s
 }
 
 std::string Mitsoko::TableListAdapter::headerViewClassName(const void *tableOrListView,int section,const void *jni){
-    auto it=adaptersMap.end();
+    auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
         return it->second->getHeaderClass(section);
@@ -203,7 +203,7 @@ std::string Mitsoko::TableListAdapter::headerViewClassName(const void *tableOrLi
 }
 
 std::string Mitsoko::TableListAdapter::cellClassName(const void *tableOrListView,int section,int row,const void *jni){
-    auto it=adaptersMap.end();
+    auto it = adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
 #else
@@ -218,7 +218,7 @@ std::string Mitsoko::TableListAdapter::cellClassName(const void *tableOrListView
 }
 
 std::string Mitsoko::TableListAdapter::rowId(const void *tableOrListView,int section,int row,const void *jni){
-    auto it=adaptersMap.end();
+    auto it = adaptersMap.end();
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
 #else

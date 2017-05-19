@@ -16,13 +16,12 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/widget/ImageView");
             
             /**
              *  This method doesn't exist in SDK but it is created to
              *  allow user avoid requesting image resource id (just like android::view::View::findViewById).
              */
-            void setImageResource(const std::string &resName,const content::Context &context);
+            void setImageResource(const std::string &resName, const content::Context &context);
             
             void setImageResource(int resId);
             
