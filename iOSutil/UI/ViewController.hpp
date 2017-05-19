@@ -9,15 +9,16 @@
 
 namespace UI {
     
-    template<class NavC>
-    struct _ViewController:public UI::Responder{
+    template<class NavC, class TabC>
+    struct _ViewController : public UI::Responder {
+        
         using Responder::Responder;
         
 #ifdef __APPLE__
         
         static const std::string className;
         
-        typedef _ViewController<NavC> Self;
+        typedef _ViewController<NavC, TabC> Self;
         
         void setTabBarItem(const UI::TabBarItem &newValue){
             this->sendMessage<void>("setTabBarItem:",newValue.handle);
@@ -37,6 +38,10 @@ namespace UI {
         
         NavC navigationController(){
             return this->sendMessage<Handle>("navigationController");
+        }
+        
+        TabC tabBarController() {
+            return this->sendMessage<Handle>("tabBarController");
         }
         
         void presentViewController(const Self &vc,bool animated,std::function<void()> completion){
@@ -64,7 +69,7 @@ namespace UI {
 
 #ifdef __APPLE__
 
-template<class NavC>
-const std::string UI::_ViewController<NavC>::className="UIViewController";
+template<class NavC, class TabC>
+const std::string UI::_ViewController<NavC, TabC>::className = "UIViewController";
 
 #endif  //__APPLE__

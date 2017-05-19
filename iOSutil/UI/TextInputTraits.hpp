@@ -5,6 +5,7 @@
 #include "Mitsoko/iOSutil/NS/Object.hpp"
 
 namespace UI {
+    
 #ifdef __APPLE__
     enum class KeyboardType {
         Default = UIKeyboardTypeDefault,
@@ -20,6 +21,13 @@ namespace UI {
         WebSearch = UIKeyboardTypeWebSearch,
 //        UIKeyboardTypeAlphabet = UIKeyboardTypeASCIICapable, // Deprecated
     };
+    
+    enum class TextAutocapitalizationType {
+        None = UITextAutocapitalizationTypeNone,
+        Words = UITextAutocapitalizationTypeWords,
+        Sentences = UITextAutocapitalizationTypeSentences,
+        AllCharacters = UITextAutocapitalizationTypeAllCharacters,
+    };
 #endif
     /**
      *  Protocol.
@@ -34,6 +42,10 @@ namespace UI {
         void setKeyboardType(UI::KeyboardType newValue);
         
         UI::KeyboardType keyboardType();
+        
+        void setAutocapitalizationType(TextAutocapitalizationType value);
+        
+        TextAutocapitalizationType autocapitalizationType();
         
         void setSecureTextEntry(bool value);
         

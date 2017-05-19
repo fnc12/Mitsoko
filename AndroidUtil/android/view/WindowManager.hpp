@@ -16,16 +16,14 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/view/WindowManager");
             
-            struct LayoutParams:public ViewGroup::LayoutParams{
+            struct LayoutParams : public ViewGroup::LayoutParams {
                 
                 typedef ViewGroup::LayoutParams Super;
                 
                 using Super::Super;
                 
-            static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/view/WindowManager$LayoutParams");
+                static const std::string signature;
                 
                 static int SOFT_INPUT_STATE_VISIBLE();
             };

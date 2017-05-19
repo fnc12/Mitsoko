@@ -10,7 +10,7 @@
 
 #ifdef __APPLE__
 
-const std::string UI::NavigationController::className="UINavigationController";
+const std::string UI::NavigationController::className = "UINavigationController";
 
 UI::NavigationController UI::NavigationController::create(const UI::ViewController &rootViewController){
     auto cls = NS::getClass(className);
@@ -51,6 +51,10 @@ void UI::NavigationController::popViewControllerAnimated(bool animated){
 
 auto UI::NavigationController::initWithRootViewController(const Handle &rootViewController)->Handle{
     return this->sendMessage<Handle>("initWithRootViewController:", rootViewController);
+}
+
+NS::Array UI::NavigationController::viewControllers(){
+    return this->sendMessage<Handle>("viewControllers");
 }
 
 #endif  //__APPLE__

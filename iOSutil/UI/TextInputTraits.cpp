@@ -28,4 +28,12 @@ bool UI::TextInputTraits::isSecureTextEntry() {
     return this->sendMessage<BOOL>("isSecureTextEntry");
 }
 
+void UI::TextInputTraits::setAutocapitalizationType(TextAutocapitalizationType value) {
+    this->sendMessage<void>("setAutocapitalizationType:", UITextAutocapitalizationType(value));
+}
+
+UI::TextAutocapitalizationType UI::TextInputTraits::autocapitalizationType() {
+    return UI::TextAutocapitalizationType(this->sendMessage<UITextAutocapitalizationType>("autocapitalizationType"));
+}
+
 #endif  //__APPLE__

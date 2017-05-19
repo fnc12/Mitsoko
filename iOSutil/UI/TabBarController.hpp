@@ -7,14 +7,13 @@
 
 namespace UI{
     
-    struct TabBarController : public _ViewController<NavigationController> {
+    struct TabBarController : public _ViewController<NavigationController, TabBarController> {
         
         using _ViewController::_ViewController;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(std::string, className, "UITabBarController");
         
         void setViewControllers(const NS::Array &newValue);
         

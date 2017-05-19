@@ -7,17 +7,20 @@
 #include "NavigationBar.hpp"
 
 namespace UI {
-    struct NavigationController;
-    typedef _ViewController<NavigationController> ViewController;
     
-    struct NavigationController : public _ViewController<NavigationController> {
+    struct NavigationController;
+    
+    struct TabBarController;
+    
+    typedef _ViewController<NavigationController, TabBarController> ViewController;
+    
+    struct NavigationController : public ViewController {
         
         using _ViewController::_ViewController;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UINavigationController");
         
         static NavigationController create(const UI::ViewController &rootViewController);
         
@@ -29,9 +32,7 @@ namespace UI {
         
         void setNavigationBarHidden(bool hidden,bool animated);
         
-        NS::Array viewControllers(){
-            return this->sendMessage<Handle>("viewControllers");
-        }
+        NS::Array viewControllers();
         
         void popToViewController(const ViewController &vc,bool animated);
         
