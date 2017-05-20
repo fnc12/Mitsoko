@@ -27,6 +27,8 @@ namespace android{
             
             void setImageBitmap(const android::graphics::Bitmap &bm);
             
+            void setSelected(bool selected);
+            
 #endif  //__ANDROID__
             
         };

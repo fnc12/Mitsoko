@@ -35,4 +35,8 @@ void android::widget::ImageView::setImageBitmap(const android::graphics::Bitmap 
     this->sendMessage<void>("setImageBitmap",bm);
 }
 
+void android::widget::ImageView::setSelected(bool selected) {
+    this->sendMessage<void>("setSelected", selected);
+}
+
 #endif  //__ANDROID__
