@@ -25,4 +25,12 @@ UI::Color UI::Label::textColor(){
     return this->sendMessage<Handle>("textColor");
 }
 
+void UI::Label::setTextAlignment(NS::TextAlignment value) {
+    this->sendMessage<void>("setTextAlignment:", NSTextAlignment(value));
+}
+
+NS::TextAlignment UI::Label::textAlignment() {
+    return NS::TextAlignment(this->sendMessage<NSTextAlignment>("textAlignment"));
+}
+
 #endif  //__APPLE__

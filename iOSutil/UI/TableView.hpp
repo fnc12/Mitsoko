@@ -7,6 +7,7 @@
 #include "ImageView.hpp"
 #include "Label.hpp"
 #include "Mitsoko/iOSutil/NS/IndexSet.hpp"
+#include "Mitsoko/iOSutil/UI/EdgeInsets.hpp"
 
 namespace UI {
     
@@ -70,7 +71,6 @@ namespace UI {
             using View::View;
             
             static const std::string className;
-//            STATIC_VAR(std::string, className, "UITableViewCell");
             
             enum class AccessoryType{
                 None = UITableViewCellAccessoryNone,
@@ -100,6 +100,10 @@ namespace UI {
             void setAccessoryType(AccessoryType newValue);
             
             AccessoryType accessoryType();
+            
+            void setSeparatorInset(const UI::EdgeInsets &value);
+            
+            UI::EdgeInsets separatorInset();
         };
 #endif
     };

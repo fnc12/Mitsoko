@@ -62,6 +62,14 @@ void UI::TableView::Cell::setSelectionStyle(SelectionStyle newValue) {
     this->sendMessage<void>("setSelectionStyle:", UITableViewCellSelectionStyle(newValue));
 }
 
+void UI::TableView::Cell::setSeparatorInset(const UI::EdgeInsets &value) {
+    this->sendMessage<void>("setSeparatorInset:", UIEdgeInsets(value));
+}
+
+UI::EdgeInsets UI::TableView::Cell::separatorInset() {
+    return UI::EdgeInsets(this->sendMessage<UIEdgeInsets>("separatorInset"));
+}
+
 auto UI::TableView::Cell::selectionStyle() -> SelectionStyle {
     return SelectionStyle(this->sendMessage<UITableViewCellSelectionStyle>("selectionStyle"));
 }

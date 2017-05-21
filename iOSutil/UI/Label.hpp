@@ -6,21 +6,27 @@
 #include "Mitsoko/iOSutil/UI/Color.hpp"
 #include "Mitsoko/iOSutil/CF/String.hpp"
 #include "Mitsoko/Util.hpp"
+#include "Mitsoko/iOSutil/NS/TextAlignment.hpp"
 
 namespace UI {
-    struct Label:public UI::View{
+    
+    struct Label : public UI::View {
+        
         using View::View;
         
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UILabel");
         
         void setText(const std::string &newValue);
         
         void setTextColor(const UI::Color &newValue);
         
         UI::Color textColor();
+        
+        void setTextAlignment(NS::TextAlignment value);
+        
+        NS::TextAlignment textAlignment();
 #endif
     };
 }
