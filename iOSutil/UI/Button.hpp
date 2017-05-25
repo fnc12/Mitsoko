@@ -4,6 +4,7 @@
 
 #include "Control.hpp"
 #include "Mitsoko/iOSutil/CF/String.hpp"
+#include "Image.hpp"
 
 namespace UI {
     
@@ -15,7 +16,11 @@ namespace UI {
         
         static const std::string className;
         
-        void setTitle(const std::string &title,UI::Control::State state);
+        void setTitle(const std::string &title, UI::Control::State state);
+        
+        void setImage(UI::Image image, UI::Control::State state);
+        
+        void setBackgroundImage(UI::Image image, UI::Control::State state);
 
 #endif  //__APPLE__
         

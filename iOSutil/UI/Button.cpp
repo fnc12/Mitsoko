@@ -10,11 +10,19 @@
 
 #ifdef __APPLE__
 
-const std::string UI::Button::className="UIButton";
+const std::string UI::Button::className = "UIButton";
 
 void UI::Button::setTitle(const std::string &title,UI::Control::State state){
     auto str = CF::String::create(title);
-    this->sendMessage<void>("setTitle:forState:", str.handle,UIControlState(state));
+    this->sendMessage<void>("setTitle:forState:", str.handle, UIControlState(state));
+}
+
+void UI::Button::setImage(UI::Image image, UI::Control::State state) {
+    this->sendMessage<void>("setImage:forState:", image.handle, UIControlState(state));
+}
+
+void UI::Button::setBackgroundImage(UI::Image image, UI::Control::State state) {
+    this->sendMessage<void>("setBackgroundImage:forState:", image.handle, UIControlState(state));
 }
 
 #endif  //__APPLE__
