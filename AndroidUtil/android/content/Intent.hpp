@@ -24,25 +24,24 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/content/Intent");
             
             static Intent create(const Context &context, const java::lang::Class &cls);
             
             static Intent create(const java::lang::String &action, const android::net::Uri &uri);
             
-            static Intent create(const java::lang::String &action);
+            static Intent create(const std::string &action);
             
-            static java::lang::String ACTION_PICK();
+            static std::string ACTION_PICK();
             
-            static java::lang::String ACTION_CALL();
+            static std::string ACTION_CALL();
             
-            static java::lang::String ACTION_SEND();
+            static std::string ACTION_SEND();
             
-            static java::lang::String EXTRA_EMAIL();
+            static std::string EXTRA_EMAIL();
             
-            static java::lang::String EXTRA_SUBJECT();
+            static std::string EXTRA_SUBJECT();
             
-            static java::lang::String EXTRA_TEXT();
+            static std::string EXTRA_TEXT();
             
             static Intent createChooser(const Intent &target, const std::string &title);
             

@@ -21,53 +21,54 @@ auto android::content::Intent::create(const java::lang::String &action,const and
     return std::move(java::lang::Object::create<Intent>(action,uri));
 }
 
-auto android::content::Intent::create(const java::lang::String &action)->Intent{
-    return std::move(java::lang::Object::create<Intent>(action));
+auto android::content::Intent::create(const std::string &action)->Intent{
+    auto a = java::lang::String::create(action);
+    return java::lang::Object::create<Intent>(a);
 }
 
-java::lang::String android::content::Intent::ACTION_PICK(){
+std::string android::content::Intent::ACTION_PICK(){
     if(java::lang::Class cls=java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("ACTION_PICK");
+        return cls.getStaticField<java::lang::String>("ACTION_PICK").c_str();
     }else{
         return {};
     }
 }
 
-java::lang::String android::content::Intent::ACTION_CALL(){
+std::string android::content::Intent::ACTION_CALL(){
     if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("ACTION_CALL");
+        return cls.getStaticField<java::lang::String>("ACTION_CALL").c_str();
     }else{
         return {};
     }
 }
 
-java::lang::String android::content::Intent::ACTION_SEND() {
+std::string android::content::Intent::ACTION_SEND() {
     if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("ACTION_SEND");
+        return cls.getStaticField<java::lang::String>("ACTION_SEND").c_str();
     }else{
         return {};
     }
 }
 
-java::lang::String android::content::Intent::EXTRA_EMAIL() {
+std::string android::content::Intent::EXTRA_EMAIL() {
     if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("EXTRA_EMAIL");
+        return cls.getStaticField<java::lang::String>("EXTRA_EMAIL").c_str();
     }else{
         return {};
     }
 }
 
-java::lang::String android::content::Intent::EXTRA_SUBJECT() {
+std::string android::content::Intent::EXTRA_SUBJECT() {
     if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("EXTRA_SUBJECT");
+        return cls.getStaticField<java::lang::String>("EXTRA_SUBJECT").c_str();
     }else{
         return {};
     }
 }
 
-java::lang::String android::content::Intent::EXTRA_TEXT() {
+std::string android::content::Intent::EXTRA_TEXT() {
     if(java::lang::Class cls = java::lang::Class::find<Intent>()){
-        return cls.getStaticField<java::lang::String>("EXTRA_TEXT");
+        return cls.getStaticField<java::lang::String>("EXTRA_TEXT").c_str();
     }else{
         return {};
     }
@@ -76,17 +77,8 @@ java::lang::String android::content::Intent::EXTRA_TEXT() {
 auto android::content::Intent::createChooser(const Intent &target, const std::string &title) -> Intent {
     if(auto java_env = java::lang::JNI::Env()){
         auto t = java::lang::String::create(title);
-//        auto clazz = java_env->FindClass(signature().c_str());
         java::lang::Class clazz = java::lang::Class::find<Intent>();
-        /*auto methodSignature = generateMethodSignature<Intent, Intent, java::lang::CharSequence>();
-        auto mid = java_env->GetStaticMethodID(clazz,
-                                               "createChooser",
-                                               methodSignature.c_str());
-        return java_env->CallStaticObjectMethod(clazz,
-                                                mid,
-                                                target.handle,
-                                                t.handle);*/
-        return clazz.callStaticFunc<Intent>("createChooser", target, t);
+        return clazz.callStaticFunc<Intent>("createChooser", target, (java::lang::CharSequence)t);
     }else{
         return {};
     }
