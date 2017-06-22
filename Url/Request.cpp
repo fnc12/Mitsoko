@@ -217,7 +217,7 @@ auto Mitsoko::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Re
     return *this;
 }
 
-auto Mitsoko::Url::Request::setValueForHTTPHeaderField(std::string value, std::string field) -> Request&{
+auto Mitsoko::Url::Request::setValueForHTTPHeaderField(std::string value, std::string field) -> Request& {
 
 #ifdef __APPLE__
     request.setValueForHTTPHeaderField(value, field);

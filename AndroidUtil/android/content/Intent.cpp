@@ -13,12 +13,13 @@
 
 const std::string android::content::Intent::signature = "android/content/Intent";
 
-auto android::content::Intent::create(const Context &context,const java::lang::Class &cls)->Intent{
+auto android::content::Intent::create(const Context &context, const java::lang::Class &cls)->Intent{
     return std::move(java::lang::Object::create<Intent>(context,cls));
 }
 
-auto android::content::Intent::create(const java::lang::String &action,const android::net::Uri &uri)->Intent{
-    return std::move(java::lang::Object::create<Intent>(action,uri));
+auto android::content::Intent::create(const std::string &action, const android::net::Uri &uri)->Intent{
+    auto ac = java::lang::String::create(action);
+    return std::move(java::lang::Object::create<Intent>(ac, uri));
 }
 
 auto android::content::Intent::create(const std::string &action)->Intent{

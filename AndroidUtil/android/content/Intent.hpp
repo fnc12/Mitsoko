@@ -27,7 +27,7 @@ namespace android{
             
             static Intent create(const Context &context, const java::lang::Class &cls);
             
-            static Intent create(const java::lang::String &action, const android::net::Uri &uri);
+            static Intent create(const std::string &action, const android::net::Uri &uri);
             
             static Intent create(const std::string &action);
             

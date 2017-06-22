@@ -16,7 +16,6 @@ namespace java{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "java/lang/String");
             
             const char* c_str() const;
             
