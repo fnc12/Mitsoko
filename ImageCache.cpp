@@ -77,9 +77,6 @@ void Mitsoko::ImageCache::put(const std::string &url, Image image) {
 }
 
 Mitsoko::Image Mitsoko::ImageCache::getCached(const std::string &url, std::string *keyPointer, std::string *filepathPointer) {
-    /*sha256_t digest;
-    ::sha256((unsigned char*)url.c_str(), url.length(), digest);
-    auto key = getHexRepresentation(digest, sizeof(digest));*/
     auto key = this->keyByUrl(url);
     if(keyPointer){
         *keyPointer = key;

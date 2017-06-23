@@ -5,14 +5,16 @@
 #include "FilterOutputStream.hpp"
 
 namespace java {
+    
     namespace io {
-        struct BufferedOutputStream:public FilterOutputStream{
+        
+        struct BufferedOutputStream : public FilterOutputStream {
+            
             using FilterOutputStream::FilterOutputStream;
             
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "java/io/BufferedOutputStream");
             
             static BufferedOutputStream create(const OutputStream &out);
             

@@ -4,6 +4,7 @@
 
 #include "Mitsoko/AndroidUtil/java/lang/String.hpp"
 #include "Bitmap.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Array.hpp"
 
 namespace android {
     
@@ -16,27 +17,20 @@ namespace android {
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory");
             
             static Bitmap decodeFile(const std::string &pathName);
             
             static Bitmap decodeFile(const java::lang::String &pathName);
+            
+            static Bitmap decodeByteArray(java::lang::Array<char> data, int offset, int length);
             
             struct Options : public java::lang::Object {
                 
                 using Object::Object;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/graphics/BitmapFactory$Options");
                 
                 static Options create();
-                
-                /**
-                 *  Enum setter
-                 */
-                /*void inPreferredConfig(int value){
-                    this->setField<Bitmap::Config>("inPreferredConfig",value);
-                }*/
                 
             };
             

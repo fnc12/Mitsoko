@@ -47,19 +47,11 @@ namespace java{
             template<class R, class ...Args>
             R callStaticFunc(const std::string &functionName, Args ...args) {
                 if(auto env = java::lang::JNI::Env()){
-//                    if(auto clazz = java::lang::Class::find<Intent>()){
-                        auto methodSignature = generateMethodSignature<R, Args...>();
+                    auto methodSignature = generateMethodSignature<R, Args...>();
                     auto mid = env->GetStaticMethodID(jclass(this->handle),
                                                       functionName.c_str(),
                                                       methodSignature.c_str());
-                        /*return java_env->CallStaticObjectMethod(clazz,
-                                                                mid,
-                                                                target.handle,
-                                                                t.handle);*/
-                        return _callStaticFunc<R>(env, jclass(this->handle), mid, args...);
-                    /*}else{
-                        return MessageSender<R>().failure();
-                    }*/
+                    return _callStaticFunc<R>(env, jclass(this->handle), mid, args...);
                 }else{
                     return MessageSender<R>().failure();
                 }

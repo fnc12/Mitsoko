@@ -16,7 +16,6 @@ namespace android {
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/graphics/Bitmap");
             
             int getWidth();
             
@@ -29,7 +28,6 @@ namespace android {
                 using Object::Object;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/graphics/Bitmap$CompressFormat");
                 
                 static CompressFormat JPEG();
                 
@@ -38,12 +36,11 @@ namespace android {
                 static int WEBP();
             };
             
-            struct Config:public java::lang::Object{
+            struct Config : public java::lang::Object {
                 
                 using Object::Object;
                 
                 static const std::string signature;
-//                STATIC_VAR(const std::string, signature, "android/graphics/Bitmap$Config");
                 
                 static int ALPHA_8();
                 

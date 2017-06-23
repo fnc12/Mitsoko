@@ -18,12 +18,21 @@ namespace java{
          */
         template<class T>
         struct Array {
+            
 #ifdef __ANDROID__
             typedef void *Handle;
             Handle handle;
             
             Array(Handle h):handle(h){}
             Array():Array(nullptr){}
+            
+            int length() {
+                if(auto env = java::lang::JNI::Env()){
+                    return env->GetArrayLength(jbyteArray(this->handle));
+                }else{
+                    return -1;
+                }
+            }
             
             static Array<T> create(int size, const T &initialElement){
                 if(auto env = java::lang::JNI::Env()){

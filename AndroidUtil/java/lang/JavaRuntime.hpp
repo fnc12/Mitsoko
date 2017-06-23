@@ -31,6 +31,7 @@ TYPE_SIGNATURE(bool,"Z");
 TYPE_SIGNATURE(float,"F");
 TYPE_SIGNATURE(double,"D");
 TYPE_SIGNATURE(long,"J");
+TYPE_SIGNATURE(char,"B");
 #undef TYPE_SIGNATURE
 
 //  array specialization..
@@ -44,7 +45,7 @@ struct TypeSignatureGenerator<java::lang::Array<T>>{
 template<class ...Args>
 struct SignatureGenerator;
 
-template<class T,class ...Args>
+template<class T, class ...Args>
 struct SignatureGenerator<T,Args...>{
     std::string operator()()const{
         std::stringstream ss;
