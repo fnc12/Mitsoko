@@ -23,6 +23,12 @@ NS::Data NS::Data::createWithContentsOfFile(const CF::String &path){
     return sendMessage<Handle>(cls, "dataWithContentsOfFile:",path.handle);
 }
 
+NS::Data NS::Data::createWithBytes(const void *bytes, int length) {
+    auto cls = NS::getClass(className);
+    assert(cls);
+    return sendMessage<Handle>(cls, "dataWithBytes:length:", bytes, NSUInteger(length));
+}
+
 int NS::Data::length(){
     return int(this->sendMessage<NSUInteger>("length"));
 }

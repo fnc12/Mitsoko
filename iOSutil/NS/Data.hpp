@@ -18,6 +18,8 @@ namespace NS {
         
         static NS::Data createWithContentsOfFile(const CF::String &path);
         
+        static NS::Data createWithBytes(const void *bytes, int length);
+        
         int length();
         
         const void *bytes();

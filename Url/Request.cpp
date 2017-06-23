@@ -65,7 +65,7 @@ void Mitsoko::Url::Request::MultipartAdapter::addFilePart(const std::string &fie
         this->stream << "--" << _boundary << crlf;
         this->stream << "Content-Disposition: form-data; name=\"" << fieldName << "\"; filename=\"" << fileName << "\"" << crlf;
         this->stream << "Content-Type: " << mimeType << crlf;
-        this->stream << "Content-Transfer-Encoding: binary" << crlf;
+//        this->stream << "Content-Transfer-Encoding: binary" << crlf;
         this->stream << crlf;
         stream_copy_n(file, count, this->stream);
         file.close();
@@ -179,11 +179,13 @@ std::string Mitsoko::Url::Request::MultipartAdapter::generateBoundary() {
     std::stringstream ss;
     ss << "===" << tv.tv_sec << "_" << tv.tv_usec << "===";
     return ss.str();
+//    return "Asrf456BGe4h";
 }
 
 void Mitsoko::Url::Request::MultipartAdapter::finish() {
-    this->stream << crlf;
+//    this->stream << crlf;
     this->stream << "--" << _boundary << "--" << crlf;
+    this->stream << crlf;
 }
 
 size_t Mitsoko::Url::Request::MultipartAdapter::fileSize(const std::string &filepath) {
@@ -212,7 +214,19 @@ auto Mitsoko::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Re
     MultipartAdapter multipartAdapter;
     f(multipartAdapter);
     multipartAdapter.finish();
-    this->body(multipartAdapter.body());
+//    this->body(multipartAdapter.body());
+    auto bodyString = multipartAdapter.body();
+#ifdef __APPLE__
+    auto bodyData = NS::Data::createWithBytes((const void *)bodyString.c_str(), int(bodyString.length()));
+    cout << "bodyData len = " << bodyData.length() << endl;
+    request.setHTTPBody(bodyData);
+#else
+    auto env = java::lang::JNI::Env();
+    auto byteArray = env->NewByteArray(bodyString.length());
+    env->SetByteArrayRegion(byteArray, 0, bodyString.length(), (const jbyte*)bodyString.c_str());
+    auto arrayObject = java::lang::Array<char>(byteArray);
+    request.setField("mBody", arrayObject);
+#endif
     this->setValueForHTTPHeaderField("multipart/form-data; boundary=" + multipartAdapter.boundary(), "Content-Type");
     return *this;
 }
@@ -299,11 +313,14 @@ std::string Mitsoko::Url::Request::method() {
     
 }
 
-auto Mitsoko::Url::Request::body(const std::string &s) -> Request& {
+Mitsoko::Url::Request& Mitsoko::Url::Request::body(const std::string &s) {
     
 #ifdef __APPLE__
+//    cout << "s.len = " << s.length() << endl;
+//    cout << "body = *" << s << "*" << endl;
 //    auto str = NS::String::stringWithCString(s.c_str(), NS::String::Encoding::UTF8);
     auto str = [NSString stringWithUTF8String:s.c_str()];
+//    NSLog(@"str len = %ld", (long)str.length);
 //    str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     auto data = NS::String((__bridge const void*)str).dataUsingEncoding(NS::String::Encoding::UTF8);
     request.setHTTPBody(data);

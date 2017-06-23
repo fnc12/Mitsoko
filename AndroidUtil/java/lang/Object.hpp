@@ -85,7 +85,7 @@ namespace java{
             jclass getClass();
             
             template<class T>
-            void setField(const char *fieldName,const T &value){
+            void setField(const char *fieldName, const T &value){
                 if(auto java_env=JNI::Env()){
                     if(auto clazz=this->getClass()){
                         auto signature=TypeSignatureGenerator<T>()();
@@ -103,7 +103,7 @@ namespace java{
             }
             
             template<class T>
-            void setField(const std::string &fieldName,const T &value){
+            void setField(const std::string &fieldName, const T &value){
                 this->setField(fieldName.c_str(),value);
             }
             
