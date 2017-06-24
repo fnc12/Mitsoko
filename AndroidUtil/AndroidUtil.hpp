@@ -16,6 +16,7 @@
 #include "java/lang/Thread.hpp"
 
 #include "java/io/BufferedOutputStream.hpp"
+#include "java/io/ByteArrayOutputStream.hpp"
 #include "java/io/File.hpp"
 #include "java/io/FileOutputStream.hpp"
 #include "java/io/FilterOutputStream.hpp"
@@ -143,4 +144,4 @@ private:
  #undef TYPE_SIGNATURE
  #endif*/
  
- #endif /* ANDROID_UTIL_H */
+#endif /* ANDROID_UTIL_H */
