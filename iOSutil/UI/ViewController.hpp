@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER_APPLE_UI_VIEW_CONTROLLER_H
+#define __VIPER_APPLE_UI_VIEW_CONTROLLER_H
 
 #include "Responder.hpp"
 #include "View.hpp"
@@ -73,3 +74,5 @@ template<class NavC, class TabC>
 const std::string UI::_ViewController<NavC, TabC>::className = "UIViewController";
 
 #endif  //__APPLE__
+
+#endif /* __VIPER_APPLE_UI_VIEW_CONTROLLER_H */
