@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef ANDROID_UTIL_H
+#define ANDROID_UTIL_H
 
 #include "Mitsoko/Util.hpp"
 
@@ -15,7 +16,6 @@
 #include "java/lang/Thread.hpp"
 
 #include "java/io/BufferedOutputStream.hpp"
-#include "java/io/ByteArrayOutputStream.hpp"
 #include "java/io/File.hpp"
 #include "java/io/FileOutputStream.hpp"
 #include "java/io/FilterOutputStream.hpp"
@@ -142,3 +142,5 @@ private:
 /*#ifdef __ANDROID__
  #undef TYPE_SIGNATURE
  #endif*/
+ 
+ #endif /* ANDROID_UTIL_H */
