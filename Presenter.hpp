@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef ViperPresenter_h
-#define ViperPresenter_h
+#ifndef __VIPER_PRESENTER_H
+#define __VIPER_PRESENTER_H
 
 #include <memory>
 #include <string>
@@ -47,4 +47,4 @@ namespace Mitsoko{
     };
 }
 
-#endif /* ViperPresenter_h */
+#endif /* __VIPER_PRESENTER_H */

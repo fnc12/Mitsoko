@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER_WIREFRAME_H
+#define __VIPER_WIREFRAME_H
 
 #include "iOSutil/iOSutil.hpp"
 #include "AndroidUtil/AndroidUtil.hpp"
@@ -224,3 +225,5 @@ namespace Mitsoko{
         return {t};
     }
 }
+
+#endif /* __VIPER_WIREFRAME_H */

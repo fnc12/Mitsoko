@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef Util_h
-#define Util_h
+#ifndef __VIPER_UTIL_H
+#define __VIPER_UTIL_H
 
 //#include "EnumUtil.hpp"
 //#include "Selfish.hpp"
@@ -36,4 +36,4 @@
 
 #endif  //__ANDROID__
 
-#endif /* Util_h */
+#endif /* __VIPER_UTIL_H */

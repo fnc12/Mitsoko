@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef Disposable_h
-#define Disposable_h
+#ifndef __VIPER_DISPOSABLE_H
+#define __VIPER_DISPOSABLE_H
 
 #include <mutex>
 #include <vector>
@@ -50,4 +50,4 @@ namespace Mitsoko{
     };
 }
 
-#endif /* Disposable_h */
+#endif /* __VIPER_DISPOSABLE_H */
