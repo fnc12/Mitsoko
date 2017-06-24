@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef VIPER__IMAGE
-#define VIPER__IMAGE
+#ifndef __VIPER_VIPER__IMAGE
+#define __VIPER_VIPER__IMAGE
 
 #include "Mitsoko/iOSutil/UI/Image.hpp"
 #include "Mitsoko/AndroidUtil/android/graphics/Bitmap.hpp"
@@ -36,4 +36,4 @@ namespace Mitsoko {
     };
 }
 
-#endif  //VIPER__IMAGE
+#endif  //__VIPER_VIPER__IMAGE

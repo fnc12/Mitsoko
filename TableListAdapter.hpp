@@ -1,5 +1,7 @@
 
-#pragma once
+#ifndef __VIPER_TABLE_LIST_ADAPTER_H
+#define __VIPER_TABLE_LIST_ADAPTER_H
+
 
 #include "Util.hpp"
 
@@ -307,3 +309,5 @@ namespace Mitsoko {
 //        STATIC_VAR(AdaptersMap, adaptersMap, {});
     };
 }
+
+#endif /* __VIPER_TABLE_LIST_ADAPTER_H */

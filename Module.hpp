@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER_MODULE_H
+#define __VIPER_MODULE_H
 
 namespace Viper{
     template<class V, class P /*,class W,class I*/>
@@ -10,3 +11,5 @@ namespace Viper{
 //        typedef I interactor_type;
     };
 }
+
+#endif /* __VIPER_MODULE_H */

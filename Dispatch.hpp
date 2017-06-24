@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef Dispatch_h
-#define Dispatch_h
+#ifndef __VIPER_DISPATCH_H
+#define __VIPER_DISPATCH_H
 
 #ifdef __APPLE__
     #include <dispatch/dispatch.h>
@@ -56,4 +56,4 @@ namespace Mitsoko{
     void operator++(std::function<void()> f);
 }
 
-#endif /* Dispatch_h */
+#endif /* __VIPER_DISPATCH_H */

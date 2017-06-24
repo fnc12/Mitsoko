@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER_SHA256_H
+#define __VIPER_SHA256_H
 
 #include <string.h>
 #include <stdio.h>
@@ -66,3 +67,6 @@ void sha256(unsigned char *data,size_t len,unsigned char output[32]);
 }*/
 
 int sha256_file(const char *filename,uint8 digest[32]);
+
+
+#endif /* __VIPER_SHA256_H */

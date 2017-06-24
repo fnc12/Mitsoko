@@ -1,5 +1,5 @@
-
-#pragma once
+#ifndef __VIPER_IMAGECACHE_H
+#define __VIPER_IMAGECACHE_H
 
 #include "iOSutil/iOSutil.hpp"
 #include "AndroidUtil/AndroidUtil.hpp"
@@ -86,3 +86,4 @@ namespace Mitsoko {
         std::string _documentsPath;
     };
 }
+#endif /* __VIPER_IMAGECACHE_H */
