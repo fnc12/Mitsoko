@@ -37,12 +37,9 @@ void Mitsoko::ImageCache::Callback::disposableDidDispose(Disposable::Id id){
 
 void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
     std::string key, filepath;
-//    LOGI("Mitsoko::ImageCache::get %S", url.c_str());
     if(auto res = getCached(url, &key, &filepath)){
-//        LOGI("found cached %s", url.c_str());
         cb(res);
     }else{
-//        LOGI("not cached");
         auto it = this->callbacks.find(url);
         if(it == this->callbacks.end()){
             callbacks[url].push_back(cb);
@@ -61,9 +58,6 @@ void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
                     }else{
                         std::cerr << "callback not found for url *" << url << "*" << std::endl;
                     }
-                }else{
-//                    LOGI("image is null for url *%s*", url.c_str());
-//                    std::cerr << "image is null for url *" << url << "*" << std::endl;
                 }
             });
         }else{
