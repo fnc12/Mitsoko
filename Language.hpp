@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef __VIPER_LANGUAGE_H
+#define __VIPER_LANGUAGE_H
 
 #include <string>
 #include <mutex>
@@ -34,3 +35,4 @@ namespace Viper{
         std::string operator()(const std::string &s) const;
     };
 }
+#endif /* __VIPER_LANGUAGE_H */

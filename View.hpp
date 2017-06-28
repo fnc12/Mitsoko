@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef View_h
-#define View_h
+#ifndef __VIPER_VIEW_H
+#define __VIPER_VIEW_H
 
 #include <memory>
 #include <map>
@@ -75,4 +75,4 @@ namespace Mitsoko{
     };
 }
 
-#endif /* View_h */
+#endif /* __VIPER_VIEW_H */

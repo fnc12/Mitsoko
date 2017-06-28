@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef ANDROID_UTIL_H
+#define ANDROID_UTIL_H
 
 #include "Mitsoko/Util.hpp"
 
@@ -142,3 +143,5 @@ private:
 /*#ifdef __ANDROID__
  #undef TYPE_SIGNATURE
  #endif*/
+ 
+#endif /* ANDROID_UTIL_H */

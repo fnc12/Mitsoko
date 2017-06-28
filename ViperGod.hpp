@@ -6,8 +6,8 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef ViperGod_h
-#define ViperGod_h
+#ifndef __VIPER_VIPERGOD_H
+#define __VIPER_VIPERGOD_H
 
 #include <string>
 #include <tuple>
@@ -146,4 +146,4 @@ namespace Mitsoko{
                                                              std::vector<std::shared_ptr<Disposable>> &disposables);
 }
 
-#endif /* ViperGod_h */
+#endif /* __VIPER_VIPERGOD_H */
