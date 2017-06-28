@@ -43,10 +43,23 @@ UI::Image UI::Image::createWithCGImage(const CG::Image &img) {
 }
 
 NS::Data UI::Image::JPEGRepresentation(UI::Image image, CG::Float compressionQuality){
-    image.retain();
-    auto res = CFBridgingRetain(UIImageJPEGRepresentation(CFBridgingRelease(image.handle), CGFloat(compressionQuality)));
-    CFRelease(res);
-    return res;
+    if(image){
+        image.retain();
+        id img = CFBridgingRelease(image.handle);
+        if(auto data = UIImageJPEGRepresentation(img, CGFloat(compressionQuality))){
+            auto res = CFBridgingRetain(data);
+            if(res){
+                CFRelease(res);
+                return res;
+            }else{
+                return {};
+            }
+        }else{
+            return {};
+        }
+    }else{
+        return {};
+    }
 }
 
 CG::Size UI::Image::size(){
