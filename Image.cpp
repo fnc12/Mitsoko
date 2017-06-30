@@ -14,15 +14,15 @@
 
 #include <iostream>
 
-#include "Services/Storage.hpp"
+//#include "Services/Storage.hpp"
 
-using Services::Storage;
+//using Services::Storage;
 
-static void addToLog(const std::string &line) {
+/*static void addToLog(const std::string &line) {
     auto testData = Storage::shared().testData();
     testData.push_back(line);
     Storage::shared().setTestData(std::move(testData));
-}
+}*/
 
 using java::io::File;
 using java::io::BufferedOutputStream;
@@ -46,12 +46,12 @@ void Mitsoko::Image::writeToFile(const std::string &filepath) {
     
 #ifdef __APPLE__
     if(auto i = image) {
-        addToLog("if(auto i = image) {");
+//        addToLog("if(auto i = image) {");
         if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {
-            addToLog("if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {");
+//            addToLog("if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {");
             auto done = data.writeToFile(filepath, true);
-            addToLog("auto done = data.writeToFile(filepath, true);");
-            addToLog("done = " + std::to_string(done));
+//            addToLog("auto done = data.writeToFile(filepath, true);");
+//            addToLog("done = " + std::to_string(done));
             if(!done) {
                 std::cerr << "Viper::Image: write to file failed" << std::endl;
             }
