@@ -28,9 +28,7 @@ int Mitsoko::Url::Response::statusCode() {
 #ifdef __APPLE__
     return response.statusCode();
 #else
-//    LOGI("Mitsoko::Url::Response::statusCode, response = %p", response.handle);    
     auto res = response.sendMessage<int>("getStatusCode");
-//    LOGI("/Mitsoko::Url::Response::statusCode %d", res);
     return res;
 #endif  //__APPLE__
 }
@@ -73,31 +71,11 @@ std::string Mitsoko::Url::Response::Headers::operator[](const std::string &key) 
     if(response){
         if(auto javaKey = String::create(key)){
             LOGI("javaKey = %p", javaKey.handle);
-            if(auto res = response.response.sendMessage<String>("headerValueFor", javaKey)){
+            if(auto res = response.response.sendMessage<String>("getHeaderField", javaKey)){
                 return res.c_str();
             }else{
                 return {};
             }
-            /*if(auto headersMap = response.response.sendMessage<Map<String, List<String>>>("getHeaders")){
-                LOGI("headersMap = %p", headersMap.handle);
-                if(auto resList = headersMap.get(javaKey)){
-                    LOGI("resList = %p", resList.handle);
-                    if(resList.size()){
-                        if(auto res = resList.get(0)){
-                            return res.c_str();
-                        }else{
-                            return {};
-                        }
-                    }else{
-                        return {};
-                    }
-                }else{
-                    return {};
-                }
-            }else{
-                LOGI("headersMap is null");
-                return {};
-            }*/
         }else{
             return {};
         }
