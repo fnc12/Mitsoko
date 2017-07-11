@@ -218,7 +218,7 @@ auto Mitsoko::Url::Request::body(std::function<void(MultipartAdapter&)> f) -> Re
     auto bodyString = multipartAdapter.body();
 #ifdef __APPLE__
     auto bodyData = NS::Data::createWithBytes((const void *)bodyString.c_str(), int(bodyString.length()));
-    cout << "bodyData len = " << bodyData.length() << endl;
+//    cout << "bodyData len = " << bodyData.length() << endl;
     request.setHTTPBody(bodyData);
 #else
     auto env = java::lang::JNI::Env();
