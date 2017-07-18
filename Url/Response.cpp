@@ -13,7 +13,7 @@
 #include "Mitsoko/AndroidUtil/java/util/List.hpp"
 #include "Mitsoko/AndroidUtil/java/util/Map.hpp"
 
-Mitsoko::Url::Response::Response(decltype(response) response_):response(response_),headers{*this}{}
+Mitsoko::Url::Response::Response(decltype(response) response_):headers{*this}, response(response_){}
 
 Mitsoko::Url::Response::Response(const Response& other):headers{*this}, response(other.response) {
     //..
