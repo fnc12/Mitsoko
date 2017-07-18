@@ -71,6 +71,7 @@ Mitsoko::TableListAdapter::AdapterId Mitsoko::TableListAdapter::registerAdapter(
                                                                                 AdapterBasePointer adapter,
                                                                                 const void *jni)
 {
+    (void)jni;
     auto it=adaptersMap.end();
     it=adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -160,6 +161,7 @@ void Mitsoko::TableListAdapter::cellCreated(const void *tableOrListView,const vo
 
 Mitsoko::AdapterBase::RowStyle Mitsoko::TableListAdapter::cellStyle(const void *tableOrListView,int section,int row){
     auto it=adaptersMap.end();
+    (void)tableOrListView;
 #ifdef __APPLE__
     it = adaptersMap.find(tableOrListView);
 #else
@@ -173,6 +175,7 @@ Mitsoko::AdapterBase::RowStyle Mitsoko::TableListAdapter::cellStyle(const void *
 }
 
 void Mitsoko::TableListAdapter::headerCreated(const void *tableOrListView,const void *header,int section,const void *jni){
+    (void)jni;
     auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -183,6 +186,7 @@ void Mitsoko::TableListAdapter::headerCreated(const void *tableOrListView,const 
 }
 
 double Mitsoko::TableListAdapter::headerHeight(const void *tableOrListView,int section,const void *jni){
+    (void)jni;
     auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -193,6 +197,7 @@ double Mitsoko::TableListAdapter::headerHeight(const void *tableOrListView,int s
 }
 
 std::string Mitsoko::TableListAdapter::headerViewClassName(const void *tableOrListView,int section,const void *jni){
+    (void)jni;
     auto it = adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){
@@ -248,6 +253,7 @@ int Mitsoko::TableListAdapter::rowsCount(const void *tableOrListView,int section
 }
 
 int Mitsoko::TableListAdapter::sectionsCount(const void *tableOrListView,const void *jni){
+    (void)jni;
     auto it=adaptersMap.end();
     it = adaptersMap.find(tableOrListView);
     if(it != adaptersMap.end()){

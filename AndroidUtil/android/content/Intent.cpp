@@ -77,6 +77,7 @@ std::string android::content::Intent::EXTRA_TEXT() {
 
 auto android::content::Intent::createChooser(const Intent &target, const std::string &title) -> Intent {
     if(auto java_env = java::lang::JNI::Env()){
+        (void)java_env;
         auto t = java::lang::String::create(title);
         java::lang::Class clazz = java::lang::Class::find<Intent>();
         return clazz.callStaticFunc<Intent>("createChooser", target, (java::lang::CharSequence)t);
@@ -109,12 +110,13 @@ auto android::content::Intent::putExtra(const std::string &name,const std::strin
 android::content::Intent& android::content::Intent::putExtra(const std::string &name, const std::vector<std::string> &value) {
     auto j_name = java::lang::String::create(name);
     auto jItems = java::lang::Array<java::lang::String>::create(int(value.size()), {});
-    for(auto i = 0; i < value.size(); ++i) {
+    for(size_t i = 0; i < value.size(); ++i) {
         auto &v = value[i];
         auto str = java::lang::String::create(v);
         jItems[i] = str;
     }
     this->sendMessage<Intent>("putExtra", j_name, jItems);
+    return *this;
 }
 
 auto android::content::Intent::setData(const android::net::Uri &data)->Intent&{

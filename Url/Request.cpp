@@ -247,10 +247,10 @@ auto Mitsoko::Url::Request::setValueForHTTPHeaderField(std::string value, std::s
 auto Mitsoko::Url::Request::url(const std::string &value, std::vector<GetParameter> getParameters) -> Request& {
     std::stringstream ss;
     ss << value;
-    const auto getParametersCount = getParameters.size();
+    const size_t getParametersCount = getParameters.size();
     if(getParametersCount) {
         ss << "?";
-        for(auto i=0; i<getParametersCount; ++i) {
+        for(size_t i=0; i<getParametersCount; ++i) {
             auto &getParameter = getParameters[i];
             ss << getParameter.value;
             if(i < getParametersCount-1) {

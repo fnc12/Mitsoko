@@ -66,6 +66,8 @@ void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
             request.url(url);
 //            addToLog("request.url(url);");
             request.performAsync<Image>([=](Url::Response response, Mitsoko::Image image, Url::Error error) {
+                (void)response;
+                (void)error;
 //                addToLog("request.performAsync<Image>([=](Url::Response response, Mitsoko::Image image, Url::Error error) {");
                 if(image) {
 //                    addToLog("if(image) {");
