@@ -38,7 +38,7 @@ auto android::app::AlertDialog::Builder::create()->AlertDialog{
 
 auto android::app::AlertDialog::Builder::setItems(const std::vector<std::string> &items,OnClickCallback cb) -> Builder& {
     auto jItems = java::lang::Array<java::lang::CharSequence>::create(int(items.size()), {});
-    for(auto i=0;i<items.size();++i){
+    for(size_t i=0;i<items.size();++i){
         const auto &item = items[i];
         auto str = java::lang::String::create(item);
         jItems[i] = str;
