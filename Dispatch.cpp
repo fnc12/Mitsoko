@@ -24,6 +24,7 @@ int Mitsoko::Dispatch::callbackId=0;
 Handler Mitsoko::Dispatch::mainThreadHandler;
 
 void Mitsoko::Dispatch::postCallback(int callbackId,bool isMainThread){
+    (void)isMainThread;
     std::function<void()> f;
     
     callbacksMutex.lock();

@@ -12,6 +12,8 @@
 //using android::app::Activity;
 
 void Mitsoko::NavigationPusher::operator()(const void *handle, const std::string &viewName) {
+    (void)handle;
+    (void)viewName;
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     auto object = NS::Object::create<UI::ViewController>(viewName);
@@ -27,6 +29,7 @@ animated(animated_)
 }
 
 void Mitsoko::NavigationClassPoper::operator()(const void *handle) {
+    (void)handle;
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     auto navigationController = vc.navigationController();
@@ -91,6 +94,7 @@ void Mitsoko::ActivityCloser::operator()(const void *handle) {
 }
 
 void Mitsoko::NavigationPoper::operator()(const void *handle) {
+    (void)handle;
 #ifdef __APPLE__
     UI::ViewController vc(handle);
     vc.navigationController().popViewControllerAnimated(this->animated);
