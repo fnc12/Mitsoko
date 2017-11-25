@@ -46,6 +46,15 @@ const std::string& Mitsoko::Url::Request::MultipartAdapter::boundary() const {
     return _boundary;
 }
 
+Mitsoko::Url::Request& Mitsoko::Url::Request::timeout(double seconds) {
+#ifdef __APPLE__
+    this->request.setTimeoutInterval(NS::TimeInterval(seconds));
+#else
+    this->request.sendMessage<void>("setTimeout", seconds);
+#endif
+    return *this;
+}
+
 void Mitsoko::Url::Request::MultipartAdapter::addFormField(const std::string &name, const std::string &value) {
     this->stream << "--" << _boundary << crlf;
     this->stream << "Content-Disposition: form-data; name=\"" << name << "\"" << crlf;
