@@ -138,6 +138,8 @@ namespace Mitsoko {
                 void stream_copy_n(std::istream &in, std::size_t count, std::ostream &out);
             };
             
+            Request& timeout(double seconds);
+            
             Request& setValueForHTTPHeaderField(std::string value, std::string field);
             
             //  URL setter & getter..

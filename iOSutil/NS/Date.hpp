@@ -6,16 +6,23 @@
 //  Copyright © 2017 Mitsoko. All rights reserved.
 //
 
-#ifndef Date_hpp
-#define Date_hpp
+#ifndef __Mitsoko__ios_util__ns_date__
+#define __Mitsoko__ios_util__ns_date__
 
 #include "Object.hpp"
 
+#ifdef __APPLE__
+#import <Foundation/NSDate.h>
+#endif  //  __APPLE__
+
 namespace NS {
+    
+#ifdef __APPLE__
+    typedef NSTimeInterval TimeInterval;
+#endif  //  __APPLE__
     
     struct Date : public NS::Object {
         using Object::Object;
-        
 #ifdef __APPLE__
         
         static const std::string className;
@@ -24,4 +31,4 @@ namespace NS {
     };
 }
 
-#endif /* Date_hpp */
+#endif /* __Mitsoko__ios_util__ns_date__ */

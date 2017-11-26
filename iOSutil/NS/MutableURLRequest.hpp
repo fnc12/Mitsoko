@@ -6,11 +6,12 @@
 //  Copyright © 2016 Outlaw Studio. All rights reserved.
 //
 
-#ifndef MutableURLRequest_hpp
-#define MutableURLRequest_hpp
+#ifndef __Mitsoko__ns__mutable_url_request__
+#define __Mitsoko__ns__mutable_url_request__
 
 #include "URLRequest.hpp"
 #include "Data.hpp"
+#include "Date.hpp"
 
 namespace NS {
     
@@ -23,6 +24,10 @@ namespace NS {
         static const std::string className;
         
         static NS::MutableURLRequest create();
+        
+        void setTimeoutInterval(NS::TimeInterval value);
+        
+        NS::TimeInterval timeoutInterval();
         
         void setURL(const NS::URL &newValue);
         
@@ -44,4 +49,4 @@ namespace NS {
     };
 }
 
-#endif /* MutableURLRequest_hpp */
+#endif /* __Mitsoko__ns__mutable_url_request__ */
