@@ -30,12 +30,12 @@ void android::view::View::onClick(int id,android::view::View v){
 void android::view::View::setOnClickListener(OnClick cb,const Mitsoko::Disposable &disposable){
     OnClickListener l;
     if(onClick){
-        auto classSignature="kz/outlawstudio/viper/EventHandlers$ViewOnClickListener";
-        auto callbackObject=java::lang::Object::create(classSignature);
-        auto callbackId=callbackObject.getField<int>("mId");
-        onClickMap.insert({callbackId,cb});
-        l=(OnClickListener)callbackObject;
-        disposablesMap.insert({disposable.id,callbackId});
+        auto classSignature = "kz/outlawstudio/viper/EventHandlers$ViewOnClickListener";
+        auto callbackObject = java::lang::Object::create(classSignature);
+        auto callbackId = callbackObject.getField<int>("mId");
+        onClickMap.insert({callbackId, cb});
+        l = (OnClickListener)callbackObject;
+        disposablesMap.insert({disposable.id, callbackId});
     }
     this->sendMessage<void>("setOnClickListener",l);
 }
@@ -45,17 +45,17 @@ auto android::view::View::findViewById(int id)->View{
 }
 
 auto android::view::View::findViewById(const std::string &idString,const content::Context &context)->View{
-    if(auto java_env=java::lang::JNI::Env()){
-        auto niClazz=java::lang::Class::find("kz/outlawstudio/viper/NI");
-        auto signature=java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
-        auto methodId=java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
-        auto resourseId=java::lang::String::create(idString);
-        auto folderName=java::lang::String::create("id");
-        auto resID=java_env->CallStaticIntMethod(niClazz,
-                                                 methodId,
-                                                 context.handle,
-                                                 resourseId.handle,
-                                                 folderName.handle);
+    if(auto java_env = java::lang::JNI::Env()){
+        auto niClazz = java::lang::Class::find("kz/outlawstudio/viper/NI");
+        auto signature = java::lang::Object::generateMethodSignature<int,content::Context,java::lang::String,java::lang::String>();
+        auto methodId = java_env->GetStaticMethodID(niClazz,"getResourseId",signature.c_str());
+        auto resourseId = java::lang::String::create(idString);
+        auto folderName = java::lang::String::create("id");
+        auto resID = java_env->CallStaticIntMethod(niClazz,
+                                                   methodId,
+                                                   context.handle,
+                                                   resourseId.handle,
+                                                   folderName.handle);
         return this->findViewById(resID);
     }else{
         return {};

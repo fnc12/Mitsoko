@@ -179,6 +179,7 @@ namespace Mitsoko{
         void operator()(const void *handle);
     };
     
+    //  searches view controller with a given class name using reverse loop and pops to it if found otherwise does nothing
     struct NavigationClassPoper {
         std::string targetClassName;
         bool animated = true;
@@ -186,6 +187,16 @@ namespace Mitsoko{
         NavigationClassPoper() = delete;
         
         NavigationClassPoper(const std::string &target, bool animated = true);
+        
+        void operator()(const void *handle);
+    };
+    
+    //  performs popToViewController(self)
+    struct NavigationSelfPoper {
+        bool animated = true;
+        
+        NavigationSelfPoper() = delete;
+        NavigationSelfPoper(bool animated);
         
         void operator()(const void *handle);
     };

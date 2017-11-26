@@ -36,7 +36,6 @@ void Mitsoko::NavigationClassPoper::operator()(const void *handle) {
     auto viewControllers = navigationController.viewControllers();
     auto viewControllersCount = viewControllers.count();
     UI::ViewController targetVC = nullptr;
-//    auto targetClassName = "Jako.JKMainTabBarC";
     for(auto i = viewControllersCount - 1; i; --i) {
         UI::ViewController vc = viewControllers[i];
         auto vcClass = vc.getClass();
@@ -50,7 +49,16 @@ void Mitsoko::NavigationClassPoper::operator()(const void *handle) {
     if(targetVC){
         navigationController.popToViewController(targetVC, true);
     }
-#endif
+#endif  //  __APPLE__
+}
+
+Mitsoko::NavigationSelfPoper::NavigationSelfPoper(bool animated_): animated(animated_) {}
+
+void Mitsoko::NavigationSelfPoper::operator()(const void *handle) {
+#ifdef __APPLE__
+    UI::ViewController vc(handle);
+    vc.navigationController().popToViewController(vc, this->animated);
+#endif  //  __APPLE__
 }
 
 void Mitsoko::FragmentStarter::operator()(const void *handle, const std::string &viewName) {
