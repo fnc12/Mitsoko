@@ -37,6 +37,7 @@ NS::Data NS::MutableURLRequest::HTTPBody() {
 }
 
 void NS::MutableURLRequest::setHTTPBody(const NS::Data &newValue) {
+    cout << "data length = " << NS::Data(newValue).length() << endl;
     this->sendMessage<void>("setHTTPBody:", newValue.handle);
 }
 

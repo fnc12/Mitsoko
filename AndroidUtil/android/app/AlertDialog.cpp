@@ -64,7 +64,7 @@ auto android::app::AlertDialog::Builder::setMessage(const java::lang::CharSequen
 }
 
 auto android::app::AlertDialog::Builder::setTitle(const std::string &title)->Builder&{
-    auto str=java::lang::String::create(title);
+    auto str = java::lang::String::create(title);
     return this->setTitle(str);
 }
 
@@ -74,20 +74,20 @@ auto android::app::AlertDialog::Builder::setTitle(const java::lang::CharSequence
 }
 
 auto android::app::AlertDialog::Builder::setPositiveButton(const std::string &text,OnClickCallback cb)->Builder&{
-    auto t=java::lang::String::create(text);
+    auto t = java::lang::String::create(text);
     return this->setPositiveButton(t,cb);
 }
 
 auto android::app::AlertDialog::Builder::setPositiveButton(const java::lang::CharSequence &text,OnClickCallback cb)->Builder&{
     android::content::DialogInterface::OnClickListener l;
     if(cb){
-        auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
-        auto callbackObject=java::lang::Object::create(classSignature);
-        auto callbackId=callbackObject.getField<int>("mId");
-        onClickMap.insert({callbackId,cb});
-        l=(android::content::DialogInterface::OnClickListener)callbackObject;
+        auto classSignature = "kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
+        auto callbackObject = java::lang::Object::create(classSignature);
+        auto callbackId = callbackObject.getField<int>("mId");
+        onClickMap.insert({callbackId, cb});
+        l = (android::content::DialogInterface::OnClickListener)callbackObject;
     }
-    this->sendMessage<Builder>("setPositiveButton",text,l);
+    this->sendMessage<Builder>("setPositiveButton", text, l);
     return *this;
 }
 
