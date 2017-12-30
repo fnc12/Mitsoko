@@ -84,10 +84,9 @@ void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChang
                                                        AfterTextChanged afterTextChanged,
                                                        const Mitsoko::Disposable &disposable)
 {
-//    android::text::TextWatcher textWatcher;
-    auto classSignature="kz/outlawstudio/viper/EventHandlers$TextViewTextChangedListener";
-    auto textWatcherObject=java::lang::Object::create(classSignature);
-    auto textWatcherId=textWatcherObject.getField<int>("mId");
+    auto classSignature = "kz/outlawstudio/viper/EventHandlers$TextViewTextChangedListener";
+    auto textWatcherObject = java::lang::Object::create(classSignature);
+    auto textWatcherId = textWatcherObject.getField<int>("mId");
     if(onTextChanged){
         TextWatcherEventHandler::onTextChangedMap.insert({textWatcherId,onTextChanged});
     }
@@ -98,7 +97,6 @@ void android::widget::TextView::addTextChangedListener(OnTextChanged onTextChang
         TextWatcherEventHandler::afterTextChangedMap.insert({textWatcherId,afterTextChanged});
     }
     TextWatcherEventHandler::disposablesMap[disposable.id].push_back(textWatcherId);
-//    this->sendMessage<void>("addTextChangedListener",textWatcher);
     this->addTextChangedListener((android::text::TextWatcher)textWatcherObject);
 }
 

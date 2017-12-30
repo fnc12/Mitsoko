@@ -43,6 +43,8 @@ namespace UI {
         
         void setOnTouchUpInside(Callback cb, Mitsoko::Disposable *target);
         
+        void setOnEditingChanged(Callback cb, Mitsoko::Disposable &target);
+        
         struct Events{
             struct TouchDown{};
             struct TouchDownRepeat{};

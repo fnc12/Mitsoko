@@ -13,7 +13,6 @@ namespace UI {
 #ifdef __APPLE__
         
         static const std::string className;
-//        STATIC_VAR(const std::string, className, "UIScrollView");
         
         void setContentSize(const CG::Size &newValue);
         

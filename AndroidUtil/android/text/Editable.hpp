@@ -15,7 +15,6 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/text/Editable");
             
 #endif  //__ANDROID__
             

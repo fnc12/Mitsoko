@@ -1,6 +1,6 @@
 
-#ifndef __VIPER__IOS_UTIL__UI__TEXT_FIELD__
-#define __VIPER__IOS_UTIL__UI__TEXT_FIELD__
+#ifndef __Mitsoko__ios_util__ui__textField__
+#define __Mitsoko__ios_util__ui__textField__
 
 #include "Control.hpp"
 #include "TextInput.hpp"
@@ -19,8 +19,6 @@ namespace UI {
         
         void setText(const std::string &newValue);
         
-//        void setText(const CF::String &newValue);
-        
         std::string text();
         
         void setPlaceholder(const std::string &newValue);
@@ -33,4 +31,4 @@ namespace UI {
     };
 }
 
-#endif  //__VIPER__IOS_UTIL__UI__TEXT_FIELD__
+#endif  //__Mitsoko__ios_util__ui__textField__

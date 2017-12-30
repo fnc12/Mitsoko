@@ -16,6 +16,14 @@ using std::endl;
 
 const std::string NS::MutableURLRequest::className = "NSMutableURLRequest";
 
+void NS::MutableURLRequest::setTimeoutInterval(NS::TimeInterval value) {
+    this->sendMessage<void>("setTimeoutInterval:", NSTimeInterval(value));
+}
+
+NS::TimeInterval NS::MutableURLRequest::timeoutInterval() {
+    return (NS::TimeInterval)this->sendMessage<NSTimeInterval>("timeoutInterval");
+}
+
 NS::MutableURLRequest NS::MutableURLRequest::create() {
     return Object::create<NS::MutableURLRequest>(className);
 }

@@ -19,7 +19,6 @@ namespace android{
 #ifdef __ANDROID__
             
             static const std::string signature;
-//            STATIC_VAR(const std::string, signature, "android/text/InputType");
             
 #define STATIC_JINT(name) static int name(){\
             if(java::lang::Class cls=java::lang::Class::find<InputType>()){\
