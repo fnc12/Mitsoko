@@ -48,45 +48,26 @@ void Mitsoko::ImageCache::Callback::disposableDidDispose(Disposable::Id id){
 
 void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
     std::string key, filepath;
-//    addToLog("std::string key, filepath;");
     if(auto res = getCached(url, &key, &filepath)){
-//        addToLog("if(auto res = getCached(url, &key, &filepath)){");
         cb(res);
-//        addToLog("cb(res);");
     }else{
-//        addToLog("}else{");
         auto it = this->callbacks.find(url);
-//        addToLog("auto it = this->callbacks.find(url);");
         if(it == this->callbacks.end()){
-//            addToLog("if(it == this->callbacks.end()){");
             callbacks[url].push_back(cb);
-//            addToLog("callbacks[url].push_back(cb);");
             Url::Request request;
-//            addToLog("Url::Request request;");
             request.url(url);
-//            addToLog("request.url(url);");
             request.performAsync<Image>([=](Url::Response response, Mitsoko::Image image, Url::Error error) {
                 (void)response;
                 (void)error;
-//                addToLog("request.performAsync<Image>([=](Url::Response response, Mitsoko::Image image, Url::Error error) {");
                 if(image) {
-//                    addToLog("if(image) {");
                     image.writeToFile(filepath);
-//                    addToLog("image.writeToFile(filepath);");
                     putIntoRAM(key, image);
-//                    addToLog("putIntoRAM(key, image);");
                     auto it = this->callbacks.find(url);
-//                    addToLog("auto it = this->callbacks.find(url);");
                     if(it != this->callbacks.end()) {
-//                        addToLog("if(it != this->callbacks.end()) {");
                         for(auto &cb : it->second) {
-//                            addToLog("for(auto &cb : it->sercond) {");
                             cb(image);
-//                            addToLog("cb(image);");
                         }
-//                        addToLog("}");
                         this->callbacks.erase(it);
-//                        addToLog("this->callbacks.erase(it);");
                     }else{
                         std::cerr << "callback not found for url *" << url << "*" << std::endl;
                     }

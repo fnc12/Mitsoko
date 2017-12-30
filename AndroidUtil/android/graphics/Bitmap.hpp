@@ -23,6 +23,8 @@ namespace android {
             
             void recycle();
             
+            void setHasAlpha(bool hasAlpha);
+            
             struct CompressFormat : public java::lang::Object {
                 
                 using Object::Object;

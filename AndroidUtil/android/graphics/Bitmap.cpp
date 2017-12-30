@@ -20,6 +20,10 @@ const std::string android::graphics::Bitmap::CompressFormat::signature = "androi
 
 const std::string android::graphics::Bitmap::Config::signature = "android/graphics/Bitmap$Config";
 
+void android::graphics::Bitmap::setHasAlpha(bool hasAlpha) {
+    this->sendMessage<void>("setHasAlpha", hasAlpha);
+}
+
 void android::graphics::Bitmap::recycle(){
     this->sendMessage<void>("recycle");
 }
