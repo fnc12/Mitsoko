@@ -7,6 +7,7 @@
 //
 
 #include "Color.hpp"
+#include "Mitsoko/AndroidUtil/java/lang/Class.hpp"
 
 #ifdef __ANDROID__
 

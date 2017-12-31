@@ -46,6 +46,7 @@
 #include "android/graphics/Bitmap.hpp"
 #include "android/graphics/BitmapFactory.hpp"
 #include "android/graphics/Color.hpp"
+#include "android/graphics/ColorSpace.hpp"
 
 #include "android/net/Uri.hpp"
 

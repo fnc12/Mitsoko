@@ -46,12 +46,8 @@ void Mitsoko::Image::writeToFile(const std::string &filepath) {
     
 #ifdef __APPLE__
     if(auto i = image) {
-//        addToLog("if(auto i = image) {");
         if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {
-//            addToLog("if(auto data = UI::Image::JPEGRepresentation(i, 0.85)) {");
             auto done = data.writeToFile(filepath, true);
-//            addToLog("auto done = data.writeToFile(filepath, true);");
-//            addToLog("done = " + std::to_string(done));
             if(!done) {
                 std::cerr << "Viper::Image: write to file failed" << std::endl;
             }
@@ -61,7 +57,8 @@ void Mitsoko::Image::writeToFile(const std::string &filepath) {
     if(auto i = image) {
         auto file = File::create(filepath);
         auto os = BufferedOutputStream::create(FileOutputStream::create(file));
-        auto compressFormat = Bitmap::CompressFormat::JPEG();
+//        auto compressFormat = Bitmap::CompressFormat::JPEG();
+        auto compressFormat = Bitmap::CompressFormat::PNG();
         i.compress(compressFormat, 85, os);
         os.close();
     }

@@ -50,7 +50,7 @@ namespace java{
         protected:
             
             template<class T>
-            void _setField(JNIEnv *java_env,jfieldID fieldId,const T &value){
+            void _setField(JNIEnv *java_env, jfieldID fieldId, const T &value){
                 java_env->SetObjectField((jobject)this->handle, fieldId, ArgumentProxy<T>::cast(value));
             }
         public:
@@ -73,7 +73,7 @@ namespace java{
             /**
              *  Cast operator. Implements `instanceof` call and returns null object if cast failed.
              */
-            template<class T,class=typename std::enable_if<std::is_base_of<T,Object>::value>::type>
+            template<class T,class = typename std::enable_if<std::is_base_of<T, Object>::value>::type>
             operator T (){
                 if(this->instanceof<T>){
                     return this->handle;
@@ -86,9 +86,9 @@ namespace java{
             
             template<class T>
             void setField(const char *fieldName, const T &value){
-                if(auto java_env=JNI::Env()){
-                    if(auto clazz=this->getClass()){
-                        auto signature=TypeSignatureGenerator<T>()();
+                if(auto java_env = JNI::Env()){
+                    if(auto clazz = this->getClass()){
+                        auto signature = TypeSignatureGenerator<T>()();
                         if(auto field = java_env->GetFieldID(clazz, fieldName, signature.c_str())){
                             this->_setField(java_env, field, value);
                         }else{
@@ -104,7 +104,7 @@ namespace java{
             
             template<class T>
             void setField(const std::string &fieldName, const T &value){
-                this->setField(fieldName.c_str(),value);
+                this->setField(fieldName.c_str(), value);
             }
             
             template<class T>
@@ -136,13 +136,9 @@ namespace java{
             
             template<class RT, class R, class ...Args>
             static RT sendMessage(const R &receiver, const std::string &message, const Args& ...args) {
-//                LOGI("receiver = %p", receiver);
                 if(auto java_env = JNI::Env()){
-//                    LOGI("java_env = %p", java_env);
                     if(auto cls = java_env->GetObjectClass(jobject(receiver))){
-//                        LOGI("cls = %p", cls);
                         auto methodSignature = std::move(generateMethodSignature<RT, Args...>());
-//                        LOGI("methodSignature = %s", methodSignature.c_str());
                         if(auto methodId = java_env->GetMethodID(cls, message.c_str(), methodSignature.c_str())){
                             return MessageSender<RT>()(java_env, jobject(receiver), methodId, args...);
                         }else{
@@ -207,7 +203,10 @@ namespace java{
 #ifdef __ANDROID__
         
         template<>
-        void Object::_setField<int>(JNIEnv *java_env,jfieldID fieldId,const int &value);
+        void Object::_setField<int>(JNIEnv *java_env, jfieldID fieldId, const int &value);
+        
+        template<>
+        void Object::_setField<bool>(JNIEnv *java_env, jfieldID fieldId, const bool &value);
         
         template<>
         int Object::getField<int>(const char *fieldName);

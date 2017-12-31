@@ -61,6 +61,8 @@ namespace Mitsoko {
         
         const std::string& documentsPath();
         
+        bool usesRamCache = true;
+        
     protected:
         std::map<std::string, std::vector<Callback>> callbacks;
         

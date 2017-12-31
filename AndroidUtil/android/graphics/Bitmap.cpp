@@ -45,11 +45,11 @@ auto android::graphics::Bitmap::CompressFormat::JPEG() -> CompressFormat {
     }
 }
 
-int android::graphics::Bitmap::CompressFormat::PNG(){
+auto android::graphics::Bitmap::CompressFormat::PNG() -> CompressFormat {
     if(java::lang::Class cls = java::lang::Class::find<CompressFormat>()){
-        return cls.getStaticField<int>("PNG");
+        return cls.getStaticField<CompressFormat>("PNG");
     }else{
-        return -1;
+        return {};
     }
 }
 
@@ -61,35 +61,35 @@ int android::graphics::Bitmap::CompressFormat::WEBP(){
     }
 }
 
-int android::graphics::Bitmap::Config::ALPHA_8(){
-    if(java::lang::Class cls=java::lang::Class::find<Config>()){
-        return cls.getStaticField<int>("ALPHA_8");
+android::graphics::Bitmap::Config android::graphics::Bitmap::Config::ALPHA_8(){
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.getStaticField<Config>("ALPHA_8");
     }else{
-        return -1;
+        return {};
     }
 }
 
-int android::graphics::Bitmap::Config::RGB_565(){
-    if(java::lang::Class cls=java::lang::Class::find<Config>()){
-        return cls.getStaticField<int>("RGB_565");
+android::graphics::Bitmap::Config android::graphics::Bitmap::Config::RGB_565(){
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.getStaticField<Config>("RGB_565");
     }else{
-        return -1;
+        return {};
     }
 }
 
-int android::graphics::Bitmap::Config::ARGB_4444(){
-    if(java::lang::Class cls=java::lang::Class::find<Config>()){
-        return cls.getStaticField<int>("ARGB_4444");
+android::graphics::Bitmap::Config android::graphics::Bitmap::Config::ARGB_4444(){
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.getStaticField<Config>("ARGB_4444");
     }else{
-        return -1;
+        return {};
     }
 }
 
-int android::graphics::Bitmap::Config::ARGB_8888(){
-    if(java::lang::Class cls=java::lang::Class::find<Config>()){
-        return cls.getStaticField<int>("ARGB_8888");
+android::graphics::Bitmap::Config android::graphics::Bitmap::Config::ARGB_8888(){
+    if(java::lang::Class cls = java::lang::Class::find<Config>()){
+        return cls.getStaticField<Config>("ARGB_8888");
     }else{
-        return -1;
+        return {};
     }
 }
 

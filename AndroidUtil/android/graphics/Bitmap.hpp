@@ -33,7 +33,7 @@ namespace android {
                 
                 static CompressFormat JPEG();
                 
-                static int PNG();
+                static CompressFormat PNG();
                 
                 static int WEBP();
             };
@@ -44,13 +44,13 @@ namespace android {
                 
                 static const std::string signature;
                 
-                static int ALPHA_8();
+                static Config ALPHA_8();
                 
-                static int RGB_565();
+                static Config RGB_565();
                 
-                static int ARGB_4444();
+                static Config ARGB_4444();
                 
-                static int ARGB_8888();
+                static Config ARGB_8888();
             };
             
             bool compress(CompressFormat format, int quality, const java::io::OutputStream &stream);

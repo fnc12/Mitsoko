@@ -31,9 +31,15 @@ java::lang::Object::~Object(){
 }
 
 template<>
-void java::lang::Object::_setField<int>(JNIEnv *java_env,jfieldID fieldId,const int &value){
+void java::lang::Object::_setField<int>(JNIEnv *java_env, jfieldID fieldId, const int &value){
     java_env->SetIntField((jobject)this->handle, fieldId, ArgumentProxy<int>::cast(value));
 }
+
+template<>
+void java::lang::Object::_setField<bool>(JNIEnv *java_env, jfieldID fieldId, const bool &value){
+    java_env->SetBooleanField((jobject)this->handle, fieldId, ArgumentProxy<bool>::cast(value));
+}
+
 
 template<>
 int java::lang::Object::getField<int>(const char *fieldName){

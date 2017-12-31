@@ -25,9 +25,9 @@ auto android::app::AlertDialog::Builder::create(const content::Context &context)
 }
 
 void android::app::AlertDialog::Builder::alertDialogClickListener_onClick(int id,jobject dialogInterface,int which){
-    auto it=onClickMap.find(id);
+    auto it = onClickMap.find(id);
     if(it != onClickMap.end()){
-        it->second(dialogInterface,which);
+        it->second(dialogInterface, which);
         onClickMap.erase(it);
     }
 }
@@ -43,23 +43,22 @@ auto android::app::AlertDialog::Builder::setItems(const std::vector<std::string>
         auto str = java::lang::String::create(item);
         jItems[i] = str;
     }
-    //                    auto classSignature=java::lang::JNI::appNamespace()+"/EventHandlers$AlertDialogClickListener";
-    auto classSignature="kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
-    auto callbackObject=java::lang::Object::create(classSignature);
-    auto callbackId=callbackObject.getField<int>("mId");
-    onClickMap.insert({callbackId,cb});
-    auto l=(android::content::DialogInterface::OnClickListener)callbackObject;
-    this->sendMessage<Builder>("setItems",jItems,l);
+    auto classSignature = "kz/outlawstudio/viper/EventHandlers$AlertDialogClickListener";
+    auto callbackObject = java::lang::Object::create(classSignature);
+    auto callbackId = callbackObject.getField<int>("mId");
+    onClickMap.insert({callbackId, cb});
+    auto l = (android::content::DialogInterface::OnClickListener)callbackObject;
+    this->sendMessage<Builder>("setItems", jItems, l);
     return *this;
 }
 
 auto android::app::AlertDialog::Builder::setMessage(const std::string &title)->Builder&{
-    auto t=java::lang::String::create(title);
+    auto t = java::lang::String::create(title);
     return this->setMessage(t);
 }
 
 auto android::app::AlertDialog::Builder::setMessage(const java::lang::CharSequence &title)->Builder&{
-    this->sendMessage<Builder>("setMessage",title);
+    this->sendMessage<Builder>("setMessage", title);
     return *this;
 }
 
@@ -69,13 +68,13 @@ auto android::app::AlertDialog::Builder::setTitle(const std::string &title)->Bui
 }
 
 auto android::app::AlertDialog::Builder::setTitle(const java::lang::CharSequence &title)->Builder&{
-    this->sendMessage<Builder>("setTitle",title);
+    this->sendMessage<Builder>("setTitle", title);
     return *this;
 }
 
 auto android::app::AlertDialog::Builder::setPositiveButton(const std::string &text,OnClickCallback cb)->Builder&{
     auto t = java::lang::String::create(text);
-    return this->setPositiveButton(t,cb);
+    return this->setPositiveButton(t, cb);
 }
 
 auto android::app::AlertDialog::Builder::setPositiveButton(const java::lang::CharSequence &text,OnClickCallback cb)->Builder&{

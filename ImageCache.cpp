@@ -9,20 +9,10 @@
 #include "ImageCache.hpp"
 #include "Mitsoko/Url/Request.hpp"
 
-//#include "Modules/Test/View.hpp"
-//#include "Services/Storage.hpp"
 
 #include <iostream>
 
-//using Services::Storage;
-
 Mitsoko::ImageCache Mitsoko::ImageCache::shared;
-
-/*void addToLog(const std::string &line) {
-    auto testData = Storage::shared().testData();
-    testData.push_back(line);
-    Storage::shared().setTestData(std::move(testData));
-}*/
 
 Mitsoko::ImageCache::Callback::Callback(type fun_,const Disposable &disposable):fun(fun_),disposableId(disposable.id){
     Disposable::subscribe(this);
@@ -61,7 +51,9 @@ void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
                 (void)error;
                 if(image) {
                     image.writeToFile(filepath);
-                    putIntoRAM(key, image);
+                    if(this->usesRamCache){
+                        putIntoRAM(key, image);
+                    }
                     auto it = this->callbacks.find(url);
                     if(it != this->callbacks.end()) {
                         for(auto &cb : it->second) {
@@ -157,6 +149,9 @@ auto Mitsoko::ImageCache::getImageFromFS(const std::string &filepath) -> Image {
 #ifdef __APPLE__
     return UI::Image::createWithContentsOfFile(filepath);
 #else
+    auto options = android::graphics::BitmapFactory::Options::create();
+    options.inDither(true);
+    options.inPreferredConfig(android::graphics::Bitmap::Config::ARGB_8888());
     return android::graphics::BitmapFactory::decodeFile(filepath);
 #endif
 }
@@ -183,7 +178,7 @@ auto Mitsoko::ImageCache::ramCache()->decltype(_ramCache)&{
 #endif
 
 std::string Mitsoko::ImageCache::imageFileName(const std::string &key){
-    return "image_"+key;
+    return "image_" + key;
 }
 
 std::string Mitsoko::ImageCache::getHexRepresentation(const unsigned char *bytes, size_t length) const {
