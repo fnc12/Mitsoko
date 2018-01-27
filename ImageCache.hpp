@@ -63,6 +63,8 @@ namespace Mitsoko {
         
         bool usesRamCache = true;
         
+        bool neverRestoresCachedImages = false;
+        
     protected:
         std::map<std::string, std::vector<Callback>> callbacks;
         

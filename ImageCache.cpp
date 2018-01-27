@@ -38,7 +38,8 @@ void Mitsoko::ImageCache::Callback::disposableDidDispose(Disposable::Id id){
 
 void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
     std::string key, filepath;
-    if(auto res = getCached(url, &key, &filepath)){
+    auto res = getCached(url, &key, &filepath);
+    if(res && !this->neverRestoresCachedImages){
         cb(res);
     }else{
         auto it = this->callbacks.find(url);
@@ -46,7 +47,7 @@ void Mitsoko::ImageCache::get(const std::string &url, Callback cb){
             callbacks[url].push_back(cb);
             Url::Request request;
             request.url(url);
-            request.performAsync<Image>([=](Url::Response response, Mitsoko::Image image, Url::Error error) {
+            request.performAsync<Image>([=](Url::Response response, Image image, Url::Error error) {
                 (void)response;
                 (void)error;
                 if(image) {
