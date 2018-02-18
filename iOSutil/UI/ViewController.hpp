@@ -19,7 +19,11 @@ namespace UI {
         
         static const std::string className;
         
-        typedef _ViewController<NavC, TabC> Self;
+        using Self = _ViewController<NavC, TabC>;
+        
+        Self parentViewController() {
+            return this->sendMessage<Handle>("parentViewController");
+        }
         
         void setTabBarItem(const UI::TabBarItem &newValue){
             this->sendMessage<void>("setTabBarItem:",newValue.handle);
