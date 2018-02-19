@@ -31,6 +31,7 @@
 #include "NS/Date.hpp"
 #include "NS/Dictionary.hpp"
 #include "NS/Error.hpp"
+#include "NS/IndexPath.hpp"
 #include "NS/IndexSet.hpp"
 #include "NS/HTTPURLResponse.hpp"
 #include "NS/MutableArray.hpp"

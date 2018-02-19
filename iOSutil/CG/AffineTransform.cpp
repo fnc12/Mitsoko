@@ -10,19 +10,16 @@
 
 #ifdef __APPLE__
 
-CG::AffineTransform::AffineTransform(CGAffineTransform s):CGAffineTransform(s){}
+CG::AffineTransform CG::AffineTransform::identity = CGAffineTransformIdentity;
 
-/*CG::AffineTransform& CG::AffineTransform::operator=(const CGAffineTransform &other){
-    this->CGAffineTransform::operator=(other);
-    return *this;
-}*/
+CG::AffineTransform::AffineTransform(CGAffineTransform s): CGAffineTransform(s) {}
 
-CG::AffineTransform CG::AffineTransform::makeScale(CG::Float sx,CG::Float sy){
-    /*CG::AffineTransform res(CGAffineTransformMakeScale(sx, sy));
-    auto t=CGAffineTransformMakeScale(sx, sy);
-    res=t;
-    return res;*/
+CG::AffineTransform CG::AffineTransform::makeScale(CG::Float sx, CG::Float sy) {
     return CGAffineTransformMakeScale(sx, sy);
+}
+
+CG::AffineTransform CG::AffineTransform::makeRotation(CG::Float angle) {
+    return CGAffineTransformMakeRotation(angle);
 }
 
 #endif

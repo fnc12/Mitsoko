@@ -1,6 +1,6 @@
 
-#ifndef __VIPER__IOS_UTIL__NS__DICTIONARY__
-#define __VIPER__IOS_UTIL__NS__DICTIONARY__
+#ifndef __MITSOKO__IOS_UTIL__NS__DICTIONARY__
+#define __MITSOKO__IOS_UTIL__NS__DICTIONARY__
 
 #include "Mitsoko/iOSutil/NS/Object.hpp"
 #include "Mitsoko/Util.hpp"
@@ -39,4 +39,4 @@ namespace NS {
     };
 }
 
-#endif  //__VIPER__IOS_UTIL__NS__DICTIONARY__
+#endif  //__MITSOKO__IOS_UTIL__NS__DICTIONARY__

@@ -17,6 +17,10 @@ void UI::Button::setTitle(const std::string &title,UI::Control::State state){
     this->sendMessage<void>("setTitle:forState:", str.handle, UIControlState(state));
 }
 
+void UI::Button::setTitleColor(UI::Color color, UI::Control::State state) {
+    this->sendMessage<void>("setTitleColor:forState:", color.handle, UIControlState(state));
+}
+
 void UI::Button::setImage(UI::Image image, UI::Control::State state) {
     this->sendMessage<void>("setImage:forState:", image.handle, UIControlState(state));
 }

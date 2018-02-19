@@ -6,6 +6,7 @@
 #include "Mitsoko/TableListAdapter.hpp"
 #include "ImageView.hpp"
 #include "Label.hpp"
+#include "Mitsoko/iOSutil/NS/Array.hpp"
 #include "Mitsoko/iOSutil/NS/IndexSet.hpp"
 #include "Mitsoko/iOSutil/UI/EdgeInsets.hpp"
 
@@ -29,11 +30,15 @@ namespace UI {
             Automatic = UITableViewRowAnimationAutomatic,
         };
         
-        void reloadSections(const NS::IndexSet &indexSet, RowAnimation animation);
+        void reloadSections(NS::IndexSet indexSet, RowAnimation animation);
         
         void reloadData();
         
         void beginUpdates();
+        
+        void endUpdates();
+        
+        void reloadRowsAtIndexPaths(NS::Array array, UI::TableView::RowAnimation animation);
         
         /**
          *  This function doesn't exist in UIKit. This is a special function 

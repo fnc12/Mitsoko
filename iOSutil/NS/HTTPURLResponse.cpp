@@ -1,10 +1,3 @@
-//
-//  HTTPURLResponse.cpp
-//  Groozim
-//
-//  Created by John Zakharov on 12.11.16.
-//  Copyright © 2016 Outlaw Studio. All rights reserved.
-//
 
 #include "HTTPURLResponse.hpp"
 
@@ -25,7 +18,6 @@ NS::String NS::HTTPURLResponse::localizedStringForStatusCode(int statusCode) {
 }
 
 NS::Dictionary NS::HTTPURLResponse::allHeaderFields() {
-//    return this->sendMessage<Handle>("allHeaderFields");
     auto headers = ((__bridge NSHTTPURLResponse*)this->handle).allHeaderFields;
     return (__bridge Handle)headers;
 }

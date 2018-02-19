@@ -13,9 +13,13 @@
 const std::string UI::TableView::className = "UITableView";
 const std::string UI::TableView::Cell::className = "UITableViewCell";
 
-void UI::TableView::reloadSections(const NS::IndexSet &indexSet, RowAnimation animation){
+void UI::TableView::reloadSections(NS::IndexSet indexSet, RowAnimation animation){
     auto is = indexSet.handle;
     this->sendMessage<void>("reloadSections:withRowAnimation:", is, UITableViewRowAnimation(animation));
+}
+
+void UI::TableView::reloadRowsAtIndexPaths(NS::Array array, UI::TableView::RowAnimation animation) {
+    this->sendMessage<void>("reloadRowsAtIndexPaths:withRowAnimation:", array.handle, UITableViewRowAnimation(animation));
 }
 
 void UI::TableView::reloadData() {
@@ -24,6 +28,10 @@ void UI::TableView::reloadData() {
 
 void UI::TableView::beginUpdates() {
     this->sendMessage<void>(this->handle, "beginUpdates");
+}
+
+void UI::TableView::endUpdates() {
+    this->sendMessage<void>(this->handle, "endUpdates");
 }
 
 UI::Color UI::TableView::separatorColor() {

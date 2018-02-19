@@ -1,10 +1,3 @@
-//
-//  HTTPURLResponse.hpp
-//  Groozim
-//
-//  Created by John Zakharov on 12.11.16.
-//  Copyright © 2016 Outlaw Studio. All rights reserved.
-//
 
 #ifndef HTTPURLResponse_hpp
 #define HTTPURLResponse_hpp
